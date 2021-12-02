@@ -41,11 +41,11 @@ export default {
     drawer: false,
     routes: [
       {
-        title: "route 1",
+        title: "Каталог",
         path: "/",
       },
       {
-        title: "route 2",
+        title: "Личный кабинет",
         path: "/",
       },
     ],
