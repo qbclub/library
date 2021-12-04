@@ -46,7 +46,11 @@ export default {
       },
       {
         title: "Личный кабинет",
-        path: "/",
+        path: "/cabinet",
+      },
+      {
+        title: "TakeBook",
+        path: "/takebook",
       },
     ],
   }),
