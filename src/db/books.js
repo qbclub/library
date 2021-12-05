@@ -232,3 +232,4 @@ const books = [
         series: "5000"
     }
 ]
+export default books;

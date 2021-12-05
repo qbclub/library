@@ -1,15 +1,14 @@
 <template>
   <v-container>
     <v-row class="justify">
-      <!-- <v-col v-for="card in cards" :key="card.title" :cols="card.flex"> -->
-      <v-col cols="2" class="justify-center">
+      <v-col v-for="book in books" :key="book.title">
+      <v-col cols="4" >
         <v-card>
           <v-img
-            src="https://picsum.photos/350/165?random"
-            height="125"
+            :src = "book.image"
             class="white--text align-end"
-            ><v-card-title v-text="hello"></v-card-title>
-            </v-img
+            ><v-card-title v-text="book.title"></v-card-title>
+             </v-img
           >
 
           <v-card-actions>
@@ -19,12 +18,17 @@
         </v-card>
       </v-col>
 
-      <!-- </v-col> -->
+      </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
-export default {};
+import books from "../db/books"
+export default {
+  data: () => ({
+    books
+  }),
+};
 </script>
 <style scoped>
 </style>
