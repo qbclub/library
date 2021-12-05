@@ -1,33 +1,32 @@
 <template>
   <v-container>
     <v-row class="justify">
-      <v-col v-for="book in books" :key="book.title">
-      <v-col cols="4" >
-        <v-card>
+      <v-col v-for="book in books" :key="book.title" cols="4" sm="6" md="2">
+        <v-card rounded-lg >
           <v-img
-            :src = "book.image"
-            class="white--text align-end"
+            :src="book.image"
+            style="cursor: pointer; height: 25vh "
+            @click="routeTo('/book')"
+            
             ><v-card-title v-text="book.title"></v-card-title>
-             </v-img
-          >
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn text> Learn More </v-btn>
-          </v-card-actions>
+          </v-img>
         </v-card>
-      </v-col>
-
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
-import books from "../db/books"
+import books from "../db/books";
 export default {
   data: () => ({
-    books
+    books,
   }),
+  methods: {
+    routeTo: function (path) {
+      this.$router.push(path);
+      this.drawer = false;
+    },
+  },
 };
 </script>
 <style scoped>
