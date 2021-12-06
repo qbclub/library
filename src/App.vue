@@ -49,8 +49,8 @@ export default {
         path: "/cabinet",
       },
       {
-        title: "TakeBook",
-        path: "/takebook",
+        title: "AddBook",
+        path: "/addbook",
       },
     ],
   }),
