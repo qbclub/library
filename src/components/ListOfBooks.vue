@@ -1,26 +1,22 @@
 <template>
   <v-container>
     <v-row class="justify">
-      <v-col v-for="book in books" :key="book.title" cols="4" sm="6" md="2">
-        <v-card rounded-lg >
-          <v-img
-            :src="book.image"
-            style="cursor: pointer; height: 25vh "
-            @click="routeTo('/book')"
-            
-            ><v-card-title v-text="book.title"></v-card-title>
-          </v-img>
-        </v-card>
+      <v-col v-for="(book, k) in books" :key="k" cols="12" sm="6" md="4" lg="3">
+        <MiniBook :book="book" />
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
 import books from "../db/books";
+import MiniBook from "./MiniBook.vue";
 export default {
   data: () => ({
     books,
   }),
+  components: {
+    MiniBook,
+  },
   methods: {
     routeTo: function (path) {
       this.$router.push(path);
