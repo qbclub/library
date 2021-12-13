@@ -52,6 +52,14 @@ export default {
         title: "AddBook",
         path: "/addbook",
       },
+      {
+        title: "Регистрация",
+        path: "/reg",
+      },
+      {
+        title: "Войти",
+        path: "/logIn",
+      },
     ],
   }),
   methods: {
