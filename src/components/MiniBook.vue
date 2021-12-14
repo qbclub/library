@@ -1,13 +1,24 @@
 <template>
   <v-container>
-    <v-card>
-      <v-img style="max-height: 500px" :src="book.image"></v-img>
-      <v-card-title
-        ><span style="word-break: break-word">{{ book.name }}</span>
-      </v-card-title>
-      <v-card-text style="min-heigth: 300px">
-        <p>{{ annotation }}...</p>
-      </v-card-text>
+    <v-card class="justify-center align-center">
+      <v-img
+        contain
+        max-width="500"
+        :aspect-ratio="10 / 16"
+        :src="book.image"
+      ></v-img>
+      <div>
+        <p
+          class="text-body-2 mt-0 mb-0 h overflow-hidden"
+          style="word-break: break-word"
+        >
+          {{ book.name }}
+        </p>
+        <span class="text-caption">
+          Автор:
+          {{ book.authors }}
+        </span>
+      </div>
     </v-card>
   </v-container>
 </template>
@@ -26,11 +37,11 @@ export default {
       },
     },
   },
-  mounted() {
-    this.annotation = this.book.annotation.split(" ").slice(0, 24).join(" ");
-  },
 };
 </script>
 
 <style scoped>
+.h {
+  height: 60px;
+}
 </style>
