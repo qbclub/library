@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row class="justify-center">
-      <v-col class="col-md-6 col-12">
+    <v-row class="justify-center" >
+      <v-col class="col-md-6 col-12" >
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
             v-model="BookName"
@@ -9,11 +9,14 @@
             required
           ></v-text-field>
 
-          <v-text-field
+          <v-textarea
             v-model="BookAnnotation"
             label="Краткое описание книги"
-            required
-          ></v-text-field>
+            counter
+            maxlength="120"
+            full-width
+            single-line
+          ></v-textarea>
 
           <v-text-field
             v-model="BookPhoto"
@@ -26,52 +29,65 @@
             label="Имя автора"
             required
           ></v-text-field>
-
-          <v-text-field
-            v-model="BookTags"
-            label="Теги"
-            required
-          ></v-text-field>
-
-          <v-text-field
-            v-model="BookYears"
-            label="Год издательства книги"
-            required
-          ></v-text-field>
-
+          <v-row>
+            <v-col cols="6" sm="6">
+              <v-text-field
+                v-model="BookTags"
+                label="Теги"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="6" sm="6">
+              <v-text-field
+                v-model="BookYears"
+                label="Год издательства книги"
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
           <v-text-field
             v-model="BookPlace"
             label="Расположение книги"
             required
           ></v-text-field>
 
-          <v-text-field
-            v-model="BookISBN"
-            label="Уникальный номер книги"
-            required
-          ></v-text-field>
+          <v-row>
+            <v-col cols="6" sm="6">
+              <v-text-field
+                v-model="BookISBN"
+                label="Уникальный номер книги"
+                required
+              ></v-text-field>
+            </v-col>
 
-          <v-text-field
-            v-model="BookPublish"
-            label="Издатель книги"
-            required
-          ></v-text-field>
+            <v-col cols="6" sm="6">
+              <v-text-field
+                v-model="BookPublish"
+                label="Издатель книги"
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
 
-          <v-text-field
-            v-model="BookPageCount"
-            label="Количество страниц"
-            required
-          ></v-text-field>
-
-          <v-text-field
-            v-model="BookSeries"
-            label="Серия"
-            required
-          ></v-text-field>
-
+          <v-row>
+            <v-col cols="6" sm="6">
+              <v-text-field
+                v-model="BookPageCount"
+                label="Количество страниц"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="6" sm="6">
+              <v-text-field
+                v-model="BookSeries"
+                label="Серия"
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
           <v-checkbox
             v-model="checkbox"
-            :rules="[v => !!v || 'Вы должны подтвердить чтобы продолжить!']"
+            :rules="[(v) => !!v || 'Вы должны подтвердить чтобы продолжить!']"
             label="Вы уверены?"
             required
           ></v-checkbox>
@@ -82,7 +98,7 @@
             class="mr-4"
             @click="validate"
           >
-            Отправка
+            Отправить
           </v-btn>
 
           <v-btn color="error" class="mr-4" @click="reset"> Сброс </v-btn>
@@ -116,6 +132,9 @@ export default {
   methods: {
     reset() {
       this.$refs.form.reset();
+    },
+    validate() {
+      this.$refs.form.validate();
     },
   },
 };
