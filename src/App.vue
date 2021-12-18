@@ -1,6 +1,12 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" fixed temporary app>
+    <v-navigation-drawer
+      class="d-none d-sm-flex"
+      v-model="drawer"
+      fixed
+      temporary
+      app
+    >
       <v-list nav>
         <!-- active-class="deep-purple--text text--accent-4" -->
         <v-list-item-group v-for="(item, key) in this.routes" :key="key">
@@ -12,11 +18,12 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app hide-on-scroll
-      ><v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title @click="routeTo('/')" style="cursor: pointer"
-        >Библиотека</v-toolbar-title
-      >
+    <v-app-bar app hide-on-scroll>
+      <v-app-bar-nav-icon
+        class="d-none d-sm-flex"
+        @click.stop="drawer = !drawer"
+      ></v-app-bar-nav-icon>
+      <v-toolbar-title @click="routeTo('/')">Библиотека</v-toolbar-title>
     </v-app-bar>
 
     <v-main>
@@ -25,10 +32,24 @@
       </v-container>
     </v-main>
 
-    <v-footer padless app>
+    <v-footer class="d-none d-sm-flex" padless app>
       <v-col cols="2"></v-col>
       <v-col class="text-center" cols="8">With Love, from Qbit</v-col>
       <v-col cols="2"></v-col>
+    </v-footer>
+
+    <v-footer height="49px" class="d-flex d-sm-none" app>
+      <v-row class="align-center justify-center">
+        <v-col cols="4" class="text-center">
+          <v-icon @click="routeTo('/')">mdi-home</v-icon>
+        </v-col>
+        <v-col cols="4" class="text-center">
+          <v-icon @click="routeTo('/')">mdi-bookmark</v-icon>
+        </v-col>
+        <v-col cols="4" class="text-center">
+          <v-icon @click="routeTo('/cabinet')">mdi-account</v-icon>
+        </v-col>
+      </v-row>
     </v-footer>
   </v-app>
 </template>
