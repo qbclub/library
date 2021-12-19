@@ -1,52 +1,51 @@
 <template>
   <v-container>
-    <v-row class="justify-center" >
-      <v-col class="col-md-6 col-12" >
-        <v-form ref="form" v-model="valid" lazy-validation>
+    <v-row class="justify-center">
+      <v-col class="col-md-6 col-12">
+        <v-form>
           <v-text-field
-            v-model="BookName"
+            v-model="form.Name"
             label="Название книги"
             required
           ></v-text-field>
 
           <v-textarea
-            v-model="BookAnnotation"
+            v-model="form.Annotation"
             label="Краткое описание книги"
             counter
             maxlength="300"
             full-width
-          
           ></v-textarea>
 
           <v-text-field
-            v-model="BookPhoto"
+            v-model="form.CoverPath"
             label="Фотография обложки"
             required
           ></v-text-field>
 
           <v-text-field
-            v-model="AvtorName"
+            v-model="form.Authors"
             label="Имя автора"
             required
           ></v-text-field>
           <v-row>
             <v-col cols="6" sm="6">
               <v-text-field
-                v-model="BookTags"
+                v-model="form.Sections"
                 label="Теги"
                 required
               ></v-text-field>
             </v-col>
             <v-col cols="6" sm="6">
               <v-text-field
-                v-model="BookYears"
-                label="Год издательства книги"
+                v-model="form.ReleaseDate"
+                label="Год издания книги"
                 required
               ></v-text-field>
             </v-col>
           </v-row>
           <v-text-field
-            v-model="BookPlace"
+            v-model="form.PhysicalPlace"
             label="Расположение книги"
             required
           ></v-text-field>
@@ -54,7 +53,7 @@
           <v-row>
             <v-col cols="6" sm="6">
               <v-text-field
-                v-model="BookISBN"
+                v-model="form.ISBN"
                 label="Уникальный номер книги"
                 required
               ></v-text-field>
@@ -62,7 +61,7 @@
 
             <v-col cols="6" sm="6">
               <v-text-field
-                v-model="BookPublish"
+                v-model="form.PublisherName"
                 label="Издатель книги"
                 required
               ></v-text-field>
@@ -72,36 +71,29 @@
           <v-row>
             <v-col cols="6" sm="6">
               <v-text-field
-                v-model="BookPageCount"
+                v-model="form.PageCount"
                 label="Количество страниц"
                 required
               ></v-text-field>
             </v-col>
             <v-col cols="6" sm="6">
               <v-text-field
-                v-model="BookSeries"
+                v-model="form.Series"
                 label="Серия"
                 required
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-checkbox
+          <!-- <v-checkbox
             v-model="checkbox"
             :rules="[(v) => !!v || 'Вы должны подтвердить чтобы продолжить!']"
             label="Вы уверены?"
             required
-          ></v-checkbox>
+          ></v-checkbox> -->
 
-          <v-btn
-            :disabled="!valid"
-            color="success"
-            class="mr-4"
-            @click="validate"
-          >
-            Отправить
-          </v-btn>
+          <v-btn color="success" class="mr-4" @click="send"> Отправить </v-btn>
 
-          <v-btn color="error" class="mr-4" @click="reset"> Сброс </v-btn>
+          <!-- <v-btn color="error" class="mr-4" @click="reset"> Сброс </v-btn> -->
         </v-form>
       </v-col>
     </v-row>
@@ -115,26 +107,40 @@ export default {
   data: function () {
     return {
       form: {
-        BookName: null,
-        BookAnnotation: null,
-        BookPhoto: null,
-        AvtorName: null,
-        BookTags: null,
-        BookYears: null,
-        BookPlace: null,
-        BookISBN: null,
-        BookPublic: null,
-        BookPageCount: null,
-        BookSeries: null,
+        Name: null,
+        Annotation: null,
+        CoverPath: null,
+        Authors: null,
+        Sections: null,
+        ReleaseDate: null,
+        PhysicalPlace: null,
+        ISBN: null,
+        PublisherName: null,
+        PageCount: null,
+        Series: null,
       },
     };
   },
   methods: {
-    reset() {
-      this.$refs.form.reset();
+    clearingForm() {
+      this.form = {
+        Name: null,
+        Annotation: null,
+        CoverPath: null,
+        Authors: null,
+        Sections: null,
+        ReleaseDate: null,
+        PhysicalPlace: null,
+        ISBN: null,
+        PublisherName: null,
+        PageCount: null,
+        Series: null,
+      };
     },
-    validate() {
-      this.$refs.form.validate();
+    send() {
+    
+      console.log(this.form);
+        this.clearingForm();
     },
   },
 };
