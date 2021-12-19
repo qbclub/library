@@ -102,6 +102,7 @@
 
 <script>
 import About from "../views/About.vue";
+import axios from "axios";
 export default {
   components: { About },
   data: function () {
@@ -122,7 +123,7 @@ export default {
     };
   },
   methods: {
-    clearingForm() {
+    clearingForm: function () {
       this.form = {
         Name: null,
         Annotation: null,
@@ -137,10 +138,23 @@ export default {
         Series: null,
       };
     },
-    send() {
-    
-      console.log(this.form);
-        this.clearingForm();
+    send: function () {
+     
+      axios
+        .post(
+          "http://localhost:8080/api/books/create",
+          JSON.stringify(this.form),
+          {
+            headers: headers,
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          this.clearingForm();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
