@@ -125,29 +125,30 @@ export default {
   methods: {
     clearingForm: function () {
       this.form = {
-        Name: null,
-        Annotation: null,
-        CoverPath: null,
-        Authors: null,
-        Sections: null,
-        ReleaseDate: null,
-        PhysicalPlace: null,
-        ISBN: null,
-        PublisherName: null,
-        PageCount: null,
-        Series: null,
+        Name: "",
+        Annotation: "",
+        CoverPath: "",
+        Authors: "",
+        Sections: "",
+        ReleaseDate: "",
+        PhysicalPlace: "",
+        ISBN: "",
+        PublisherName: "",
+        PageCount: "",
+        Series: "",
+        Id: "",
+        Status: "",
+        TimeStamp: "",
       };
     },
     send: function () {
-     
+      const headers = {
+        "content-type": "application/json",
+      };
       axios
-        .post(
-          "http://localhost:8080/api/books/create",
-          JSON.stringify(this.form),
-          {
-            headers: headers,
-          }
-        )
+        .post("http://localhost:8080/api/books/create", this.form, {
+          headers: headers
+        })
         .then((response) => {
           console.log(response);
           this.clearingForm();

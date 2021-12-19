@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div class="ma-0">
     <v-card class="justify-center align-center">
       <v-img
         contain
@@ -20,7 +20,7 @@
         </span>
       </div>
     </v-card>
-  </v-container>
+  </div>
 </template>
 
 <script>
