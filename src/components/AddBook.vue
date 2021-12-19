@@ -13,9 +13,9 @@
             v-model="BookAnnotation"
             label="Краткое описание книги"
             counter
-            maxlength="120"
+            maxlength="300"
             full-width
-            single-line
+          
           ></v-textarea>
 
           <v-text-field
