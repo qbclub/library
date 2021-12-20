@@ -44,6 +44,12 @@ const routes = [{
 
   component: () => import( /* webpackChunkName: "about" */ '../components/LogIn.vue')
 },
+{
+  path: '/eventList',
+  name: 'EventList',
+
+  component: () => import( /* webpackChunkName: "about" */ '../components/EventList.vue')
+},
 ]
 
 const router = new VueRouter({
