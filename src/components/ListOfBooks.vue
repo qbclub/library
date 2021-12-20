@@ -1,8 +1,8 @@
 <template>
   <v-container>
     <v-row class="mt-2">
-      <v-col class="ma-0" v-for="(book, k) in books" :key="k" cols="6" sm="4" md="3" lg="3">
-        <MiniBook :book="book"></MiniBook>
+      <v-col class="ma-0" v-for="(book, k) in books" :key="k" cols="6" sm="4" md="3" lg="3" @click="routeTo(book)">
+        <MiniBook :book="book" ></MiniBook>
       </v-col>
     </v-row>
   </v-container>
@@ -18,8 +18,13 @@ export default {
     MiniBook,
   },
   methods: {
-    routeTo: function (path) {
-      this.$router.push(path);
+    routeTo: function (book) {
+      this.$router.push({
+                path: "/book",
+                query: {
+                    book_id: book.id,
+                },
+            });
       this.drawer = false;
     },
   },
