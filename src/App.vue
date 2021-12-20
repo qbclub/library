@@ -41,14 +41,21 @@
 
     <v-footer height="49px" class="d-flex d-sm-none" app>
       <v-row class="align-center justify-center">
-        <v-col cols="4" class="text-center">
-          <v-icon @click="routeTo('/')">mdi-home</v-icon>
+        <v-col cols="3" @click="routeTo('/')" class="text-center navicons">
+          <i class="fi fi-rr-align-justify"></i>
         </v-col>
-        <v-col cols="4" class="text-center">
-          <v-icon @click="routeTo('/')">mdi-bookmark</v-icon>
+        <v-col cols="3" @click="routeTo('/')" class="text-center navicons">
+          <i class="fi fi-rr-bookmark"></i>
         </v-col>
-        <v-col cols="4" class="text-center">
-          <v-icon @click="routeTo('/cabinet')">mdi-account</v-icon>
+        <v-col cols="3" @click="routeTo('/')" class="text-center navicons">
+          <i class="fi fi-rr-search"></i>
+        </v-col>
+        <v-col
+          cols="3"
+          @click="routeTo('/cabinet')"
+          class="text-center navicons"
+        >
+          <i class="fi fi-rr-user"></i>
         </v-col>
       </v-row>
     </v-footer>
@@ -92,3 +99,9 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+@import url("./assets/style/style.scss");
+.navicons {
+  cursor: pointer;
+}
+</style>
