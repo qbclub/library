@@ -1,7 +1,7 @@
 <template>
   <div class="book">
     <v-container>
-      <span class="text-h6">{{ books[0].authors }}:{{ books[0].name }} </span>
+      <span class="text-h6">{{ books[bookId].authors }}:{{ books[bookId].name }} </span>
       <v-row class="mt-2">
         <v-col>
           <v-container>
@@ -11,20 +11,20 @@
                   max-width="250"
                   :aspect-ratio="9 / 16"
                   contain
-                  :src="books[0].image"
+                  :src="books[bookId].image"
                 ></v-img> </v-col
               ><v-col
-                ><div class="text-caption">Автор: {{ books[0].authors }}</div>
+                ><div class="text-caption">Автор: {{ books[bookId].authors }}</div>
                 <div class="text-caption">
-                  Издательство: {{ books[0].publisher }}, {{ books[0].date }} г.
+                  Издательство: {{ books[bookId].publisher }}, {{ books[bookId].date }} г.
                 </div>
                 <div class="text-caption">
-                  Тематика: {{ books[0].direction }}
+                  Тематика: {{ books[bookId].direction }}
                 </div>
 
-                <div class="text-caption">ISBN: {{ books[0].ISBN }}</div>
+                <div class="text-caption">ISBN: {{ books[bookId].ISBN }}</div>
                 <div class="text-caption">
-                  Страниц: {{ books[0].pagesCount }}
+                  Страниц: {{ books[bookId].pagesCount }}
                 </div>
                 <v-btn
                   depressed
@@ -33,7 +33,7 @@
                   v-on:click="takeBook"
                   >Взять книгу</v-btn
                 >
-                <div class="">Состояние: {{ books[0].state }}</div>
+                <div class="">Состояние: {{ books[bookId].state }}</div>
               </v-col>
             </v-row>
           </v-container>
@@ -41,9 +41,9 @@
 
         <v-col>
           <div class="text-caption">
-            <b>Аннотация к книге "{{ books[0].name }}"</b>
+            <b>Аннотация к книге "{{ books[bookId].name }}"</b>
           </div>
-          <span class="text-caption">{{ books[0].annotation }}</span>
+          <span class="text-caption">{{ books[bookId].annotation }}</span>
         </v-col>
       </v-row>
     </v-container>
@@ -58,9 +58,12 @@ export default {
   }),
   methods: {
     takeBook: function () {
-      console.log(this.books[0].name);
+      console.log(this.books[this.bookId].name);
     },
   },
+  mounted() {
+    this.bookId = this.$route.query.book_id;
+  }
 };
 </script>
 
