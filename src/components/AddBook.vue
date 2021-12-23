@@ -107,18 +107,41 @@ export default {
   components: { About },
   data: function () {
     return {
+      example: {
+        Id: 5,
+        Annotation: "party",
+        Name: "food1",
+        TableOfContents: "Table",
+        CoverPath: "http://google.com",
+        Authors: ["Jacey", "Taylor", "Mary"],
+        Sections: ["Javascript", "Java"],
+        Status: "Ready",
+        ReservedQueue: [1, 2],
+        TemporaryOwner: "Vlad",
+        DateOfGivenOut: "2021-12-21T23:25:27.338Z",
+        ReleaseDate: "2021-12-21T23:25:27.338Z",
+        TimeStamp: "2021-12-21T23:25:27.338Z",
+        PhysicalPlace: "path to zhopa",
+        ISBN: "123456",
+        PublisherName: "Alpina",
+        PageCount: 234,
+        Series: 515,
+      },
       form: {
-        Name: null,
-        Annotation: null,
-        CoverPath: null,
-        Authors: null,
-        Sections: null,
-        ReleaseDate: null,
-        PhysicalPlace: null,
-        ISBN: null,
-        PublisherName: null,
-        PageCount: null,
-        Series: null,
+        Name: "",
+        Annotation: "",
+        CoverPath: "",
+        Authors: "",
+        Sections: "",
+        ReleaseDate: "",
+        PhysicalPlace: "",
+        ISBN: "",
+        PublisherName: "",
+        PageCount: "",
+        Series: "",
+        Id: "",
+        Status: "",
+        TimeStamp: "",
       },
     };
   },
@@ -145,10 +168,15 @@ export default {
       const headers = {
         "content-type": "application/json",
       };
+
       axios
-        .post("http://localhost:8080/api/books/create", this.form, {
-          headers: headers
-        })
+        .post(
+          "http://localhost:8080/api/books/create2",
+          JSON.stringify(this.example),
+          {
+            headers: headers,
+          }
+        )
         .then((response) => {
           console.log(response);
           this.clearingForm();
