@@ -20,14 +20,16 @@
           <v-form>
             <v-file-input
               label="Фотография обложки"
-              v-model="form.CoverPath"
+              v-model="CoverPathImage"
               required
               accept="image/*"
             ></v-file-input>
-            <v-btn @click="uploadPhoto">загрузить</v-btn>
+            <div v-if="CoverPathImage"><v-img :src="preImage" contain /></div>
+
+            <v-btn @click="resizeImage">загрузить</v-btn>
+
             <canvas id="preview-on-canvas"></canvas>
             <v-divider></v-divider>
-            <div id="img-pre" />
           </v-form>
 
           <!-- <canvas id="preview-image"></canvas>
@@ -154,6 +156,7 @@ export default {
         TimeStamp: "",
       },
       CoverPathImage: null,
+      preImage: null,
       editedImage: null,
     };
   },
@@ -193,23 +196,23 @@ export default {
           console.log(error);
         });
     },
-    uploadPhoto: function () {
-      let vm = this;
-      if (vm.form.CoverPath) {
-        console.log(vm.form.CoverPath);
-        const reader = new FileReader();
-        reader.readAsDataURL(vm.form.CoverPath);
+    // uploadPhoto: function () {
+    //   let vm = this;
+    //   if (vm.form.CoverPath) {
+    //     console.log(vm.form.CoverPath);
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(vm.form.CoverPath);
 
-        // let preview = document.getElementById("img-pre");
+    //     // let preview = document.getElementById("img-pre");
 
-        reader.onloadend = function () {
-          vm.CoverPathImage = reader.result;
-          vm.resizeImage(vm);
-        };
-      } else {
-        console.log("No provided images");
-      }
-    },
+    //     reader.onloadend = function () {
+    //       vm.CoverPathImage = reader.result;
+    //       vm.resizeImage(vm);
+    //     };
+    //   } else {
+    //     console.log("No provided images");
+    //   }
+    // },
     resizeImage: async function (vm) {
       const width = 400;
       const height = 500;
@@ -288,6 +291,19 @@ export default {
       } else {
         console.log("No CoverPath images provided");
       }
+    },
+  },
+  watch: {
+    CoverPathImage: function (file) {
+      if (!file) {
+        this.image = null;
+        return
+      }
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.preImage = reader.result;
+      };
     },
   },
 };
