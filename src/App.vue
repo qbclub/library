@@ -41,21 +41,37 @@
 
     <v-footer height="49px" class="d-flex d-sm-none" app>
       <v-row class="align-center justify-center">
-        <v-col cols="3" @click="routeTo('/')" class="text-center navicons">
+        <v-col
+          cols="3"
+          @click="routeTo('/')"
+          class="d-flex flex-column text-center navicons"
+        >
           <i class="fi fi-rr-align-justify"></i>
+          <span class="text-caption">главная</span>
         </v-col>
-        <v-col cols="3" @click="routeTo('/')" class="text-center navicons">
+        <v-col
+          cols="3"
+          @click="routeTo('/')"
+          class="d-flex flex-column text-center navicons"
+        >
           <i class="fi fi-rr-bookmark"></i>
+          <span class="text-caption">закладки</span>
         </v-col>
-        <v-col cols="3" @click="routeTo('/')" class="text-center navicons">
+        <v-col
+          cols="3"
+          @click="routeTo('/')"
+          class="d-flex flex-column text-center navicons"
+        >
           <i class="fi fi-rr-search"></i>
+          <span class="text-caption">поиск</span>
         </v-col>
         <v-col
           cols="3"
           @click="routeTo('/cabinet')"
-          class="text-center navicons"
+          class="d-flex flex-column text-center navicons"
         >
           <i class="fi fi-rr-user"></i>
+          <span class="text-caption">пользователь</span>
         </v-col>
       </v-row>
     </v-footer>

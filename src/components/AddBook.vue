@@ -21,11 +21,11 @@
           <image-uploader
             accept="image/*"
             :scaleRatio="0.5625"
-            :quality="0.89"
+            :quality="0.96"
             :maxWidth="256"
             outputFormat="verbose"
             :className="['d-flex', 'flex-column']"
-            :preview="true"
+            :preview="false"
             @input="setImage"
             @onComplete="uploadImageComplete"
             @onUpload="uploadImageStart"
@@ -33,7 +33,7 @@
           <p class="mt-4">Ваше изображение:</p>
           <br />
           <v-img
-            :src="form.CoverPath"
+            :src="cover.image"
             :height="cover.newHeight"
             :width="cover.newWidth"
           ></v-img>
@@ -162,10 +162,8 @@ export default {
       cover: {
         newHeight: 0,
         newWidth: 0,
+        image: null,
       },
-      CoverPathImage: null,
-      preImage: null,
-      editedImage: null,
     };
   },
   methods: {
@@ -207,7 +205,7 @@ export default {
     setImage: function (img) {
       console.log("INPUT");
       // img - объект, содержащий много ифнормации об изображении
-      this.form.CoverPath = img.dataUrl;
+      this.cover.image = img.dataUrl;
       this.cover.newWidth = img.info.newWidth;
       this.cover.newHeight = img.info.newHeight;
       console.log(img);
@@ -218,116 +216,6 @@ export default {
     },
     uploadImageStart: function () {
       console.log("UPLOAD STARTED");
-    },
-    // uploadPhoto: function () {
-    //   let vm = this;
-    //   if (vm.form.CoverPath) {
-    //     console.log(vm.form.CoverPath);
-    //     const reader = new FileReader();
-    //     reader.readAsDataURL(vm.form.CoverPath);
-
-    //     // let preview = document.getElementById("img-pre");
-
-    //     reader.onloadend = function () {
-    //       vm.CoverPathImage = reader.result;
-    //       vm.resizeImage(vm);
-    //     };
-    //   } else {
-    //     console.log("No provided images");
-    //   }
-    // },
-    resizeImage: async function (vm) {
-      return;
-      const width = 400;
-      const height = 500;
-      const canvas = document.getElementById("preview-on-canvas");
-      canvas.width = width;
-      canvas.height = height;
-
-      const ctx = canvas.getContext("2d");
-
-      let img = new Image(width, height);
-      img.src = vm.CoverPathImage;
-      if (img.complete) {
-        ctx.drawImage(img, 0, 0);
-      } else {
-        img.onload = function () {
-          ctx.drawImage(img, 0, 0);
-        };
-      }
-      const data = await canvas.toDataURL("image/jpeg", 0.1);
-      const editedImg = new Image();
-      // if (data.complete) {
-      //   editedImg.src = data;
-      // } else {
-      //   data.onload = function () {
-
-      //   };
-      // }
-      editedImg.src = data;
-      const editedImagePreview = document.getElementById("img-pre");
-      if (editedImg.complete) {
-        // console.log(editedImg);
-        editedImagePreview.appendChild(editedImg);
-      } else {
-        editedImg.onload = function () {
-          // console.log(editedImg);
-          editedImagePreview.appendChild(editedImg);
-        };
-      }
-
-      if (this.form.CoverPath) {
-        const reader = new FileReader();
-        reader.readAsDataURL(this.form.CoverPath);
-        // const fileName = this.form.CoverPath.name.replace(/\.[^/.]+$/, "");
-
-        reader.onload = (event) => {
-          const width = 200;
-          const height = 1000;
-          const img = new Image(width, height);
-          img.src = event.target.result;
-          let test = document.getElementById("testing");
-
-          let canvas = document.getElementById("preview-image");
-
-          // canvas.width = width;
-          // canvas.height = height;
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(img, 0, 0);
-          const data = canvas.toDataURL("image/png", 0.7);
-          this.previewImage = data;
-          // console.log(data);
-          // ctx.canvas.toBlob(
-          //   (blob) => {
-          //     // console.log(blob); //output image as a blob
-          //     const file = new File([blob], fileName + ".jpeg", {
-          //       type: "image/jpeg",
-          //       lastModified: Date.now(),
-          //     }); //output image as a file
-          //     /**Файл есть, осталось его сохранить */
-
-          //   },
-          //   "image/jpeg",
-          //   0.7
-          // );
-        };
-      } else {
-        console.log("No CoverPath images provided");
-      }
-    },
-  },
-  watch: {
-    CoverPathImage: function (file) {
-      return;
-      if (!file) {
-        this.image = null;
-        return;
-      }
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.preImage = reader.result;
-      };
     },
   },
 };
