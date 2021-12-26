@@ -17,27 +17,47 @@
             full-width
             required
           ></v-textarea>
-          <p>Загрузите фотографию обложки</p>
-          <image-uploader
-            accept="image/*"
-            :scaleRatio="0.5625"
-            :quality="0.96"
-            :maxWidth="256"
-            outputFormat="verbose"
-            :className="['d-flex', 'flex-column']"
-            :preview="false"
-            @input="setImage"
-            @onComplete="uploadImageComplete"
-            @onUpload="uploadImageStart"
-          ></image-uploader>
-          <p class="mt-4">Ваше изображение:</p>
-          <br />
-          <v-img
-            :src="cover.image"
-            :height="cover.newHeight"
-            :width="cover.newWidth"
-          ></v-img>
+          <v-row class="align-center">
+            <v-col cols="6">
+              <image-uploader
+                :preview="false"
+                accept="image/*"
+                :scaleRatio="0.5625"
+                :quality="0.96"
+                :maxWidth="256"
+                outputFormat="verbose"
+                :className="['d-flex', 'flex-column']"
+                @input="setImage"
+                @onComplete="uploadImageComplete"
+                @onUpload="uploadImageStart"
+              >
+                <label for="fileInput" slot="upload-label">
+                  <div class="d-flex flex-column text-center">
+                    <i class="fi fi-rr-camera text-h4 ma-0 d-inline"></i>
 
+                    <span class="caption"> фото <br /></span>
+                  </div>
+                </label>
+              </image-uploader>
+            </v-col>
+            <v-col cols="6">
+              <v-img
+                v-if="cover.image"
+                :src="cover.image"
+                :height="cover.newHeight"
+                :width="cover.newWidth"
+              ></v-img>
+
+              <v-sheet
+                color="grey"
+                min-height="200px"
+                class="pa-3 d-flex justify-center align-center"
+                v-if="!cover.image"
+              >
+                фото обложки
+              </v-sheet>
+            </v-col>
+          </v-row>
           <v-text-field
             v-model="form.Authors"
             label="Имя автора"
@@ -99,16 +119,8 @@
               ></v-text-field>
             </v-col>
           </v-row>
-          <!-- <v-checkbox
-            v-model="checkbox"
-            :rules="[(v) => !!v || 'Вы должны подтвердить чтобы продолжить!']"
-            label="Вы уверены?"
-            required
-          ></v-checkbox> -->
 
           <v-btn color="success" class="mr-4" @click="send"> Отправить </v-btn>
-
-          <!-- <v-btn color="error" class="mr-4" @click="reset"> Сброс </v-btn> -->
         </v-form>
       </v-col>
     </v-row>
@@ -203,16 +215,14 @@ export default {
         });
     },
     setImage: function (img) {
-      console.log("INPUT");
       // img - объект, содержащий много ифнормации об изображении
       this.cover.image = img.dataUrl;
       this.cover.newWidth = img.info.newWidth;
       this.cover.newHeight = img.info.newHeight;
-      console.log(img);
     },
     uploadImageComplete: function () {
+      // здесь обращаемся к файрбейз получаем ссылку и сохраняем ее в form.imgPath
       console.log("UPLOAD FINISHED");
-      // console.log(this.form.CoverPath);
     },
     uploadImageStart: function () {
       console.log("UPLOAD STARTED");
@@ -221,5 +231,8 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+label {
+  cursor: pointer;
+}
 </style>
