@@ -17,23 +17,26 @@
             full-width
             required
           ></v-textarea>
-          <v-form>
-            <v-file-input
-              label="Фотография обложки"
-              v-model="CoverPathImage"
-              required
-              accept="image/*"
-            ></v-file-input>
-            <div v-if="CoverPathImage"><v-img :src="preImage" contain /></div>
-
-            <v-btn @click="resizeImage">загрузить</v-btn>
-
-            <canvas id="preview-on-canvas"></canvas>
-            <v-divider></v-divider>
-          </v-form>
-
-          <!-- <canvas id="preview-image"></canvas>
-          <div id="testing"></div> -->
+          <p>Загрузите фотографию обложки</p>
+          <image-uploader
+            accept="image/*"
+            :scaleRatio="0.5625"
+            :quality="0.89"
+            :maxWidth="256"
+            outputFormat="verbose"
+            :className="['d-flex', 'flex-column']"
+            :preview="true"
+            @input="setImage"
+            @onComplete="uploadImageComplete"
+            @onUpload="uploadImageStart"
+          ></image-uploader>
+          <p class="mt-4">Ваше изображение:</p>
+          <br />
+          <v-img
+            :src="form.CoverPath"
+            :height="cover.newHeight"
+            :width="cover.newWidth"
+          ></v-img>
 
           <v-text-field
             v-model="form.Authors"
@@ -115,8 +118,9 @@
 <script>
 import About from "../views/About.vue";
 import axios from "axios";
+import ImageUploader from "vue-image-upload-resize";
 export default {
-  components: { About },
+  components: { About, ImageUploader },
   data: function () {
     return {
       example: {
@@ -154,6 +158,10 @@ export default {
         Id: "",
         Status: "",
         TimeStamp: "",
+      },
+      cover: {
+        newHeight: 0,
+        newWidth: 0,
       },
       CoverPathImage: null,
       preImage: null,
@@ -196,6 +204,21 @@ export default {
           console.log(error);
         });
     },
+    setImage: function (img) {
+      console.log("INPUT");
+      // img - объект, содержащий много ифнормации об изображении
+      this.form.CoverPath = img.dataUrl;
+      this.cover.newWidth = img.info.newWidth;
+      this.cover.newHeight = img.info.newHeight;
+      console.log(img);
+    },
+    uploadImageComplete: function () {
+      console.log("UPLOAD FINISHED");
+      // console.log(this.form.CoverPath);
+    },
+    uploadImageStart: function () {
+      console.log("UPLOAD STARTED");
+    },
     // uploadPhoto: function () {
     //   let vm = this;
     //   if (vm.form.CoverPath) {
@@ -214,6 +237,7 @@ export default {
     //   }
     // },
     resizeImage: async function (vm) {
+      return;
       const width = 400;
       const height = 500;
       const canvas = document.getElementById("preview-on-canvas");
@@ -252,7 +276,6 @@ export default {
         };
       }
 
-      return;
       if (this.form.CoverPath) {
         const reader = new FileReader();
         reader.readAsDataURL(this.form.CoverPath);
@@ -295,9 +318,10 @@ export default {
   },
   watch: {
     CoverPathImage: function (file) {
+      return;
       if (!file) {
         this.image = null;
-        return
+        return;
       }
       const reader = new FileReader();
       reader.readAsDataURL(file);
