@@ -105,6 +105,10 @@ export default {
         title: "Войти",
         path: "/logIn",
       },
+      {
+        title: "Движение книг",
+        path: "/eventList",
+      }
     ],
   }),
   methods: {
