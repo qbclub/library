@@ -42,6 +42,7 @@
             </v-col>
             <v-col cols="6">
               <v-img
+                contain
                 v-if="cover.image"
                 :src="cover.image"
                 :height="cover.newHeight"
