@@ -1,8 +1,22 @@
 <template>
   <v-container>
+    <v-row class="justify-end">
+      <v-col cols="md-6"
+        ><search :books="books" @findBooks="showBooks"
+      /></v-col>
+    </v-row>
     <v-row class="mt-2">
-      <v-col class="ma-0" v-for="(book, k) in books" :key="k" cols="6" sm="4" md="3" lg="3" @click="routeTo(book)">
-        <MiniBook :book="book" ></MiniBook>
+      <v-col
+        class="ma-0"
+        v-for="(book, k) in booksToShow"
+        :key="k"
+        cols="6"
+        sm="4"
+        md="3"
+        lg="3"
+        @click="routeTo(book)"
+      >
+        <MiniBook :book="book"></MiniBook>
       </v-col>
     </v-row>
   </v-container>
@@ -10,22 +24,28 @@
 <script>
 import books from "../db/books";
 import MiniBook from "./MiniBook.vue";
+import Search from "./Search.vue";
 export default {
   data: () => ({
     books,
+    booksToShow: books,
   }),
   components: {
     MiniBook,
+    Search,
   },
   methods: {
     routeTo: function (book) {
       this.$router.push({
-                path: "/book",
-                query: {
-                    book_id: book.id,
-                },
-            });
+        path: "/book",
+        query: {
+          book_id: book.id,
+        },
+      });
       this.drawer = false;
+    },
+    showBooks: function (booksToShow) {
+      this.booksToShow = booksToShow;
     },
   },
 };
