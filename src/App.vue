@@ -73,6 +73,14 @@
           <i class="fi fi-rr-user"></i>
           <span class="text-caption">пользователь</span>
         </v-col>
+        <v-col
+          cols="3"
+          @click="routeTo('/userinfo')"
+          class="d-flex flex-column text-center navicons"
+        >
+          <i class="fi fi-rr-info"></i>
+          <span class="text-caption">Информация о пользователе</span>
+        </v-col>
       </v-row>
     </v-footer>
   </v-app>
@@ -108,7 +116,11 @@ export default {
       {
         title: "Движение книг",
         path: "/eventList",
-      }
+      },
+      {
+        title: "Информация о пользователе",
+        path: "/userinfo",
+      },
     ],
   }),
   methods: {

@@ -50,7 +50,14 @@ const routes = [{
 
   component: () => import( /* webpackChunkName: "about" */ '../components/EventList.vue')
 },
+{
+  path: '/userinfo',
+  name: 'UserInfo',
+
+  component: () => import( /* webpackChunkName: "about" */ '../components/UserInfo.vue')
+}
 ]
+
 
 const router = new VueRouter({
   mode: 'history',
