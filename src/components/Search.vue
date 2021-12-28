@@ -26,6 +26,7 @@ export default {
   methods: {
     findAllBooks: function () {
       if (this.searchRequest != "") {
+        this.booksToShow = [];
         for (let book of this.books) {
           let includes =
             book.name.includes(this.searchRequest) ||
