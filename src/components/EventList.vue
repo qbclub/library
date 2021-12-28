@@ -1,26 +1,47 @@
 <template>
-  <v-simple-table>
-    <template v-slot:default>
-      <thead>
-        <tr>
-          <th class="text-left">П.Н.</th>
-          <th class="text-left">Дата</th>
-          <th class="text-left">Книга</th>
-          <th class="text-left">Статус</th>
-          <th class="text-left">Пользователь</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(bookEvent, i) in booksflow" :key="i">
-          <td>{{ bookEvent.Bookid }}</td>
-          <td>{{ bookEvent.TimeStamp }}</td>
-          <td>{{ findBook(bookEvent.id)}}</td>
-          <td>{{ bookEvent.BookStatus }}</td>
-          <td>{{ bookEvent.Userid }}</td>
-        </tr>
-      </tbody>
-    </template>
-  </v-simple-table>
+  <v-container>
+    <v-row>
+      <v-col>
+        <v-simple-table>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-left">П.Н.</th>
+                <th class="text-left">Дата</th>
+                <th class="text-left">Книга</th>
+                <th class="text-left">Статус</th>
+                <th class="text-left">Пользователь</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(bookEvent, i) in booksflow" :key="i">
+                <td>{{ bookEvent.Bookid }}</td>
+                <td>{{ bookEvent.TimeStamp }}</td>
+                <td>
+                  <div class="d-flex">
+                    <div>
+                      <v-img
+                        :src="findBook(bookEvent.id)[0].image"
+                        max-width="70"
+                        contain
+                      ></v-img>
+                    </div>
+
+                    <div class="pa-6">
+                      <div ><b>Автор:</b> {{ findBook(bookEvent.id)[0].authors }}</div>
+                      <div><b>Название:</b> {{ findBook(bookEvent.id)[0].name }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>{{ bookEvent.BookStatus }}</td>
+                <td>{{ bookEvent.Userid }}</td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -30,16 +51,17 @@ export default {
   data: () => ({
     booksflow,
     books,
-    book:{},
+    book: {},
   }),
   methods: {
-    findBook: function (Bookid=1) {
-     return this.book=this.books.filter(book => book.id==Bookid) 
+    findBook: function (Bookid) {
+      return (this.book = this.books.filter((book) => book.id == Bookid));
     },
-  },
-  mounted(){
+    findUser:function(Userid){
       
-  }
+    }
+  },
+  mounted() {},
 };
 </script>
 
