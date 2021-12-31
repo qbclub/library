@@ -113,10 +113,7 @@ export default {
         title: "Аутентификация",
         path: "/auth",
       },
-      {
-        title: "Войти",
-        path: "/logIn",
-      },
+   
       {
         title: "Движение книг",
         path: "/eventList",

@@ -123,6 +123,10 @@
 
           <v-btn color="success" class="mr-4" @click="send"> Отправить </v-btn>
         </v-form>
+        <img
+          :src="form.CoverPath"
+          alt=""
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -132,6 +136,14 @@
 import About from "../views/About.vue";
 import axios from "axios";
 import ImageUploader from "vue-image-upload-resize";
+import {
+  getStorage,
+  ref,
+  uploadString,
+  getDownloadURL,
+} from "firebase/storage";
+const storage = getStorage();
+
 export default {
   components: { About, ImageUploader },
   data: function () {
@@ -168,7 +180,7 @@ export default {
         PublisherName: "",
         PageCount: "",
         Series: "",
-        Id: "",
+        Id: "1",
         Status: "",
         TimeStamp: "",
       },
@@ -222,8 +234,19 @@ export default {
       this.cover.newHeight = img.info.newHeight;
     },
     uploadImageComplete: function () {
-      // здесь обращаемся к файрбейз получаем ссылку и сохраняем ее в form.imgPath
-      console.log("UPLOAD FINISHED");
+      const storageRef = ref(storage, "books/" + this.form.Id);
+      uploadString(storageRef, this.cover.image, "data_url").then(
+        (snapshot) => {
+          getDownloadURL(snapshot.ref)
+            .then((url) => {
+              this.form.CoverPath = url;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      );
+      
     },
     uploadImageStart: function () {
       console.log("UPLOAD STARTED");

@@ -44,12 +44,7 @@ const routes = [{
 
     component: () => import('../components/Auth.vue')
   },
-  {
-    path: '/logIn',
-    name: 'LogIn',
 
-    component: () => import('../components/LogIn.vue')
-  },
   {
     path: '/eventList',
     name: 'EventList',
