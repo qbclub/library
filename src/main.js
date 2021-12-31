@@ -4,16 +4,22 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
-import firebase from "../firebaseInit.js";
+import { initializeApp } from "firebase/app"
+import { getAuth } from "firebase/auth";
+import firebaseConfig from "../firebaseConfig.js";
 import ImageUploader from 'vue-image-upload-resize'
 
 Vue.config.productionTip = false
-
-
 Vue.use(ImageUploader);
-// firebase.auth().onAuthStateChanged(user => {
-//   store.dispatch("fetchUser", user);
-// });
+
+initializeApp(firebaseConfig);
+const auth = getAuth();
+
+auth.onAuthStateChanged(user => {
+  store.dispatch("fetchUser", user);
+});
+
+
 
 new Vue({
   router,

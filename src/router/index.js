@@ -5,57 +5,63 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [{
-  path: '/about',
-  name: 'About',
+    path: '/about',
+    name: 'About',
 
-  component: () => import( /* webpackChunkName: "about" */ '../views/About.vue')
-},
-{
-  path: '/book',
-  name: 'Book',
+    component: () => import('../views/About.vue')
+  },
+  {
+    path: '/book',
+    name: 'Book',
 
-  component: () => import( /* webpackChunkName: "about" */ '../components/Book.vue')
-},
-{
-  path: '/addbook',
-  name: 'AddBook',
-  component: () => import( /* webpackChunkName: "takebook" */ '../components/AddBook.vue')
-},
-{
-  path: '/',
-  name: 'ListOfBooks',
-  component: () => import( /* webpackChunkName: "takebook" */ '../components/ListOfBooks.vue')
-},
-{
-  path: '/cabinet',
-  name: 'Cabinet',
+    component: () => import('../components/Book.vue')
+  },
+  {
+    path: '/addbook',
+    name: 'AddBook',
+    component: () => import('../components/AddBook.vue')
+  },
+  {
+    path: '/',
+    name: 'ListOfBooks',
+    component: () => import('../components/ListOfBooks.vue')
+  },
+  {
+    path: '/cabinet',
+    name: 'Cabinet',
 
-  component: () => import( /* webpackChunkName: "about" */ '../components/Cabinet.vue')
-},
-{
-  path: '/reg',
-  name: 'Registration',
+    component: () => import('../components/Cabinet.vue')
+  },
+  {
+    path: '/reg',
+    name: 'Registration',
 
-  component: () => import( /* webpackChunkName: "about" */ '../components/Registration.vue')
-},
-{
-  path: '/logIn',
-  name: 'LogIn',
+    component: () => import('../components/Registration.vue')
+  },
+  {
+    path: '/auth',
+    name: 'Auth',
 
-  component: () => import( /* webpackChunkName: "about" */ '../components/LogIn.vue')
-},
-{
-  path: '/eventList',
-  name: 'EventList',
+    component: () => import('../components/Auth.vue')
+  },
+  {
+    path: '/logIn',
+    name: 'LogIn',
 
-  component: () => import( /* webpackChunkName: "about" */ '../components/EventList.vue')
-},
-{
-  path: '/userinfo',
-  name: 'UserInfo',
+    component: () => import('../components/LogIn.vue')
+  },
+  {
+    path: '/eventList',
+    name: 'EventList',
 
-  component: () => import( /* webpackChunkName: "about" */ '../components/UserInfo.vue')
-}
+    component: () => import('../components/EventList.vue')
+  },
+  {
+    path: '/userinfo',
+    name: 'UserInfo',
+
+    component: () => import('../components/UserInfo.vue')
+  }
 ]
 
 

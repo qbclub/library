@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-sheet class="d-flex align-center flex-column ">
+    <v-sheet class="d-flex align-center flex-column">
       <h2>Регистрация</h2>
       <v-container>
         <v-row class="align-center justify-center" no-gutters>
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import router from "../router/index";
+// import router from "../router/index";
 import { required, digits, email, max, regex } from "vee-validate/dist/rules";
 import {
   extend,
@@ -99,8 +99,8 @@ extend("email", {
   message: "Email must be valid",
 });
 
-import firebase from "../../firebaseInit";
-
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+const auth = getAuth();
 export default {
   components: {
     ValidationProvider,
@@ -110,16 +110,15 @@ export default {
     name: null,
     email: null,
     password: null,
-    error: null,
-    userSaved: false,
-    sending: false,
-    lastUser: null,
+    error: null,  
+   
+    
   }),
 
   methods: {
     submit() {
       this.$refs.observer.validate().then(this.userReg());
-      setTimeout(this.clear, 2000);
+      setTimeout(this.clear, 1000);
     },
     clear() {
       this.name = "";
@@ -128,37 +127,20 @@ export default {
       this.$refs.observer.reset();
     },
     userReg() {
-    //   firebase
-    //     .auth()
-    //     .createUserWithEmailAndPassword(this.email, this.password)
-    //     .then((data) => {
-    //       data.user.updateProfile({
-    //         displayName: this.name,
-    //       });
-    //     })
-    //     .then(() => {
-    //       router.push({ path: "/course" });
-    //       var user = firebase.auth().currentUser;
-    //       this.sendEmail(user);
-    //     })
-    //     .catch((err) => {
-    //       this.error = err.message;
-    //     });
-    // },
-    // sendEmail(user) {
-    //   user
-    //     .sendEmailVerification()
-    //     .then(function () {
-    //       console.log(user);
-    //     })
-    //     .catch(function (err) {
-    //       this.error = err.message;
-    //     });
+      createUserWithEmailAndPassword(auth, this.email, this.password)
+        .then((data) => {
+          console.log(data);
+          data.user.updateProfile({
+            displayName: this.name,
+          });
+        })
+        .catch((err) => {
+          this.error = err.message;
+        });
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
 </style>

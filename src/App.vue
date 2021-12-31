@@ -109,6 +109,10 @@ export default {
         title: "Регистрация",
         path: "/reg",
       },
+       {
+        title: "Аутентификация",
+        path: "/auth",
+      },
       {
         title: "Войти",
         path: "/logIn",
