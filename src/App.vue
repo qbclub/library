@@ -25,6 +25,21 @@
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
       <v-toolbar-title @click="routeTo('/')">Библиотека</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <template v-if="user.loggedIn">
+        <div class="d-flex flex-column text-center navicons">
+          <i @click.stop="dialog = true" class="fi fi-rr-sign-out ">
+          </i>
+          <span class="text-caption">выход</span>
+        </div>
+      </template>
+      <template v-else>
+        <div class="d-flex flex-column text-center navicons">
+          <i v-on:click="routeTo('/auth')" class="fi fi-rr-sign-in ">
+          </i>
+          <span class="text-caption">вход</span>
+        </div>
+      </template>
     </v-app-bar>
 
     <v-main>
@@ -83,15 +98,32 @@
         </v-col>
       </v-row>
     </v-footer>
+    <v-dialog v-model="dialog" max-width="290">
+      <v-card>
+        <v-card-title> Выйти из приложения? </v-card-title>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="accent" text @click="dialog = false"> Нет </v-btn>
+
+          <v-btn color="primary" text @click.prevent="signOut"> Да </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { getAuth, signOut } from "firebase/auth";
+
 export default {
   name: "App",
 
   data: () => ({
     drawer: false,
+    dialog: false,
     routes: [
       {
         title: "Каталог",
@@ -109,11 +141,11 @@ export default {
         title: "Регистрация",
         path: "/reg",
       },
-       {
+      {
         title: "Аутентификация",
         path: "/auth",
       },
-   
+
       {
         title: "Движение книг",
         path: "/eventList",
@@ -129,6 +161,24 @@ export default {
       this.$router.push(path);
       this.drawer = false;
     },
+    signOut: function () {
+      signOut(getAuth())
+        .then(() => {
+          this.$router.replace({
+            name: "EventList",
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      this.dialog = false;
+    },
+  },
+  computed: {
+    ...mapGetters({
+      user: "user",
+    }),
   },
 };
 </script>
