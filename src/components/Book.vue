@@ -44,7 +44,7 @@
           </v-container>
         </v-col>
 
-        <v-col>
+        <v-col class="col-12 col-md-6">
           <div class="text-caption">
             <b>Аннотация к книге "{{ currentBook.name }}"</b>
           </div>

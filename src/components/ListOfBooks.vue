@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="justify-end">
-      <v-col cols="md-6"
+      <v-col cols="md-6 ma-0"
         ><Search :books="books" @findBooks="showBooks"
       /></v-col>
     </v-row>
@@ -11,9 +11,8 @@
         v-for="(book, k) in booksToShow"
         :key="k"
         cols="6"
-        sm="4"
-        md="3"
-        lg="3"
+       
+        md="4"
         @click="routeTo(book)"
       >
         <MiniBook :book="book"></MiniBook>
