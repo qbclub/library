@@ -28,15 +28,16 @@
       <v-spacer></v-spacer>
       <template v-if="user.loggedIn">
         <div class="d-flex flex-column text-center navicons">
-          <i @click.stop="dialog = true" class="fi fi-rr-sign-out ">
-          </i>
+          <i @click.stop="dialog = true" class="fi fi-rr-sign-out"> </i>
           <span class="text-caption">выход</span>
         </div>
       </template>
       <template v-else>
-        <div class="d-flex flex-column text-center navicons">
-          <i v-on:click="routeTo('/auth')" class="fi fi-rr-sign-in ">
-          </i>
+        <div
+          v-on:click="routeTo('/auth')"
+          class="d-flex flex-column text-center navicons"
+        >
+          <i class="fi fi-rr-sign-in"> </i>
           <span class="text-caption">вход</span>
         </div>
       </template>
@@ -50,7 +51,7 @@
 
     <v-footer class="d-none d-sm-flex" padless app>
       <v-col cols="2"></v-col>
-      <v-col class="text-center" cols="8">With Love, from Qbit</v-col>
+      <v-col class="text-center" cols="8">Сделанов в Кубит</v-col>
       <v-col cols="2"></v-col>
     </v-footer>
 
@@ -81,20 +82,22 @@
           <span class="text-caption">поиск</span>
         </v-col>
         <v-col
+          v-if="user.loggedIn"
           cols="3"
           @click="routeTo('/cabinet')"
           class="d-flex flex-column text-center navicons"
         >
           <i class="fi fi-rr-user"></i>
-          <span class="text-caption">пользователь</span>
+          <span class="text-caption">кабинет</span>
         </v-col>
         <v-col
+          v-else
           cols="3"
-          @click="routeTo('/userinfo')"
+          @click="routeTo('/auth')"
           class="d-flex flex-column text-center navicons"
         >
-          <i class="fi fi-rr-info"></i>
-          <span class="text-caption">Информация о пользователе</span>
+          <i class="fi fi-rr-sign-in"> </i>
+          <span class="text-caption">вход</span>
         </v-col>
       </v-row>
     </v-footer>
@@ -105,9 +108,9 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="accent" text @click="dialog = false"> Нет </v-btn>
+          <v-btn color="red" text @click="dialog = false"> Нет </v-btn>
 
-          <v-btn color="primary" text @click.prevent="signOut"> Да </v-btn>
+          <v-btn text @click.prevent="signOut"> Да </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -186,5 +189,9 @@ export default {
 @import url("./assets/style/style.scss");
 .navicons {
   cursor: pointer;
+  opacity: 0.6;
+  &:hover {
+    opacity: 1;
+  }
 }
 </style>

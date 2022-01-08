@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-sheet class="d-flex align-center flex-column">
+    <v-sheet class="d-flex align-center flex-column pa-10">
       <h2>Регистрация</h2>
       <v-container>
         <v-row class="align-center justify-center" no-gutters>

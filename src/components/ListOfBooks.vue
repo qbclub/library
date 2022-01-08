@@ -2,7 +2,7 @@
   <v-container>
     <v-row class="justify-end">
       <v-col cols="md-6"
-        ><search :books="books" @findBooks="showBooks"
+        ><Search :books="books" @findBooks="showBooks"
       /></v-col>
     </v-row>
     <v-row class="mt-2">

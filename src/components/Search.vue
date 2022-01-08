@@ -1,12 +1,11 @@
 <template>
-  <v-container
-    ><v-text-field
+  <div>
+    <v-text-field
       append-icon="mdi-search"
       v-model="searchRequest"
       label="Поиск"
-      @change="findAllBooks"
-    ></v-text-field
-  ></v-container>
+    ></v-text-field>
+  </div>
 </template>
 
 <script>
@@ -25,24 +24,29 @@ export default {
   },
   methods: {
     findAllBooks: function () {
-      if (this.searchRequest != "") {
-        this.booksToShow = [];
-        for (let book of this.books) {
-          let includes =
-            book.name.includes(this.searchRequest) ||
-            [book.authors].find((author) =>
-              author.includes(this.searchRequest)
-            ) ||
-            book.publisher.includes(this.searchRequest) ||
-            book.direction.includes(this.searchRequest);
-          if (includes) {
-            this.booksToShow.push(book);
-          }
-        }
-        this.$emit("findBooks", this.booksToShow);
-      } else {
-        this.$emit("findBooks", this.books);
-      }
+      this.searchRequest == ""
+        ? (this.booksToShow = this.books)
+        : (this.booksToShow = this.books.filter(
+            (book) =>
+              book.name
+                .toLowerCase()
+                .includes(this.searchRequest.toLowerCase()) ||
+              book.authors
+                .toLowerCase()
+                .includes(this.searchRequest.toLowerCase()) ||
+              book.publisher
+                .toLowerCase()
+                .includes(this.searchRequest.toLowerCase()) ||
+              book.direction
+                .toLowerCase()
+                .includes(this.searchRequest.toLowerCase())
+          ));
+      this.$emit("findBooks", this.booksToShow);
+    },
+  },
+  watch: {
+    searchRequest: function () {
+      this.findAllBooks();
     },
   },
 };

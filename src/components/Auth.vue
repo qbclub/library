@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-sheet
-      class="section-6 d-flex justify-center align-center flex-column pa-10"
+      class="d-flex justify-center align-center flex-column pa-10"
     >
       <h2>Войти</h2>
       <v-container>
@@ -26,6 +26,8 @@
               <v-btn class="mr-4" type="submit"> submit </v-btn>
               <v-btn> clear </v-btn>
             </form>
+            <router-link to="/reg"><p class="text-center  ma-8">Зарегистрироваться</p></router-link>
+            
           </v-col>
         </v-row>
       </v-container>
@@ -49,6 +51,7 @@ export default {
           router.push({ path: "/" });
         })
         .catch((err) => {
+          router.push({ path: "/reg" });
           this.error = err.message;
         });
     },
