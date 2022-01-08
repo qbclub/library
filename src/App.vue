@@ -26,21 +26,23 @@
       ></v-app-bar-nav-icon>
       <v-toolbar-title @click="routeTo('/')">Библиотека</v-toolbar-title>
       <v-spacer></v-spacer>
-      <template v-if="user.loggedIn">
-        <div class="d-flex flex-column text-center navicons">
-          <i @click.stop="dialog = true" class="fi fi-rr-sign-out"> </i>
-          <span class="text-caption">выход</span>
-        </div>
-      </template>
-      <template v-else>
-        <div
-          v-on:click="routeTo('/auth')"
-          class="d-flex flex-column text-center navicons"
-        >
-          <i class="fi fi-rr-sign-in"> </i>
-          <span class="text-caption">вход</span>
-        </div>
-      </template>
+      <div class="d-none d-sm-flex">
+        <template v-if="user.loggedIn">
+          <div class="d-flex flex-column text-center navicons">
+            <i @click.stop="dialog = true" class="fi fi-rr-sign-out"> </i>
+            <span class="text-caption">выход</span>
+          </div>
+        </template>
+        <template v-else>
+          <div
+            v-on:click="routeTo('/auth')"
+            class="d-flex flex-column text-center navicons"
+          >
+            <i class="fi fi-rr-sign-in"> </i>
+            <span class="text-caption">вход</span>
+          </div>
+        </template>
+      </div>
     </v-app-bar>
 
     <v-main>

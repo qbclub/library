@@ -10,8 +10,8 @@
         class="ma-0"
         v-for="(book, k) in booksToShow"
         :key="k"
-        cols="6"
-       
+        cols="12"
+        sm="6"
         md="4"
         @click="routeTo(book)"
       >
