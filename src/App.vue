@@ -30,7 +30,7 @@
         <template v-if="user.loggedIn">
           <div class="d-flex flex-column text-center navicons">
             <i @click.stop="dialog = true" class="fi fi-rr-sign-out"> </i>
-            <span class="text-caption">выход</span>
+            <span class="icon_text">выход</span>
           </div>
         </template>
         <template v-else>
@@ -39,7 +39,7 @@
             class="d-flex flex-column text-center navicons"
           >
             <i class="fi fi-rr-sign-in"> </i>
-            <span class="text-caption">вход</span>
+            <span class="icon_text">вход</span>
           </div>
         </template>
       </div>
@@ -57,51 +57,37 @@
       <v-col cols="2"></v-col>
     </v-footer>
 
-    <v-footer height="49px" class="d-flex d-sm-none" app>
-      <v-row class="align-center justify-center">
-        <v-col
-          cols="3"
-          @click="routeTo('/')"
-          class="d-flex flex-column text-center navicons"
-        >
-          <i class="fi fi-rr-align-justify"></i>
-          <span class="text-caption">главная</span>
-        </v-col>
-        <v-col
-          cols="3"
-          @click="routeTo('/')"
-          class="d-flex flex-column text-center navicons"
-        >
-          <i class="fi fi-rr-bookmark"></i>
-          <span class="text-caption">закладки</span>
-        </v-col>
-        <v-col
-          cols="3"
-          @click="routeTo('/')"
-          class="d-flex flex-column text-center navicons"
-        >
-          <i class="fi fi-rr-search"></i>
-          <span class="text-caption">поиск</span>
-        </v-col>
-        <v-col
+    <v-footer class="d-sm-none justify-center" padless app>
+      <v-col class="text-center col-12 col-sm-6 d-flex justify-space-around">
+        <div @click="routeTo('/')" class="d-flex flex-column justify-center navicons">
+          <span class="fi fi-rr-align-justify"></span>
+          <span class="icon_text">главная</span>
+        </div>
+        <div @click="routeTo('/')" class="d-flex flex-column navicons">
+          <span class="fi fi-rr-bookmark"></span>
+          <span class="icon_text">закладки</span>
+        </div>
+        <div @click="routeTo('/')" class="d-flex flex-column navicons">
+          <span class="fi fi-rr-search"></span>
+          <span class="icon_text">поиск</span>
+        </div>
+        <div
           v-if="user.loggedIn"
-          cols="3"
           @click="routeTo('/cabinet')"
-          class="d-flex flex-column text-center navicons"
+          class="d-flex flex-column navicons"
         >
-          <i class="fi fi-rr-user"></i>
-          <span class="text-caption">кабинет</span>
-        </v-col>
-        <v-col
+          <span class="fi fi-rr-user"></span>
+          <span class="icon_text">кабинет</span>
+        </div>
+        <div
           v-else
-          cols="3"
           @click="routeTo('/auth')"
           class="d-flex flex-column text-center navicons"
         >
-          <i class="fi fi-rr-sign-in"> </i>
-          <span class="text-caption">вход</span>
-        </v-col>
-      </v-row>
+          <span class="fi fi-rr-sign-in"> </span>
+          <span class="icon_text">вход</span>
+        </div>
+      </v-col>
     </v-footer>
     <v-dialog v-model="dialog" max-width="290">
       <v-card>
@@ -191,9 +177,20 @@ export default {
 @import url("./assets/style/style.scss");
 .navicons {
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.7;
   &:hover {
     opacity: 1;
+    transform: scale(1.05);
   }
 }
+
+.fi {
+    font-size: 20px;
+    opacity: 0.48;
+  }
+  .icon_text {
+    line-height: 1;
+    font-size: 10px;
+    opacity: 0.48;
+  }
 </style>

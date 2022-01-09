@@ -1,13 +1,13 @@
 <template>
   <v-container>
     <v-row class="justify-end">
-      <v-col cols="md-6 ma-0"
+      <v-col cols="md-6 pa-0"
         ><Search :books="books" @findBooks="showBooks"
       /></v-col>
     </v-row>
     <v-row class="mt-2">
       <v-col
-        class="ma-0"
+        class="pa-1"
         v-for="(book, k) in booksToShow"
         :key="k"
         cols="12"
