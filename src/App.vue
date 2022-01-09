@@ -177,7 +177,7 @@ export default {
 @import url("./assets/style/style.scss");
 .navicons {
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.6;
   &:hover {
     opacity: 1;
     transform: scale(1.05);
@@ -186,11 +186,11 @@ export default {
 
 .fi {
     font-size: 20px;
-    opacity: 0.48;
+  
   }
   .icon_text {
     line-height: 1;
     font-size: 10px;
-    opacity: 0.48;
+    
   }
 </style>
