@@ -6,46 +6,104 @@
           <h1>Информация</h1>
           </v-sheet>
         <v-form>
+          <v-row>
+            <v-col cols="12" sm="6">
           <v-text-field
             v-model="FirstName"
             label="Имя"
             required
           ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
          <v-text-field
             v-model="LastName"
             label="Фамилия"
             required
           ></v-text-field>
+            </v-col>
+          </v-row>
 
+          <v-row>
+            <v-col cols="12" sm="6">
           <v-text-field
             v-model="BirthDate"
             label="Дата рождения"
             required
           ></v-text-field>
-
+            </v-col>
+            <v-col cols="12" sm="6">
           <v-text-field
             v-model="EducationalInstitution"
             label="Учебное заведение"
             required
           ></v-text-field>
+            </v-col>
+          </v-row>  
 
+          <v-row>
+            <v-col cols="12" sm="6">
           <v-text-field
             v-model="LivingAddress"
             label="Адрес проживания"
             required
           ></v-text-field>
-          <v-text-field
-            v-model="UserType"
-            label="Тип пользователя"
-            required
-          ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+          <v-checkbox
+      v-model="checkbox"
+      :label="`Администратор?  ${checkbox.toString()}`"
+          ></v-checkbox>
+            </v-col>
+          </v-row>
+          <v-row class="align-center">
+            <v-col cols="6">
+              <image-uploader
+                :preview="false"
+                accept="image/*"
+                :scaleRatio="0.5625"
+                :quality="0.96"
+                :maxWidth="256"
+                outputFormat="verbose"
+                :className="['d-flex', 'flex-column']"
+                @input="setImage"
+                @onComplete="uploadImageComplete"
+                @onUpload="uploadImageStart"
+              >
+                <label for="fileInput" slot="upload-label">
+                  <div class="d-flex flex-column text-center">
+                    <i class="fi fi-rr-camera text-h4 ma-0 d-inline"></i>
+
+                    <span class="caption"> фото <br /></span>
+                  </div>
+                </label>
+              </image-uploader>
+            </v-col>
+            <v-col cols="6">
+              <v-img
+                contain
+                v-if="cover.image"
+                :src="cover.image"
+                :height="cover.newHeight"
+                :width="cover.newWidth"
+              ></v-img>
+
+              <v-sheet
+                color="grey"
+                min-height="200px"
+                class="pa-3 d-flex justify-center align-center"
+                v-if="!cover.image"
+              >
+                фото обложки
+              </v-sheet>
+            </v-col>
+          </v-row>
 
           <v-sheet class="d-flex align-center flex-column ">
           <h3>История действий</h3>
           </v-sheet>
 
           <v-row>
-            <v-col cols="6" sm="6">
+            <v-col cols="12" sm="6">
               <v-text-field
                 v-model="CurrentTakenBooks"
                 label="Книги , которые были взяты пользователем"
@@ -53,7 +111,7 @@
               ></v-text-field>
             </v-col>
 
-            <v-col cols="6" sm="6">
+            <v-col cols="12" sm="6">
               <v-text-field
                 v-model="CurrentReservedBooks"
                 label="Книги , которые были зарезервированы пользователем"
@@ -100,8 +158,9 @@
 
 <script>
 import About from "../views/About.vue";
-import axios from "axios";
+import ImageUploader from "vue-image-upload-resize";
 export default {
+  components: { About, ImageUploader },
   data: function () {
     return {
       example: {
@@ -137,7 +196,7 @@ export default {
         Email: "",
         SocCeti: "",
       },
-
+      checkbox: true,
       cover: {
         newHeight: 0,
         newWidth: 0,
@@ -165,18 +224,6 @@ export default {
       const headers = {
         "content-type": "application/json",
       };
-
-      axios
-        // .post("http://localhost:8080/api/books/create", this.form, {
-        //   headers: headers,
-        // })
-        .then((response) => {
-          console.log(response);
-          this.clearingForm();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
   },
 };

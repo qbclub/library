@@ -53,7 +53,7 @@
 
     <v-footer class="d-none d-sm-flex" padless app>
       <v-col cols="2"></v-col>
-      <v-col class="text-center" cols="8">Сделанов в Кубит</v-col>
+      <v-col class="text-center" cols="8">Сделано в Кубит</v-col>
       <v-col cols="2"></v-col>
     </v-footer>
 
