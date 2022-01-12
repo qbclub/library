@@ -16,7 +16,10 @@ let store = new Vuex.Store({
     user: {
       loggedIn: false,
       data: null
-  },  
+    },
+    app: {
+      currentBackend: 'firebase'
+    }
 
   },
   mutations,

@@ -101,6 +101,7 @@ extend("email", {
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 const auth = getAuth();
+import axios from "axios";
 export default {
   components: {
     ValidationProvider,
@@ -110,9 +111,7 @@ export default {
     name: null,
     email: null,
     password: null,
-    error: null,  
-   
-    
+    error: null,
   }),
 
   methods: {
@@ -126,17 +125,36 @@ export default {
       this.email = "";
       this.$refs.observer.reset();
     },
-    userReg() {
-      createUserWithEmailAndPassword(auth, this.email, this.password)
-        .then((data) => {
-          console.log(data);
-          data.user.updateProfile({
-            displayName: this.name,
-          });
-        })
-        .catch((err) => {
-          this.error = err.message;
-        });
+    async userReg() {
+      switch (this.$store.state.app.currentBackend) {
+        case "firebase":
+          console.log("use firebase");
+          createUserWithEmailAndPassword(auth, this.email, this.password)
+            .then((data) => {
+              console.log(data);
+              data.user.updateProfile({
+                displayName: this.name,
+              });
+            })
+            .catch((err) => {
+              this.error = err.message;
+            });
+          break;
+        case "node":
+          console.log("use node");
+          let user = {
+            name: this.name,
+            email: this.email,
+            password: this.password,
+          };
+          await axios
+            .post("http://localhost:3000/api/users/create", user)
+            .then((response) => console.log(response))
+            .catch((error) => {
+              console.error("There was an error!", error);
+            });
+          break;
+      }
     },
   },
 };

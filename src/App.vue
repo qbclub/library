@@ -17,6 +17,14 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
+      <!-- select backend -->
+      <v-select
+        v-model="chosenBackend"
+        :items="backends"
+        label="Backend"
+        class="ma-4"
+      ></v-select>
+      <!-- select backend -->
     </v-navigation-drawer>
 
     <v-app-bar app hide-on-scroll>
@@ -59,7 +67,10 @@
 
     <v-footer class="d-sm-none justify-center" padless app>
       <v-col class="text-center col-12 col-sm-6 d-flex justify-space-around">
-        <div @click="routeTo('/')" class="d-flex flex-column justify-center navicons">
+        <div
+          @click="routeTo('/')"
+          class="d-flex flex-column justify-center navicons"
+        >
           <span class="fi fi-rr-align-justify"></span>
           <span class="icon_text">главная</span>
         </div>
@@ -146,6 +157,8 @@ export default {
         path: "/userinfo",
       },
     ],
+    backends: ["node", "firebase", "cooming soon"],
+    chosenBackend: "firebase",
   }),
   methods: {
     routeTo: function (path) {
@@ -171,6 +184,11 @@ export default {
       user: "user",
     }),
   },
+  watch: {
+    chosenBackend: function () {
+      this.$store.state.app.currentBackend = this.chosenBackend;
+    },
+  },
 };
 </script>
 <style lang="scss">
@@ -185,12 +203,10 @@ export default {
 }
 
 .fi {
-    font-size: 20px;
-  
-  }
-  .icon_text {
-    line-height: 1;
-    font-size: 10px;
-    
-  }
+  font-size: 20px;
+}
+.icon_text {
+  line-height: 1;
+  font-size: 10px;
+}
 </style>
