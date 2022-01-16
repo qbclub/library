@@ -2,21 +2,21 @@
   <v-container>
     <v-row class="justify-center">
       <v-col class="col-md-6 col-12">
-           <v-sheet class="d-flex align-center flex-column ">
-          <h1>Информация</h1>
-          </v-sheet>
+        
+          <h1 class="text-center">Информация</h1>
+        
         <v-form>
           <v-row>
             <v-col cols="12" sm="6">
           <v-text-field
-            v-model="FirstName"
+            v-model="form.FirstName"
             label="Имя"
             required
           ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6">
          <v-text-field
-            v-model="LastName"
+            v-model="form.LastName"
             label="Фамилия"
             required
           ></v-text-field>
@@ -26,14 +26,14 @@
           <v-row>
             <v-col cols="12" sm="6">
           <v-text-field
-            v-model="BirthDate"
+            v-model="form.BirthDate"
             label="Дата рождения"
             required
           ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6">
           <v-text-field
-            v-model="EducationalInstitution"
+            v-model="form.EducationalInstitution"
             label="Учебное заведение"
             required
           ></v-text-field>
@@ -43,16 +43,16 @@
           <v-row>
             <v-col cols="12" sm="6">
           <v-text-field
-            v-model="LivingAddress"
+            v-model="form.LivingAddress"
             label="Адрес проживания"
             required
           ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6">
+            <v-col class="d-flex align-center"  cols="12" sm="6">
           <v-checkbox
-      v-model="checkbox"
-      :label="`Администратор?  ${checkbox.toString()}`"
+          v-model="form.isAdmin"
           ></v-checkbox>
+          <span>{{form.isAdmin? 'Администратор': 'Пользователь'}}</span> 
             </v-col>
           </v-row>
           <v-row class="align-center">
@@ -93,63 +93,43 @@
                 class="pa-3 d-flex justify-center align-center"
                 v-if="!cover.image"
               >
-                фото обложки
+                пользователь
               </v-sheet>
             </v-col>
           </v-row>
 
-          <v-sheet class="d-flex align-center flex-column ">
-          <h3>История действий</h3>
-          </v-sheet>
+        
+         
+          <h3 class="text-center">Контакты</h3>
+         
 
           <v-row>
             <v-col cols="12" sm="6">
               <v-text-field
-                v-model="CurrentTakenBooks"
-                label="Книги , которые были взяты пользователем"
-                required
-              ></v-text-field>
-            </v-col>
-
-            <v-col cols="12" sm="6">
-              <v-text-field
-                v-model="CurrentReservedBooks"
-                label="Книги , которые были зарезервированы пользователем"
-                required
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-sheet class="d-flex align-center flex-column ">
-          <h3>Контакты</h3>
-          </v-sheet>
-
-          <v-row>
-            <v-col cols="6" sm="4">
-              <v-text-field
-                v-model="PhoneNumber"
+                v-model="form.PhoneNumber"
                 label="Номер телефона"
                 required
               ></v-text-field>
             </v-col>
 
-            <v-col cols="6" sm="4">
+            <v-col cols="12" sm="6">
               <v-text-field
-                v-model="Email"
+                v-model="form.Email"
                 label="Почта"
                 required
               ></v-text-field>
             </v-col>
 
-            <v-col cols="6" sm="4">
+            <v-col cols="12" >
               <v-text-field
-                v-model="SocCeti"
+                v-model="form.SocCeti"
                 label="Соц.сети"
                 required
               ></v-text-field>
             </v-col>
           </v-row>
 
-          <v-btn color="success" class="mr-4" @click="send"> Отправить </v-btn>
+          <v-btn color="success" class="mb-10" @click="send"> Отправить </v-btn>
         </v-form>
       </v-col>
     </v-row>
@@ -159,44 +139,32 @@
 <script>
 import About from "../views/About.vue";
 import ImageUploader from "vue-image-upload-resize";
+import {
+  getStorage,
+  ref,
+  uploadString,
+  getDownloadURL,
+} from "firebase/storage";
+const storage = getStorage();
 export default {
   components: { About, ImageUploader },
   data: function () {
     return {
-      example: {
-        Id: 5,
-        Annotation: "party",
-        Name: "food1",
-        TableOfContents: "Table",
-        CoverPath: "http://google.com",
-        Authors: ["Jacey", "Taylor", "Mary"],
-        Sections: ["Javascript", "Java"],
-        Status: "Ready",
-        ReservedQueue: [1, 2],
-        TemporaryOwner: "Vlad",
-        DateOfGivenOut: "2021-12-21T23:25:27.338Z",
-        ReleaseDate: "2021-12-21T23:25:27.338Z",
-        TimeStamp: "2021-12-21T23:25:27.338Z",
-        PhysicalPlace: "path to zhopa",
-        ISBN: "123456",
-        PublisherName: "Alpina",
-        PageCount: 234,
-        Series: 515,
-      },
       form: {
         FirstName: "",
         LastName: "",
         BirthDate: "",
         EducationalInstitution: "",
         LivingAddress: "",
-        UserType: "",
+        isAdmin: false,
         CurrentTakenBooks: "",
         CurrentReservedBooks: "",
         PhoneNumber: "",
         Email: "",
         SocCeti: "",
+        usersPhotoUrl:""
       },
-      checkbox: true,
+     
       cover: {
         newHeight: 0,
         newWidth: 0,
@@ -212,18 +180,43 @@ export default {
         BirthDate: "",
         EducationalInstitution: "",
         LivingAddress: "",
-        UserType: "",
+        isAdmin: null,
         CurrentTakenBooks: "",
         CurrentReservedBooks: "",
         PhoneNumber: "",
         Email: "",
         SocCeti: "",
+        usersPhotoUrl: ""
       };
     },
     send: function () {
       const headers = {
         "content-type": "application/json",
       };
+    },
+        setImage: function (img) {
+      // img - объект, содержащий много ифнормации об изображении
+      this.cover.image = img.dataUrl;
+      this.cover.newWidth = img.info.newWidth;
+      this.cover.newHeight = img.info.newHeight;
+    },
+    uploadImageComplete: function () {
+      const storageRef = ref(storage, "books/" + this.form.Id);
+      uploadString(storageRef, this.cover.image, "data_url").then(
+        (snapshot) => {
+          getDownloadURL(snapshot.ref)
+            .then((url) => {
+              this.form.usersPhotoUrl = url;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      );
+      
+    },
+    uploadImageStart: function () {
+      console.log("UPLOAD STARTED");
     },
   },
 };
