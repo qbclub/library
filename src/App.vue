@@ -169,7 +169,7 @@ export default {
       signOut(getAuth())
         .then(() => {
           this.$router.replace({
-            name: "EventList",
+            name: "ListOfBooks",
           });
         })
         .catch((error) => {

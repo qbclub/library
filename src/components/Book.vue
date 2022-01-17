@@ -32,11 +32,21 @@
                   Страниц: {{ currentBook.pagesCount }}
                 </div>
                 <v-btn
+                  v-if="user.loggedIn"
                   depressed
                   small
                   class="ma-4 secondary"
                   v-on:click="takeBook"
                   >Взять книгу</v-btn
+                >
+                <v-btn
+                  v-else
+                  @click="routeTo('/reg')"
+                  depressed
+                  small
+                  class="ma-4 secondary"
+                  v-on:click="takeBook"
+                  >Зарегистрироваться</v-btn
                 >
                 <div class="">Состояние: {{ currentBook.state }}</div>
               </v-col>
@@ -56,6 +66,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import books from "../db/books";
 export default {
   data: () => ({
@@ -67,6 +78,15 @@ export default {
     takeBook: function () {
       console.log(this.books[this.bookId].name);
     },
+    routeTo: function (path) {
+      this.$router.push(path);
+      this.drawer = false;
+    },
+  },
+  computed: {
+    ...mapGetters({
+      user: "user",
+    }),
   },
   mounted() {
     this.bookId = this.$route.query.book_id;

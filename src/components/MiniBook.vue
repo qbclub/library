@@ -2,7 +2,7 @@
   <div class="ma-0">
     <v-hover>
       <template v-slot:default="{ hover }">
-        <v-card class="pa-2" :elevation="hover ? 10 : 4">
+        <v-card class="pa-3" :elevation="hover ? 10 : 4">
           <v-container>
             <v-row>
               <v-col class="col-3 col-sm-4 pa-0 ma-0">
@@ -12,7 +12,7 @@
                   :src="book.image"
                 ></v-img>
               </v-col>
-              <v-col class="col-9 col-sm-8 pa-sm-2 pa-xs-0">
+              <!-- <v-col class="col-9 col-sm-8 pa-sm-2 pa-xs-0">
                 <div>
                   <span class="text-caption font-weight-medium">
                     {{ book.authors }}
@@ -21,7 +21,7 @@
                     {{ book.name }}
                   </p>
                 </div>
-              </v-col>
+              </v-col> -->
             </v-row>
           </v-container>
         </v-card>

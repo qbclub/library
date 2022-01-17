@@ -54,6 +54,7 @@
                 </v-btn>
                 <v-btn @click="clear"> clear </v-btn>
               </form>
+               <router-link to="/auth"><p class="text-center  ma-8">Войти</p></router-link>
             </validation-observer>
           </v-col>
         </v-row>
