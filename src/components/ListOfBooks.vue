@@ -10,9 +10,9 @@
         class="pa-1"
         v-for="(book, k) in booksToShow"
         :key="k"
-        cols="12"
-        sm="6"
-        md="4"
+        cols="6"
+        sm="3"
+        md="2"
         @click="routeTo(book)"
       >
         <MiniBook :book="book"></MiniBook>
