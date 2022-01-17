@@ -157,8 +157,8 @@ export default {
         path: "/userinfo",
       },
     ],
-    backends: ["node", "firebase", "cooming soon"],
-    chosenBackend: "firebase",
+    backends: ["node", "cooming soon"],
+    chosenBackend: "node",
   }),
   methods: {
     routeTo: function (path) {

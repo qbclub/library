@@ -127,20 +127,18 @@ export default {
       this.$refs.observer.reset();
     },
     async userReg() {
+      createUserWithEmailAndPassword(auth, this.email, this.password)
+        .then((data) => {
+          console.log(data);
+          data.user.updateProfile({
+            displayName: this.name,
+          });
+        })
+        .catch((err) => {
+          this.error = err.message;
+        });
+      return;
       switch (this.$store.state.app.currentBackend) {
-        case "firebase":
-          console.log("use firebase");
-          createUserWithEmailAndPassword(auth, this.email, this.password)
-            .then((data) => {
-              console.log(data);
-              data.user.updateProfile({
-                displayName: this.name,
-              });
-            })
-            .catch((err) => {
-              this.error = err.message;
-            });
-          break;
         case "node":
           console.log("use node");
           let user = {
