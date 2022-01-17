@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row class="align-center justify-center"
-      ><v-col cols="10"
+    <v-row class="align-center justify-center">
+      <v-col cols="10"
         ><p
           class="
             text--primary text-xl-h4 text-md-h6 text-sm-body-1 text-body-1
@@ -14,6 +14,7 @@
         </p></v-col
       ></v-row
     >
+    <p class="text-center">Книги на руках</p>
     <v-row class="align-center justify-center">
       <v-col
         cols="6"
@@ -41,19 +42,62 @@
         </div>
       </v-col>
     </v-row>
+    <p class="text-center">Зарезервированные</p>
+    <v-row class="align-center justify-center">
+      <v-col
+        cols="6"
+        class="ma-0"
+        v-for="(bookid, i) in ReservedBooks"
+        :key="i"
+        sm="4"
+        md="3"
+        lg="3"
+        ><div
+          class="
+            text-lg-body-1
+            text-md-body-1
+            text-sm-body-2
+            text--primary
+            text-center
+          "
+        >
+          <v-img
+            max-width="250"
+            :aspect-ratio="9 / 16"
+            contain
+            :src="books[i].image"
+          ></v-img>
+        </div>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 <script>
 import books from "../db/books";
 import users from "../db/users";
+import { mapGetters } from "vuex";
 export default {
   data: () => ({
     books,
     users,
     TakenBooks: [],
+    ReservedBooks: [],
   }),
   mounted() {
-    this.TakenBooks = this.users[0].CurrentTakenBooks;
+    if (this.user.loggedIn) {
+      let email = this.user.data.email;
+      console.log(email);
+      let user = this.users.filter((user) => user.Contacts[0] == email)[0];
+      console.log(user);
+
+      this.TakenBooks = user.CurrentTakenBooks;
+      this.ReservedBooks = user.CurrentReservedBooks;
+    }
+  },
+  computed: {
+    ...mapGetters({
+      user: "user",
+    }),
   },
 };
 </script>
