@@ -21,13 +21,12 @@
   </v-container>
 </template>
 <script>
-import books from "../db/books";
+import { mapGetters } from "vuex";
 import MiniBook from "./MiniBook.vue";
 import Search from "./Search.vue";
 export default {
   data: () => ({
-    books,
-    booksToShow: books,
+    booksToShow: [],
   }),
   components: {
     MiniBook,
@@ -46,6 +45,12 @@ export default {
     showBooks: function (booksToShow) {
       this.booksToShow = booksToShow;
     },
+  },
+  computed: {
+    ...mapGetters(["books"]),
+  },
+  async mounted() {
+    this.booksToShow = this.books;
   },
 };
 </script>

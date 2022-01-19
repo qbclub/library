@@ -2,9 +2,13 @@
   <div class="ma-0">
     <v-container>
       <v-row>
-        <v-col v-for="(bookEvent, i) in booksflow" :key="i" cols="12"
-        sm="6"
-        md="4">
+        <v-col
+          v-for="(bookEvent, i) in booksflow"
+          :key="i"
+          cols="12"
+          sm="6"
+          md="4"
+        >
           <v-card class="pa-2" :elevation="hover ? 10 : 4">
             <v-container>
               <v-row>
@@ -36,11 +40,10 @@
 
 <script>
 import booksflow from "../db/booksflow";
-import books from "../db/books";
+import { mapGetters } from "vuex";
 export default {
   data: () => ({
     booksflow,
-    books,
     book: {},
   }),
   methods: {
@@ -48,6 +51,9 @@ export default {
       return (this.book = this.books.filter((book) => book.id == Bookid));
     },
     findUser: function (Userid) {},
+  },
+  computed: {
+    ...mapGetters(["books"]),
   },
   mounted() {},
 };

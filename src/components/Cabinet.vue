@@ -73,12 +73,10 @@
   </v-container>
 </template>
 <script>
-import books from "../db/books";
 import users from "../db/users";
 import { mapGetters } from "vuex";
 export default {
   data: () => ({
-    books,
     users,
     TakenBooks: [],
     ReservedBooks: [],
@@ -97,6 +95,7 @@ export default {
   computed: {
     ...mapGetters({
       user: "user",
+      books: "books",
     }),
   },
 };

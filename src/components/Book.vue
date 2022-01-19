@@ -67,10 +67,8 @@
 
 <script>
 import { mapGetters } from "vuex";
-import books from "../db/books";
 export default {
   data: () => ({
-    books,
     currentBook: {},
     bookId: 1,
   }),
@@ -86,6 +84,7 @@ export default {
   computed: {
     ...mapGetters({
       user: "user",
+      books: "books",
     }),
   },
   mounted() {
