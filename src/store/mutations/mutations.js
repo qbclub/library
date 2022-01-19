@@ -7,5 +7,8 @@ export default {
     },
     GET_ALL_BOOKS(state, books) {
         state.books = books;
+    },
+    GET_ALL_BOOKSFLOW(state, booksflow) {
+        state.booksflow = booksflow;
     }
 }

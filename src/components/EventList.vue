@@ -39,11 +39,9 @@
 </template>
 
 <script>
-import booksflow from "../db/booksflow";
 import { mapGetters } from "vuex";
 export default {
   data: () => ({
-    booksflow,
     book: {},
   }),
   methods: {
@@ -53,7 +51,7 @@ export default {
     findUser: function (Userid) {},
   },
   computed: {
-    ...mapGetters(["books"]),
+    ...mapGetters(["books", "booksflow"]),
   },
   mounted() {},
 };
