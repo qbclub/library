@@ -1,5 +1,4 @@
-import books from '../../db/books'
-import booksflow from '../../db/booksflow'
+
 
 export default {
   fetchUser({
@@ -18,12 +17,13 @@ export default {
     }
   },
 
-  async getAllBooks(ctx) {
-    ctx.commit('GET_ALL_BOOKS', books)
+ getAllBooks({commit},books) {
+    commit('GET_ALL_BOOKS', books)
   },
 
-  async getAllBooksflow(ctx) {
-    ctx.commit('GET_ALL_BOOKSFLOW', books)
+  getAllBooksflow() {
+    commit('GET_ALL_BOOKSFLOW', books)
   },
 
 }
+
