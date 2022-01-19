@@ -119,6 +119,8 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { getAuth, signOut } from "firebase/auth";
+import books from '../src/db/books'
+
 
 export default {
   name: "App",
@@ -185,8 +187,8 @@ export default {
       user: "user",
     }),
   },
-  async mounted() {
-    this.getAllBooks();
+  mounted() {
+    this.getAllBooks(books);
   },
   watch: {
     chosenBackend: function () {
