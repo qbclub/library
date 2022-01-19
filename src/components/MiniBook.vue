@@ -1,14 +1,14 @@
 <template>
   <div class="ma-0">
     <v-hover>
-      <template v-slot:default="{ hover }">
-        <v-card class="pa-3" :elevation="hover ? 10 : 4">
+      <template v-slot:default="{hover}">
+        <v-card class="pa-2"  max-width="250" max-height="400" :elevation="hover ? 10 : 4">
           <v-container>
             <v-row>
-              <v-col class="col-3 col-sm-4 pa-0 ma-0">
+              <v-col class="pa-0 ma-0">
                 <v-img
                   contain
-                  :aspect-ratio="10 / 16"
+                  :aspect-ratio="10/16"
                   :src="book.image"
                 ></v-img>
               </v-col>
