@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { getAuth, signOut } from "firebase/auth";
 
 export default {
@@ -178,11 +178,15 @@ export default {
 
       this.dialog = false;
     },
+    ...mapActions(["getAllBooks"]),
   },
   computed: {
     ...mapGetters({
       user: "user",
     }),
+  },
+  async mounted() {
+    this.getAllBooks();
   },
   watch: {
     chosenBackend: function () {

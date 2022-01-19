@@ -19,8 +19,8 @@ let store = new Vuex.Store({
     },
     app: {
       currentBackend: 'firebase'
-    }
-
+    },
+    books: []
   },
   mutations,
   actions,

@@ -1,3 +1,5 @@
+import books from '../../db/books'
+
 export default {
   fetchUser({
     commit
@@ -13,6 +15,10 @@ export default {
       commit("SET_USER", null);
       commit("SET_LOGGED_IN", false)
     }
+  },
+
+  async getAllBooks(ctx) {
+    ctx.commit('GET_ALL_BOOKS', books)
   },
 
 }

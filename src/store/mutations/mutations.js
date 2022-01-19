@@ -5,4 +5,7 @@ export default {
     SET_USER(state, data) {
         state.user.data = data;
     },
+    GET_ALL_BOOKS(state, books) {
+        state.books = books;
+    }
 }
