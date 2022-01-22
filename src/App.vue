@@ -23,7 +23,10 @@
         :items="backends"
         label="Backend"
         class="ma-4"
+        v-on:change="getBackend(chosenBackend)"
       ></v-select>
+      {{backend}}
+    
       <!-- select backend -->
     </v-navigation-drawer>
 
@@ -158,9 +161,13 @@ export default {
         title: "Информация о пользователе",
         path: "/userinfo",
       },
+        {
+        title: "Админ панель",
+        path: "/admin",
+      },
     ],
-    backends: ["node", "cooming soon"],
-    chosenBackend: "node",
+    backends: ["node", "cooming soon", "c#"],
+    chosenBackend: null,
   }),
   methods: {
     routeTo: function (path) {
@@ -180,21 +187,20 @@ export default {
 
       this.dialog = false;
     },
-    ...mapActions(["getAllBooks"]),
+    ...mapActions(["getAllBooks", "getBackend"]),
   },
   computed: {
     ...mapGetters({
       user: "user",
+      backend:"backend"
     }),
   },
   mounted() {
     this.getAllBooks(books);
+    this.chosenBackend = this.backend;
+   
   },
-  watch: {
-    chosenBackend: function () {
-      this.$store.state.app.currentBackend = this.chosenBackend;
-    },
-  },
+ 
 };
 </script>
 <style lang="scss">
