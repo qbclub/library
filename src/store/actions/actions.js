@@ -21,9 +21,13 @@ export default {
     commit('GET_ALL_BOOKS', books)
   },
 
-  getAllBooksflow() {
+  getAllBooksflow({commit}) {
     commit('GET_ALL_BOOKSFLOW', books)
   },
+  getBackend({commit},serverType) {
+    commit('SET_BACKEND', serverType )
+  },
+
 
 }
 

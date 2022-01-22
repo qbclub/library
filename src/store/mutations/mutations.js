@@ -6,10 +6,13 @@ export default {
         state.user.data = data;
     },
     GET_ALL_BOOKS(state, books) {
-     
+
         state.books = books;
     },
     GET_ALL_BOOKSFLOW(state, booksflow) {
         state.booksflow = booksflow;
+    },
+    SET_BACKEND(state,serverType){
+        state.backend = serverType
     }
 }
