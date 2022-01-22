@@ -17,17 +17,7 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
-      <!-- select backend -->
-      <v-select
-        v-model="chosenBackend"
-        :items="backends"
-        label="Backend"
-        class="ma-4"
-        v-on:change="getBackend(chosenBackend)"
-      ></v-select>
-      {{backend}}
-    
-      <!-- select backend -->
+  
     </v-navigation-drawer>
 
     <v-app-bar app hide-on-scroll>
@@ -166,8 +156,7 @@ export default {
         path: "/admin",
       },
     ],
-    backends: ["node", "cooming soon", "c#"],
-    chosenBackend: null,
+  
   }),
   methods: {
     routeTo: function (path) {
@@ -187,24 +176,24 @@ export default {
 
       this.dialog = false;
     },
-    ...mapActions(["getAllBooks", "getBackend"]),
+    ...mapActions(["getAllBooks"]),
   },
   computed: {
     ...mapGetters({
       user: "user",
-      backend:"backend"
+     
     }),
   },
   mounted() {
     this.getAllBooks(books);
-    this.chosenBackend = this.backend;
+  
    
   },
  
 };
 </script>
 <style lang="scss">
-@import url("./assets/style/style.scss");
+
 .navicons {
   cursor: pointer;
   opacity: 0.6;

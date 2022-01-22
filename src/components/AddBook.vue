@@ -169,6 +169,7 @@ export default {
         Series: 515,
       },
       form: {
+        Id:"",
         Name: "",
         Annotation: "",
         CoverPath: "",
@@ -194,6 +195,7 @@ export default {
   methods: {
     clearingForm: function () {
       this.form = {
+        Id:"",
         Name: "",
         Annotation: "",
         CoverPath: "",

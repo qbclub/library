@@ -151,6 +151,7 @@ export default {
   data: function () {
     return {
       form: {
+        Id:"",
         FirstName: "",
         LastName: "",
         BirthDate: "",
@@ -175,6 +176,7 @@ export default {
   methods: {
     clearingForm: function () {
       this.form = {
+        Id: "",
         FirstName: "",
         LastName: "",
         BirthDate: "",
@@ -201,7 +203,7 @@ export default {
       this.cover.newHeight = img.info.newHeight;
     },
     uploadImageComplete: function () {
-      const storageRef = ref(storage, "books/" + this.form.Id);
+      const storageRef = ref(storage, "users/" + this.form.Id);
       uploadString(storageRef, this.cover.image, "data_url").then(
         (snapshot) => {
           getDownloadURL(snapshot.ref)
