@@ -138,6 +138,7 @@
 
 <script>
 import About from "../views/About.vue";
+import methods from "../apiScripts/csharp.js";
 import ImageUploader from "vue-image-upload-resize";
 import {
   getStorage,
@@ -151,21 +152,23 @@ export default {
   data: function () {
     return {
       form: {
-        Id:"",
+        UserId: "",
         FirstName: "",
         LastName: "",
         BirthDate: "",
         EducationalInstitution: "",
         LivingAddress: "",
-        isAdmin: false,
-        CurrentTakenBooks: "",
-        CurrentReservedBooks: "",
-        PhoneNumber: "",
-        Email: "",
-        SocCeti: "",
-        usersPhotoUrl:""
+        UserType: "",
+        CurrentTakenBooks: [],
+        CurrentReservedBooks: [],
+        Contacts: {
+          PhoneNumber: "",
+          Email: "",
+          SocCeti: "",
+        },
+        PhotoPath: "",
       },
-     
+
       cover: {
         newHeight: 0,
         newWidth: 0,
@@ -176,46 +179,51 @@ export default {
   methods: {
     clearingForm: function () {
       this.form = {
-        Id: "",
+        UserId: "",
         FirstName: "",
         LastName: "",
         BirthDate: "",
         EducationalInstitution: "",
         LivingAddress: "",
-        isAdmin: null,
-        CurrentTakenBooks: "",
-        CurrentReservedBooks: "",
-        PhoneNumber: "",
-        Email: "",
-        SocCeti: "",
-        usersPhotoUrl: ""
+        UserType: "",
+        CurrentTakenBooks: [],
+        CurrentReservedBooks: [],
+        Contacts: {
+          PhoneNumber: "",
+          Email: "",
+          SocCeti: "",
+        },
+        PhotoPath: "",
       };
     },
-    send: function () {
+    send: async function () {
+      this.form.UserId = "2";
+      this.form.BirthDate = "2022-01-14T20:04:23.31Z";
       const headers = {
         "content-type": "application/json",
       };
+      console.log(methods.createUser(this.form));
+      // methods.createUser(this.form);
     },
-        setImage: function (img) {
+    setImage: function (img) {
       // img - объект, содержащий много ифнормации об изображении
       this.cover.image = img.dataUrl;
       this.cover.newWidth = img.info.newWidth;
       this.cover.newHeight = img.info.newHeight;
     },
     uploadImageComplete: function () {
-      const storageRef = ref(storage, "users/" + this.form.Id);
+      const storageRef = ref(storage, "users/" + this.form.UserId);
       uploadString(storageRef, this.cover.image, "data_url").then(
         (snapshot) => {
           getDownloadURL(snapshot.ref)
             .then((url) => {
-              this.form.usersPhotoUrl = url;
+              this.form.PhotoPath = url;
             })
             .catch((error) => {
               console.log(error);
             });
         }
       );
-      
     },
     uploadImageStart: function () {
       console.log("UPLOAD STARTED");
