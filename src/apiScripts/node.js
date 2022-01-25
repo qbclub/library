@@ -3,63 +3,102 @@ import axios from 'axios';
 const server = 'http://localhost:8080/api';
 
 const jsMethods = {
-    // USERS
-    createUser: async function (user) {
-        console.log(user)
-        await axios.post(server + '/users/create', user)
-            .then(response => console.log(response))
-            .catch(err => console.error(err))
+    // send request to get all books
+    getAllBooks: function () {
+        axios
+            .get("http://localhost:3000/api/books/get-all")
+            .then((response) => console.log(response))
+            .catch((error) => {
+                // this.errorMessage = error.message;
+                console.error("There was an error!", error);
+            });
     },
-    getAllUsers: async function () {
-        await axios.get(server + '/users')
-            .then(response => console.log(response))
-            .catch(err => console.error(err))
+    getBookById: function (id) {
+        axios
+            .get(`http://localhost:3000/api/books?id=${id}`)
+            .then((response) => console.log(response))
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
     },
-    getUserById: async function (id) {
-        await axios.get(server + `/users/${id}`)
-            .then(response => console.log(response))
-            .catch(err => console.error(err))
-    },
-    deleteUser: async function (id) {
-        await axios.delete(server + `/users/${id}`, id)
-            .then(response => console.log(response))
-            .catch(err => console.error(err))
-    },
-    deleteAllUsers: async function () {
-        await axios.delete(server + '/users/clear')
-            .then(response => console.log(response))
-            .catch(err => console.error(err))
-    },
-    /**
-         * Странный запрос, пока закомментируем
-         * Вообще put запросы сделаем позже
-         */
-    // updateUser: async function (id) {
-    //     await axios.put(server + '/users/', id)
-    //         .then(response => console.log(response))
-    //         .catch(err => console.error(err))
-    // },
-
-    // BOOKS
     createBook: async function (book) {
-        await axios.post(server + '/books', book)
-            .then(response => console.log(response))
-            .catch(err => console.error(err))
+        console.log(book);
+        //запрос отправляется на адрес https://cubit-2021.appspot.com/api/insert
+        await axios
+            .post("http://localhost:3000/api/books/create", book)
+            .then((response) => console.log(response))
+            .catch((error) => {
+                this.errorMessage = error.message;
+                console.error("There was an error!", error);
+            });
     },
-    getAllBooks: async function () {
-        await axios.get(server + '/books')
-            .then(response => console.log(response))
-            .catch(err => console.error(err))
+    clearBooks: function () {
+        let con = confirm("Удалить все книги?");
+        if (con) {
+            axios
+                .get("http://localhost:3000/api/books/clear")
+                .then((response) => console.log(response))
+                .catch((error) => {
+                    console.error("There was an error!", error);
+                });
+        }
     },
-    getBookById: async function (id) {
-        await axios.get(server + `/books/${id}`)
-            .then(response => console.log(response))
-            .catch(err => console.error(err))
+    getAllBookflow: function () {
+        axios
+            .get("http://localhost:3000/api/bookflow/get-all")
+            .then((response) => console.log(response))
+            .catch((error) => {
+                // this.errorMessage = error.message;
+                console.error("There was an error!", error);
+            });
     },
-    clearBooks: async function () {
-        await axios.delete(server + '/books/clear')
-            .then(response => console.log(response))
-            .catch(err => console.error(err))
+    createBookflow: async function (bookflow) {
+        await axios
+            .post("http://localhost:3000/api/bookflow/create", bookflow)
+            .then((response) => console.log(response))
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+    },
+    clearBookflow: function () {
+        let con = confirm("Удалить весь bookflow?");
+        if (con) {
+            axios
+                .get("http://localhost:3000/api/bookflow/clear")
+                .then((response) => console.log(response))
+                .catch((error) => {
+                    console.error("There was an error!", error);
+                });
+        }
+    },
+    getAllUsers: function () {
+        axios
+            .get("http://localhost:3000/api/users/get-all")
+            .then((response) => console.log(response))
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+    },
+    createUser: async function () {
+        await axios
+            .post("http://localhost:3000/api/users/create", this.user)
+            .then((response) => console.log(response))
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+    },
+    clearUsers: function () {
+        let con = confirm("Удалить всех пользователей?");
+        if (con) {
+            axios
+                .get("http://localhost:3000/api/users/clear")
+                .then((response) => console.log(response))
+                .catch((error) => {
+                    console.error("There was an error!", error);
+                });
+        } else {
+            console.log("Отмена удаления пользователя")
+        }
     },
 }
 
