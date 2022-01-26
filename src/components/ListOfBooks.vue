@@ -37,7 +37,7 @@ export default {
       this.$router.push({
         path: "/book",
         query: {
-          book_id: book.id,
+          book_id: book.Id,
         },
       });
       this.drawer = false;
@@ -50,7 +50,7 @@ export default {
     ...mapGetters(["books"]),
   },
   async mounted() {
-    this.booksToShow = this.books;
+    this.booksToShow = await this.books;
   },
 };
 </script>

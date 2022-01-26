@@ -123,10 +123,7 @@
 
           <v-btn color="success" class="mr-4" @click="send"> Отправить </v-btn>
         </v-form>
-        <img
-          :src="form.CoverPath"
-          alt=""
-        />
+        <img :src="form.CoverPath" alt="" />
       </v-col>
     </v-row>
   </v-container>
@@ -143,6 +140,8 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 const storage = getStorage();
+
+import jsMethods from "../apiScripts/node";
 
 export default {
   components: { About, ImageUploader },
@@ -169,7 +168,7 @@ export default {
         Series: 515,
       },
       form: {
-        Id:"",
+        Id: "",
         Name: "",
         Annotation: "",
         CoverPath: "",
@@ -195,7 +194,7 @@ export default {
   methods: {
     clearingForm: function () {
       this.form = {
-        Id:"",
+        Id: "",
         Name: "",
         Annotation: "",
         CoverPath: "",
@@ -207,7 +206,6 @@ export default {
         PublisherName: "",
         PageCount: "",
         Series: "",
-        Id: "",
         Status: "",
         TimeStamp: "",
       };
@@ -216,18 +214,12 @@ export default {
       const headers = {
         "content-type": "application/json",
       };
+      let form = this.form;
 
-      axios
-        .post("http://localhost:8080/api/books/create", this.form, {
-          headers: headers,
-        })
-        .then((response) => {
-          console.log(response);
-          this.clearingForm();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      form.TimeStamp = Date.now();
+      form.Id = Date.now();
+
+      jsMethods.createBook(form);
     },
     setImage: function (img) {
       // img - объект, содержащий много ифнормации об изображении
@@ -248,7 +240,6 @@ export default {
             });
         }
       );
-      
     },
     uploadImageStart: function () {
       console.log("UPLOAD STARTED");

@@ -17,7 +17,6 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
-  
     </v-navigation-drawer>
 
     <v-app-bar app hide-on-scroll>
@@ -112,8 +111,8 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { getAuth, signOut } from "firebase/auth";
-import books from '../src/db/books'
-
+// import books from "../src/db/books";
+import jsMethods from "./apiScripts/node";
 
 export default {
   name: "App",
@@ -151,12 +150,11 @@ export default {
         title: "Информация о пользователе",
         path: "/userinfo",
       },
-        {
+      {
         title: "Админ панель",
         path: "/admin",
       },
     ],
-  
   }),
   methods: {
     routeTo: function (path) {
@@ -181,19 +179,18 @@ export default {
   computed: {
     ...mapGetters({
       user: "user",
-     
     }),
   },
-  mounted() {
+  async mounted() {
+    let books = await jsMethods.getAllBooks();
+    // This is an ACTION
+    console.log(books);
+
     this.getAllBooks(books);
-  
-   
   },
- 
 };
 </script>
 <style lang="scss">
-
 .navicons {
   cursor: pointer;
   opacity: 0.6;

@@ -13,14 +13,14 @@
                   max-width="250"
                   :aspect-ratio="9 / 16"
                   contain
-                  :src="currentBook.image"
+                  :src="currentBook.CoverPath"
                 ></v-img> </v-col
               ><v-col
                 ><div class="text-caption">
-                  Автор: {{ currentBook.authors }}
+                  Автор: {{ currentBook.Authors }}
                 </div>
                 <div class="text-caption">
-                  Издательство: {{ currentBook.publisher }},
+                  Издательство: {{ currentBook.PublisherName }},
                   {{ currentBook.date }} г.
                 </div>
                 <div class="text-caption">
@@ -29,7 +29,7 @@
 
                 <div class="text-caption">ISBN: {{ currentBook.ISBN }}</div>
                 <div class="text-caption">
-                  Страниц: {{ currentBook.pagesCount }}
+                  Страниц: {{ currentBook.PageCount }}
                 </div>
                 <v-btn
                   v-if="user.loggedIn"
@@ -56,9 +56,9 @@
 
         <v-col class="col-12 col-md-6">
           <div class="text-caption">
-            <b>Аннотация к книге "{{ currentBook.name }}"</b>
+            <b>Аннотация к книге "{{ currentBook.Name }}"</b>
           </div>
-          <span class="text-caption">{{ currentBook.annotation }}</span>
+          <span class="text-caption">{{ currentBook.Annotation }}</span>
         </v-col>
       </v-row>
     </v-container>
@@ -74,7 +74,7 @@ export default {
   }),
   methods: {
     takeBook: function () {
-      console.log(this.books[this.bookId].name);
+      console.log(this.books.find((book) => book.Id == this.bookId).Name);
     },
     routeTo: function (path) {
       this.$router.push(path);
@@ -89,7 +89,7 @@ export default {
   },
   mounted() {
     this.bookId = this.$route.query.book_id;
-    this.currentBook = this.books.find((x) => x.id == this.bookId);
+    this.currentBook = this.books.find((x) => x.Id == this.bookId);
     console.log(this.currentBook);
   },
 };

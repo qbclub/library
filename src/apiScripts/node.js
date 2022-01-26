@@ -4,14 +4,20 @@ const server = 'http://localhost:8080/api';
 
 const jsMethods = {
     // send request to get all books
-    getAllBooks: function () {
-        axios
+    getAllBooks: async function () {
+        let books = null;
+        await axios
             .get("http://localhost:3000/api/books/get-all")
-            .then((response) => console.log(response))
+            .then((response) => {
+                // console.log(response.data);
+                books = response.data
+            })
             .catch((error) => {
                 // this.errorMessage = error.message;
                 console.error("There was an error!", error);
             });
+        // console.log(books)
+        return books;
     },
     getBookById: function (id) {
         axios
@@ -28,7 +34,6 @@ const jsMethods = {
             .post("http://localhost:3000/api/books/create", book)
             .then((response) => console.log(response))
             .catch((error) => {
-                this.errorMessage = error.message;
                 console.error("There was an error!", error);
             });
     },
@@ -48,7 +53,6 @@ const jsMethods = {
             .get("http://localhost:3000/api/bookflow/get-all")
             .then((response) => console.log(response))
             .catch((error) => {
-                // this.errorMessage = error.message;
                 console.error("There was an error!", error);
             });
     },
