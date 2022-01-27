@@ -30,7 +30,30 @@
       <v-row class="flex-column text-center">
         <h2>Обращение к серверу на Node</h2>
         <v-col class="d-flex justify-space-around">
-          <v-btn @click="this.jsMethods.getAllBooks">get All Books</v-btn>
+          <!-- <v-btn @click="this.jsMethods.getAllBooks">get All Books</v-btn> -->
+        </v-col>
+        <v-col cols="8" class="d-flex justify-space-around">
+          createBookflow
+          <v-form>
+            <v-text-field
+              v-model="bookflowForm.BookId"
+              label="BookId"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="bookflowForm.UserId"
+              label="UserId"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="bookflowForm.BookStatus"
+              label="BookStatus"
+              required
+            ></v-text-field>
+            <v-btn color="success" class="mr-4" @click="createBookflow">
+              Отправить
+            </v-btn>
+          </v-form>
         </v-col>
       </v-row>
     </v-container>
@@ -44,16 +67,34 @@ export default {
   data: () => ({
     backends: ["node", "c#"],
     chosenBackend: null,
-    jsMethods,
+    bookflowForm: {
+      Id: "",
+      BookId: "",
+      UserId: "", // ID-пользователя
+      BookStatus: "",
+      TimeStamp: "",
+    },
   }),
   computed: {
     ...mapGetters({
       user: "user",
+      bookflow: "bookflow",
       backend: "backend",
     }),
   },
   methods: {
-    ...mapActions(["getAllBooks", "getBackend"]),
+    ...mapActions(["getAllBookflow"]),
+    createBookflow: async function () {
+      // Update bookflow in vuex
+      let bookflow = await jsMethods.getAllBookflow();
+      this.getAllBookflow(bookflow);
+
+      let bookflowForm = this.bookflowForm;
+      bookflowForm.Id = this.bookflow.length + 1;
+      bookflowForm.TimeStamp = Date.now();
+
+      jsMethods.createBookflow(this.bookflowForm);
+    },
   },
   mounted() {
     this.chosenBackend = this.backend;

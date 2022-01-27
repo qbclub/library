@@ -18,7 +18,8 @@ let store = new Vuex.Store({
       data: null
     },
     backend: 'c#',
-    books: []
+    books: [],
+    bookflow: [],
   },
   mutations,
   actions,

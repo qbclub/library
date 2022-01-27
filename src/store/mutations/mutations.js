@@ -9,10 +9,10 @@ export default {
 
         state.books = books;
     },
-    GET_ALL_BOOKSFLOW(state, booksflow) {
-        state.booksflow = booksflow;
+    GET_ALL_BOOKFLOW(state, bookflow) {
+        state.bookflow = bookflow;
     },
-    SET_BACKEND(state,serverType){
+    SET_BACKEND(state, serverType) {
         state.backend = serverType
     }
 }

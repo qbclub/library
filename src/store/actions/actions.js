@@ -17,15 +17,15 @@ export default {
     }
   },
 
- getAllBooks({commit},books) {
+  getAllBooks({ commit }, books) {
     commit('GET_ALL_BOOKS', books)
   },
 
-  getAllBooksflow({commit}) {
-    commit('GET_ALL_BOOKSFLOW', books)
+  getAllBookflow({ commit }, bookflow) {
+    commit('GET_ALL_BOOKFLOW', bookflow)
   },
-  getBackend({commit},serverType) {
-    commit('SET_BACKEND', serverType )
+  getBackend({ commit }, serverType) {
+    commit('SET_BACKEND', serverType)
   },
 
 

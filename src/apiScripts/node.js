@@ -48,13 +48,18 @@ const jsMethods = {
                 });
         }
     },
-    getAllBookflow: function () {
-        axios
+    getAllBookflow: async function () {
+        let bookflow = null;
+        await axios
             .get("http://localhost:3000/api/bookflow/get-all")
-            .then((response) => console.log(response))
+            .then((response) => {
+                console.log(response)
+                bookflow = response.data
+            })
             .catch((error) => {
                 console.error("There was an error!", error);
             });
+        return bookflow;
     },
     createBookflow: async function (bookflow) {
         await axios

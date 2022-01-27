@@ -131,7 +131,6 @@
 
 <script>
 import About from "../views/About.vue";
-import axios from "axios";
 import ImageUploader from "vue-image-upload-resize";
 import {
   getStorage,

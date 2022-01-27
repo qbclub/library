@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col
-          v-for="(bookEvent, i) in booksflow"
+          v-for="(bookEvent, i) in bookflow"
           :key="i"
           cols="12"
           sm="6"
@@ -51,7 +51,7 @@ export default {
     findUser: function (Userid) {},
   },
   computed: {
-    ...mapGetters(["books", "booksflow"]),
+    ...mapGetters(["books", "bookflow"]),
   },
   mounted() {},
 };

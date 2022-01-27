@@ -5,8 +5,8 @@ export default {
     books(state) {
         return state.books;
     },
-    booksflow(state) {
-        return state.booksflow
+    bookflow(state) {
+        return state.bookflow
     },
     backend(state) {
         return state.backend

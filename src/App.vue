@@ -174,7 +174,7 @@ export default {
 
       this.dialog = false;
     },
-    ...mapActions(["getAllBooks"]),
+    ...mapActions(["getAllBooks", "getAllBookflow"]),
   },
   computed: {
     ...mapGetters({
@@ -183,10 +183,13 @@ export default {
   },
   async mounted() {
     let books = await jsMethods.getAllBooks();
+    let bookflow = await jsMethods.getAllBookflow();
     // This is an ACTION
-    console.log(books);
+    console.log("books: ", books);
+    console.log("bookflow:  ", bookflow);
 
     this.getAllBooks(books);
+    this.getAllBookflow(bookflow);
   },
 };
 </script>
