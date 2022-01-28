@@ -181,7 +181,7 @@ export default {
       user: "user",
     }),
   },
-  async mounted() {
+  async beforeMount() {
     let books = await jsMethods.getAllBooks();
     let bookflow = await jsMethods.getAllBookflow();
     // This is an ACTION

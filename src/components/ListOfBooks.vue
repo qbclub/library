@@ -49,8 +49,8 @@ export default {
   computed: {
     ...mapGetters(["books"]),
   },
-  async mounted() {
-    this.booksToShow = await this.books;
+  mounted() {
+    this.booksToShow = this.books;
   },
 };
 </script>

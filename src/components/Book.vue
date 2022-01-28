@@ -90,7 +90,7 @@ export default {
   mounted() {
     this.bookId = this.$route.query.book_id;
     this.currentBook = this.books.find((x) => x.Id == this.bookId);
-    console.log(this.currentBook);
+    console.log("showing book: ", this.currentBook);
   },
 };
 </script>

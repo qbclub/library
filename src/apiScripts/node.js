@@ -9,7 +9,6 @@ const jsMethods = {
         await axios
             .get("http://localhost:3000/api/books/get-all")
             .then((response) => {
-                // console.log(response.data);
                 books = response.data
             })
             .catch((error) => {
@@ -19,8 +18,8 @@ const jsMethods = {
         // console.log(books)
         return books;
     },
-    getBookById: function (id) {
-        axios
+    getBookById: async function (id) {
+        await axios
             .get(`http://localhost:3000/api/books?id=${id}`)
             .then((response) => console.log(response))
             .catch((error) => {
@@ -28,11 +27,11 @@ const jsMethods = {
             });
     },
     createBook: async function (book) {
-        console.log(book);
+        console.log("create book: ", book);
         //запрос отправляется на адрес https://cubit-2021.appspot.com/api/insert
         await axios
             .post("http://localhost:3000/api/books/create", book)
-            .then((response) => console.log(response))
+            .then((response) => console.log("book created\nresponse status: ", response.status))
             .catch((error) => {
                 console.error("There was an error!", error);
             });
@@ -53,7 +52,6 @@ const jsMethods = {
         await axios
             .get("http://localhost:3000/api/bookflow/get-all")
             .then((response) => {
-                console.log(response)
                 bookflow = response.data
             })
             .catch((error) => {
@@ -64,7 +62,9 @@ const jsMethods = {
     createBookflow: async function (bookflow) {
         await axios
             .post("http://localhost:3000/api/bookflow/create", bookflow)
-            .then((response) => console.log(response))
+            .then((response) => {
+                console.log("Created bookflow: ", bookflow);
+            })
             .catch((error) => {
                 console.error("There was an error!", error);
             });
@@ -74,7 +74,9 @@ const jsMethods = {
         if (con) {
             axios
                 .get("http://localhost:3000/api/bookflow/clear")
-                .then((response) => console.log(response))
+                .then((response) => {
+                    response.send('Clear book!')
+                })
                 .catch((error) => {
                     console.error("There was an error!", error);
                 });
@@ -101,7 +103,9 @@ const jsMethods = {
         if (con) {
             axios
                 .get("http://localhost:3000/api/users/clear")
-                .then((response) => console.log(response))
+                .then((response) => {
+                    console.log('Clear USERS ', response)
+                })
                 .catch((error) => {
                     console.error("There was an error!", error);
                 });

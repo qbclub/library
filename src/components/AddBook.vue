@@ -235,13 +235,14 @@ export default {
               this.form.CoverPath = url;
             })
             .catch((error) => {
-              console.log(error);
+              console.error(error);
             });
         }
       );
+      console.log("UPLOAD COVER IMAGE FINISHED");
     },
     uploadImageStart: function () {
-      console.log("UPLOAD STARTED");
+      console.log("UPLOAD COVER IMAGE STARTED");
     },
   },
 };

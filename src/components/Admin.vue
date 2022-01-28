@@ -32,8 +32,8 @@
         <v-col class="d-flex justify-space-around">
           <!-- <v-btn @click="this.jsMethods.getAllBooks">get All Books</v-btn> -->
         </v-col>
-        <v-col cols="8" class="d-flex justify-space-around">
-          createBookflow
+        <h4>createBookflow</h4>
+        <v-col class="col-8">
           <v-form>
             <v-text-field
               v-model="bookflowForm.BookId"
