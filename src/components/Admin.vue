@@ -12,25 +12,12 @@
           ></v-select>
         </v-col>
       </v-row>
-      <v-row class="flex-column text-center">
-        <h2>Регистрация</h2>
-        <v-col class="d-flex justify-space-around">
-          <v-btn>Пользователь</v-btn>
-          <v-btn>Книга</v-btn>
-        </v-col>
-      </v-row>
-      <v-row class="flex-column text-center">
-        <h2>Движение</h2>
-        <v-col class="d-flex justify-space-around">
-          <v-btn>Выдать книгу</v-btn>
-          <v-btn>Принять книгу</v-btn>
-          <v-btn>Журнал</v-btn>
-        </v-col>
-      </v-row>
-      <v-row class="flex-column text-center">
+      <userActions />
+      <bookActions />
+      <bookflowActions />
+      <!-- <v-row class="flex-column text-center">
         <h2>Обращение к серверу на Node</h2>
         <v-col class="d-flex justify-space-around">
-          <!-- <v-btn @click="this.jsMethods.getAllBooks">get All Books</v-btn> -->
         </v-col>
         <h4>createBookflow</h4>
         <v-col class="col-8">
@@ -55,7 +42,7 @@
             </v-btn>
           </v-form>
         </v-col>
-      </v-row>
+      </v-row> -->
     </v-container>
   </div>
 </template>
@@ -63,7 +50,16 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import jsMethods from "../apiScripts/node";
+import userActions from "./admin/userActions.vue";
+import bookActions from "./admin/bookActions.vue";
+import bookflowActions from "./admin/bookflowActions.vue";
+
 export default {
+  components: {
+    userActions,
+    bookActions,
+    bookflowActions,
+  },
   data: () => ({
     backends: ["node", "c#"],
     chosenBackend: null,
@@ -94,6 +90,9 @@ export default {
       bookflowForm.TimeStamp = Date.now();
 
       jsMethods.createBookflow(this.bookflowForm);
+    },
+    routeTo(path) {
+      this.$router.push(path);
     },
   },
   mounted() {
