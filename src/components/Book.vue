@@ -1,6 +1,12 @@
 <template>
   <div class="book">
     <v-container>
+      <router-link to="/" style="text-decoration: none" >
+        <div>
+          <span class="fi fi-rr-angle-left"> </span>
+        </div>
+      </router-link>
+
       <span class="text-h6"
         >{{ currentBook.authors }}: {{ currentBook.name }}
       </span>
@@ -35,6 +41,7 @@
                   v-if="user.loggedIn"
                   depressed
                   small
+                  @click="snackbar = true"
                   class="ma-4 secondary"
                   v-on:click="takeBook"
                   >Взять книгу</v-btn
@@ -62,6 +69,11 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-snackbar v-model="snackbar" :timeout="timeout" color="primary">
+      <div class="text-center">
+        {{ text }}
+      </div>
+    </v-snackbar>
   </div>
 </template>
 
@@ -71,6 +83,10 @@ export default {
   data: () => ({
     currentBook: {},
     bookId: 1,
+    snackbar: false,
+    text: `Книга зарезервирована!`,
+
+    timeout: 2000,
   }),
   methods: {
     takeBook: function () {
@@ -96,4 +112,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+ a {
+  color: #000!important;
+}
 </style>
