@@ -4,7 +4,8 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [
+  {
     path: '/about',
     name: 'About',
 
@@ -62,6 +63,24 @@ const routes = [{
     name: 'Admin',
 
     component: () => import('../components/Admin.vue')
+  },
+  {
+    path: '/user-actions',
+    name: 'UserActions',
+
+    component: () => import('../components/admin/userActions.vue')
+  },
+  {
+    path: '/book-actions',
+    name: 'BookActions',
+
+    component: () => import('../components/admin/bookActions.vue')
+  },
+  {
+    path: '/bookflow-actions',
+    name: 'BookflowActions',
+
+    component: () => import('../components/admin/bookflowActions.vue')
   }
 ]
 

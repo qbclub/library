@@ -13,10 +13,23 @@
           ></v-select>
         </v-col>
       </v-row>
-    <v-btn v-on:click="clearBooksDB()"> Отчистить базу книг</v-btn>
-      <userActions />
-      <bookActions />
-      <bookflowActions />
+      <v-row class="justify-center">
+        <v-col cols="8">
+          <v-btn v-on:click="clearBooksDB()" block class="mb-8" color="error">
+            Отчистить базу книг</v-btn
+          >
+          <v-btn @click="routeTo('/user-actions')" block class="mb-8"
+            >user actions</v-btn
+          >
+          <v-btn @click="routeTo('/book-actions')" block class="mb-8"
+            >book actions</v-btn
+          >
+          <v-btn @click="routeTo('/bookflow-actions')" block class="mb-8"
+            >bookflow actions</v-btn
+          >
+        </v-col>
+      </v-row>
+
       <!-- <v-row class="flex-column text-center">
         <h2>Обращение к серверу на Node</h2>
         <v-col class="d-flex justify-space-around">
@@ -52,16 +65,9 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import jsMethods from "../apiScripts/node";
-import userActions from "./admin/userActions.vue";
-import bookActions from "./admin/bookActions.vue";
-import bookflowActions from "./admin/bookflowActions.vue";
 
 export default {
-  components: {
-    userActions,
-    bookActions,
-    bookflowActions,
-  },
+  components: {},
   data: () => ({
     backends: ["node", "c#"],
     chosenBackend: null,
