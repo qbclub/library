@@ -1,8 +1,8 @@
 <template>
   <v-container>
     <v-row class="justify-center text-center">
-      <v-col cols="8"
-        ><h1>book actions</h1>
+       <v-col cols="12"
+        >
         <AddBook />
       </v-col>
     </v-row>
