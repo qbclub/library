@@ -17,7 +17,7 @@ let store = new Vuex.Store({
       loggedIn: false,
       data: null
     },
-    backend: 'c#',
+    backend: 'node',
     books: [],
     bookflow: [],
   },

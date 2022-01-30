@@ -6,9 +6,8 @@
           <span class="fi fi-rr-angle-left"> </span>
         </div>
       </router-link>
-
       <span class="text-h6"
-        >{{ currentBook.authors }}: {{ currentBook.name }}
+        >{{ currentBook.Authors }}: {{ currentBook.Name }}
       </span>
       <v-row class="mt-2">
         <v-col>

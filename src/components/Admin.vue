@@ -12,6 +12,7 @@
           ></v-select>
         </v-col>
       </v-row>
+    <v-btn v-on:click="clearBooksDB()"> Отчистить базу книг</v-btn>
       <userActions />
       <bookActions />
       <bookflowActions />
@@ -79,7 +80,7 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(["getAllBookflow"]),
+    ...mapActions(["getAllBookflow", "clearBooksDB"]),
     createBookflow: async function () {
       // Update bookflow in vuex
       let bookflow = await jsMethods.getAllBookflow();

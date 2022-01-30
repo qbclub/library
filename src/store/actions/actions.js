@@ -17,8 +17,8 @@ export default {
     }
   },
 
-  getAllBooks({ commit }, books) {
-    commit('GET_ALL_BOOKS', books)
+  getAllBooks({ commit }) {
+    commit('GET_ALL_BOOKS')
   },
 
   getAllBookflow({ commit }, bookflow) {
@@ -26,6 +26,12 @@ export default {
   },
   getBackend({ commit }, serverType) {
     commit('SET_BACKEND', serverType)
+  },
+  createBook({ commit }, book) {
+    commit('CREATE_BOOK', book)
+  },
+  clearBooksDB({ commit }) {
+    commit('CLEAR_BOOKS_DB')
   },
 
 

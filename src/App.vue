@@ -112,7 +112,7 @@
 import { mapGetters, mapActions } from "vuex";
 import { getAuth, signOut } from "firebase/auth";
 // import books from "../src/db/books";
-import jsMethods from "./apiScripts/node";
+// import jsMethods from "./apiScripts/node";
 
 export default {
   name: "App",
@@ -181,16 +181,12 @@ export default {
       user: "user",
     }),
   },
-  async beforeMount() {
-    let books = await jsMethods.getAllBooks();
-    let bookflow = await jsMethods.getAllBookflow();
-    // This is an ACTION
-    console.log("books: ", books);
-    console.log("bookflow:  ", bookflow);
-
-    this.getAllBooks(books);
-    this.getAllBookflow(bookflow);
+  mounted () {
+  
+    this.getAllBooks();
+    this.getAllBookflow();
   },
+  
 };
 </script>
 <style lang="scss">
