@@ -13,7 +13,7 @@
             v-model="form.Annotation"
             label="Краткое описание книги"
             counter
-            maxlength="300"
+            maxlength="1000"
             full-width
             required
           ></v-textarea>
@@ -123,7 +123,7 @@
 
           <v-btn color="success" class="mr-4" @click="send"> Отправить </v-btn>
         </v-form>
-        <img :src="form.CoverPath" alt="" />
+       
       </v-col>
     </v-row>
   </v-container>
@@ -131,6 +131,7 @@
 
 <script>
 import About from "../views/About.vue";
+import { mapActions } from "vuex";
 import ImageUploader from "vue-image-upload-resize";
 import {
   getStorage,
@@ -140,32 +141,13 @@ import {
 } from "firebase/storage";
 const storage = getStorage();
 
-import jsMethods from "../apiScripts/node";
+
 
 export default {
   components: { About, ImageUploader },
   data: function () {
     return {
-      example: {
-        Id: 5,
-        Annotation: "party",
-        Name: "food1",
-        TableOfContents: "Table",
-        CoverPath: "http://google.com",
-        Authors: ["Jacey", "Taylor", "Mary"],
-        Sections: ["Javascript", "Java"],
-        Status: "Ready",
-        ReservedQueue: [1, 2],
-        TemporaryOwner: "Vlad",
-        DateOfGivenOut: "2021-12-21T23:25:27.338Z",
-        ReleaseDate: "2021-12-21T23:25:27.338Z",
-        TimeStamp: "2021-12-21T23:25:27.338Z",
-        PhysicalPlace: "path to zhopa",
-        ISBN: "123456",
-        PublisherName: "Alpina",
-        PageCount: 234,
-        Series: 515,
-      },
+     
       form: {
         Id: "",
         Name: "",
@@ -174,7 +156,7 @@ export default {
         Authors: "",
         Sections: "",
         ReleaseDate: "",
-        PhysicalPlace: "",
+        PhysicalPlace: "Калинина, 2а",
         ISBN: "",
         PublisherName: "",
         PageCount: "",
@@ -213,12 +195,9 @@ export default {
       const headers = {
         "content-type": "application/json",
       };
-      let form = this.form;
-
-      form.TimeStamp = Date.now();
-      form.Id = Date.now();
-
-      jsMethods.createBook(form);
+      this.form.TimeStamp = Date.now();
+    
+      this.createBook(this.form);
     },
     setImage: function (img) {
       // img - объект, содержащий много ифнормации об изображении
@@ -227,6 +206,7 @@ export default {
       this.cover.newHeight = img.info.newHeight;
     },
     uploadImageComplete: function () {
+       this.form.Id = Date.now();
       const storageRef = ref(storage, "books/" + this.form.Id);
       uploadString(storageRef, this.cover.image, "data_url").then(
         (snapshot) => {
@@ -244,6 +224,7 @@ export default {
     uploadImageStart: function () {
       console.log("UPLOAD COVER IMAGE STARTED");
     },
+    ...mapActions(["createBook"]),
   },
 };
 </script>
