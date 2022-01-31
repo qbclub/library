@@ -103,8 +103,11 @@ export default {
     }),
   },
   mounted() {
-    this.bookId = this.$route.query.book_id;
+    this.$route.query.book_id?this.bookId = this.$route.query.book_id: this.bookId = localStorage.getItem(bookId)
+    
+    console.log(this.bookId)
     this.currentBook = this.books.find((x) => x.Id == this.bookId);
+    localStorage.setItem('bookId', this.bookId)
     console.log("showing book: ", this.currentBook);
   },
 };
