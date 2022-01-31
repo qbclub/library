@@ -50,7 +50,7 @@
             </v-col>
             <v-col class="d-flex align-center"  cols="12" sm="6">
           <v-checkbox
-          v-model="form.isAdmin"
+          v-model="form.UserType"
           ></v-checkbox>
           <span>{{form.isAdmin? 'Администратор': 'Пользователь'}}</span> 
             </v-col>
@@ -106,7 +106,7 @@
           <v-row>
             <v-col cols="12" sm="6">
               <v-text-field
-                v-model="form.PhoneNumber"
+                v-model="form.Contacts.PhoneNumber"
                 label="Номер телефона"
                 required
               ></v-text-field>
@@ -114,7 +114,7 @@
 
             <v-col cols="12" sm="6">
               <v-text-field
-                v-model="form.Email"
+                v-model="form.Contacts.Email"
                 label="Почта"
                 required
               ></v-text-field>
@@ -122,7 +122,7 @@
 
             <v-col cols="12" >
               <v-text-field
-                v-model="form.SocCeti"
+                v-model="form.Contacts.SocCeti"
                 label="Соц.сети"
                 required
               ></v-text-field>
@@ -138,7 +138,6 @@
 
 <script>
 import About from "../views/About.vue";
-import methods from "../apiScripts/csharp.js";
 import ImageUploader from "vue-image-upload-resize";
 import {
   getStorage,
@@ -147,6 +146,8 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 const storage = getStorage();
+import { mapActions } from "vuex";
+import jsMethods from "../apiScripts/node";
 export default {
   components: { About, ImageUploader },
   data: function () {
@@ -177,6 +178,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["createUser"]),
     clearingForm: function () {
       this.form = {
         UserId: "",
@@ -197,12 +199,18 @@ export default {
       };
     },
     send: async function () {
-      this.form.UserId = "2";
+      this.form.UserId = Date.now();
       this.form.BirthDate = "2022-01-14T20:04:23.31Z";
+      this.form.UserType == true
+        ? (this.form.UserType = "Администратор")
+        : (this.form.UserType = "Пользователь");
       const headers = {
         "content-type": "application/json",
       };
-      console.log(methods.createUser(this.form));
+
+      this.createUser(this.form);
+      jsMethods.getAllUsers();
+
       // methods.createUser(this.form);
     },
     setImage: function (img) {

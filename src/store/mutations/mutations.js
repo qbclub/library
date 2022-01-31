@@ -22,20 +22,28 @@ export default {
     SET_BACKEND(state, serverType) {
         state.backend = serverType
     },
-    CREATE_BOOK(state, book){
+    CREATE_BOOK(state, book) {
         axios
-        .post("http://localhost:3000/api/books/create", book)
-        .then((response) => console.log("book created\nresponse status: ", response.status))
-        .catch((error) => {
-            console.error("There was an error!", error);
-        });
+            .post("http://localhost:3000/api/books/create", book)
+            .then((response) => console.log("book created\nresponse status: ", response.status))
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
     },
-    CLEAR_BOOKS_DB(state){
-         axios
-         .get("http://localhost:3000/api/books/clear")
-         .then((response) => console.log(response))
-         .catch((error) => {
-             console.error("There was an error!", error);
-         });
-    }
+    CLEAR_BOOKS_DB(state) {
+        axios
+            .get("http://localhost:3000/api/books/clear")
+            .then((response) => console.log(response))
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+    },
+    CREATE_USER(state, user) {
+        axios
+            .post("http://localhost:3000/api/users/create", user)
+            .then((response) => console.log("user created\nresponse status: ", response.status))
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+    },
 }

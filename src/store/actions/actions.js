@@ -33,6 +33,9 @@ export default {
   clearBooksDB({ commit }) {
     commit('CLEAR_BOOKS_DB')
   },
+  createUser({ commit }, user) {
+    commit('CREATE_USER', user)
+  }
 
 
 }
