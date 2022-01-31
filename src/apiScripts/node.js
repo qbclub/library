@@ -113,6 +113,16 @@ const jsMethods = {
             console.log("Отмена удаления пользователя")
         }
     },
+    updateUser: function (newUser) {
+        axios
+            .put('http://localhost:3000/api/users/update', newUser)
+            .then((response) => {
+                console.log('Update user ', response)
+            })
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+    }
 }
 
 export default jsMethods
