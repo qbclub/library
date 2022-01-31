@@ -172,33 +172,7 @@ export default {
     };
   },
   methods: {
-    clearingForm: function () {
-      this.form = {
-        Id: "",
-        Name: "",
-        Annotation: "",
-        CoverPath: "",
-        Authors: "",
-        Sections: "",
-        ReleaseDate: "",
-        PhysicalPlace: "",
-        ISBN: "",
-        PublisherName: "",
-        PageCount: "",
-        Series: "",
-        Status: "",
-        TimeStamp: "",
-      };
-    },
-    send: function () {
-      const headers = {
-        "content-type": "application/json",
-      };
-      this.form.TimeStamp = Date.now();
     
-      this.createBook(this.form);
-      this.clearingForm();
-    },
     setImage: function (img) {
       // img - объект, содержащий много ифнормации об изображении
       this.cover.image = img.dataUrl;
@@ -219,12 +193,14 @@ export default {
             });
         }
       );
+      
       console.log("UPLOAD COVER IMAGE FINISHED");
     },
     uploadImageStart: function () {
       console.log("UPLOAD COVER IMAGE STARTED");
     },
     ...mapActions(["createBook"]),
+    
   },
 };
 </script>
