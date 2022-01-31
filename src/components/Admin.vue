@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <v-row class="align-center justify-end">
-        <v-col class="d-flex" cols="12" md="1">
+        <v-col class="d-flex" cols="12" md="2">
           <v-select
             :items="backends"
             label="Backend"
@@ -15,9 +15,7 @@
       </v-row>
       <v-row class="justify-center">
         <v-col cols="8">
-          <v-btn v-on:click="clearBooksDB()" block class="mb-8" color="error">
-            Отчистить базу книг</v-btn
-          >
+         
           <v-btn @click="routeTo('/user-actions')" block class="mb-8"
             >user actions</v-btn
           >
@@ -27,7 +25,23 @@
           <v-btn @click="routeTo('/bookflow-actions')" block class="mb-8"
             >bookflow actions</v-btn
           >
+           <v-btn @click.stop="dialog4 = true" block class="mb-8" color="error">
+            Отчистить базу книг</v-btn
+          >
         </v-col>
+        <v-dialog v-model="dialog4" max-width="290">
+          <v-card>
+            <v-card-title> Вы уверены? </v-card-title>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+
+              <v-btn color="red" text @click="dialog4 = false"> Нет </v-btn>
+
+              <v-btn text @click.prevent="clearBooksDB()"> Да </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-row>
 
       <!-- <v-row class="flex-column text-center">
@@ -81,6 +95,7 @@ export default {
     dialog: false,
     dialog1: false,
     dialog2: false,
+    dialog4: false,
   }),
   computed: {
     ...mapGetters({
