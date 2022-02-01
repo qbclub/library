@@ -45,5 +45,14 @@ export default {
             .catch((error) => {
                 console.error("There was an error!", error);
             });
+        state.user = user;
     },
+    UPDATE_USER(state, newUser) {
+        axios
+            .put("http://localhost:3000/api/users/update", newUser)
+            .then((response) => console.log("user updated\nresponse status: ", response.status))
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+    }
 }

@@ -153,7 +153,6 @@ export default {
   data: function () {
     return {
       form: {
-        UserId: "",
         FirstName: "",
         LastName: "",
         BirthDate: "",
@@ -178,10 +177,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["createUser"]),
+    ...mapActions(["updateUser"]),
     clearingForm: function () {
       this.form = {
-        UserId: "",
         FirstName: "",
         LastName: "",
         BirthDate: "",
@@ -199,7 +197,7 @@ export default {
       };
     },
     send: async function () {
-      this.form.UserId = Date.now();
+      // this.form.UserId = Date.now();
       this.form.BirthDate = "2022-01-14T20:04:23.31Z";
       this.form.UserType == true
         ? (this.form.UserType = "Администратор")
@@ -208,10 +206,8 @@ export default {
         "content-type": "application/json",
       };
 
-      this.createUser(this.form);
-      jsMethods.getAllUsers();
-
-      // methods.createUser(this.form);
+      this.updateUser(this.form);
+      // jsMethods.getAllUsers();
     },
     setImage: function (img) {
       // img - объект, содержащий много ифнормации об изображении
@@ -220,7 +216,10 @@ export default {
       this.cover.newHeight = img.info.newHeight;
     },
     uploadImageComplete: function () {
-      const storageRef = ref(storage, "users/" + this.form.UserId);
+      /**
+       * Поменять Date.now()
+       */
+      const storageRef = ref(storage, "users/" + Date.now().toString());
       uploadString(storageRef, this.cover.image, "data_url").then(
         (snapshot) => {
           getDownloadURL(snapshot.ref)
