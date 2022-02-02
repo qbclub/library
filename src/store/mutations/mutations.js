@@ -4,6 +4,17 @@ export default {
         state.user.loggedIn = value;
     },
     SET_USER(state, data) {
+        let Email = data.Email;
+        axios
+            .get(`http://localhost:3000/api/users/get-by-email?email=${Email}`)
+            .then((response) => {
+                console.log(response);
+                // state.user.info = response;
+            })
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+
         state.user.data = data;
     },
     GET_ALL_BOOKS(state) {

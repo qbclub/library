@@ -3,13 +3,12 @@
 export default {
   fetchUser({
     commit
-  }, user) {
-    commit("SET_LOGGED_IN", user !== null);
+  }, userEmail) {
+    commit("SET_LOGGED_IN", userEmail !== null);
 
-    if (user) {
+    if (userEmail) {
       commit("SET_USER", {
-        displayName: user.displayName,
-        email: user.email
+        Email: userEmail,
       });
     } else {
       commit("SET_USER", null);
