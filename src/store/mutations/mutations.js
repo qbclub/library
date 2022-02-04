@@ -4,18 +4,16 @@ export default {
         state.user.loggedIn = value;
     },
     SET_USER(state, data) {
-        let Email = data.Email;
+        let Email = data;
+        state.user.data = Email;
         axios
             .get(`http://localhost:3000/api/users/get-by-email?email=${Email}`)
             .then((response) => {
-                console.log(response);
-                // state.user.info = response;
+                state.user.info = response.data;
             })
             .catch((error) => {
                 console.error("There was an error!", error);
-            });
-
-        state.user.data = data;
+            })
     },
     GET_ALL_BOOKS(state) {
         axios
@@ -50,6 +48,7 @@ export default {
             });
     },
     CREATE_USER(state, user) {
+        console.log("CREATE_USER: ", user)
         axios
             .post("http://localhost:3000/api/users/create", user)
             .then((response) => console.log("user created\nresponse status: ", response.status))

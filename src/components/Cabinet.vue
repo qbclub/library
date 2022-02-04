@@ -73,26 +73,19 @@
   </v-container>
 </template>
 <script>
-import users from "../db/users";
 import { mapGetters } from "vuex";
 export default {
   data: () => ({
-    users,
     TakenBooks: [],
     ReservedBooks: [],
   }),
   mounted() {
     if (this.user.loggedIn) {
-      let email = this.user.data.email;
-      console.log(email);
-      let user = this.users.filter((user) => user.Contacts[0] == email)[0];
-      console.log(user);
-
-      this.TakenBooks = user.CurrentTakenBooks;
-      this.ReservedBooks = user.CurrentReservedBooks;
+      this.TakenBooks = user.info.CurrentTakenBooks;
+      this.ReservedBooks = user.info.CurrentReservedBooks;
     }
   },
-  computed: {
+  methods: {
     ...mapGetters({
       user: "user",
       books: "books",

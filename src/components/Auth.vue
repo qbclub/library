@@ -47,11 +47,12 @@ export default {
   methods: {
     ...mapActions(["fetchUser"]),
     submit() {
-      this.fetchUser(this.email);
-      return;
+      let vm = this;
       signInWithEmailAndPassword(auth, this.email, this.password)
         .then(() => {
           router.push({ path: "/" });
+          console.log("logged in with email: ", vm.email);
+          this.fetchUser(vm.email);
         })
         .catch((err) => {
           router.push({ path: "/reg" });

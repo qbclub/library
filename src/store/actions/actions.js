@@ -4,12 +4,10 @@ export default {
   fetchUser({
     commit
   }, userEmail) {
-    commit("SET_LOGGED_IN", userEmail !== null);
 
     if (userEmail) {
-      commit("SET_USER", {
-        Email: userEmail,
-      });
+      commit("SET_LOGGED_IN", true);
+      commit("SET_USER", userEmail);
     } else {
       commit("SET_USER", null);
       commit("SET_LOGGED_IN", false)
