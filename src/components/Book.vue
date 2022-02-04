@@ -1,7 +1,7 @@
 <template>
   <div class="book">
     <v-container>
-      <router-link to="/" style="text-decoration: none" >
+      <router-link to="/" style="text-decoration: none">
         <div>
           <span class="fi fi-rr-angle-left"> </span>
         </div>
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   data: () => ({
     currentBook: {},
@@ -88,8 +88,14 @@ export default {
     timeout: 2000,
   }),
   methods: {
+    ...mapActions(["reserveBook"]),
     takeBook: function () {
-      console.log(this.books.find((book) => book.Id == this.bookId).Name);
+      if (this.user.loggedIn) {
+        let c = confirm("Зарезервировать книгу?");
+        if (c) {
+          this.reserveBook(this.currentBook.Id);
+        }
+      }
     },
     routeTo: function (path) {
       this.$router.push(path);
@@ -103,18 +109,20 @@ export default {
     }),
   },
   mounted() {
-    this.$route.query.book_id?this.bookId = this.$route.query.book_id: this.bookId = localStorage.getItem(bookId)
-    
-    console.log(this.bookId)
+    this.$route.query.book_id
+      ? (this.bookId = this.$route.query.book_id)
+      : (this.bookId = localStorage.getItem(bookId));
+
+    console.log(this.bookId);
     this.currentBook = this.books.find((x) => x.Id == this.bookId);
-    localStorage.setItem('bookId', this.bookId)
+    localStorage.setItem("bookId", this.bookId);
     console.log("showing book: ", this.currentBook);
   },
 };
 </script>
 
 <style lang="scss" scoped>
- a {
-  color: #000!important;
+a {
+  color: #000 !important;
 }
 </style>

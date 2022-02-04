@@ -3,10 +3,11 @@ export default {
     SET_LOGGED_IN(state, value) {
         state.user.loggedIn = value;
     },
-    SET_USER(state, data) {
-        let Email = data;
-        state.user.data = Email;
-        axios
+    async SET_USER(state, data) {
+        let Email = data.email;
+        console.log(data.email)
+        state.user.data = data;
+        await axios
             .get(`http://localhost:3000/api/users/get-by-email?email=${Email}`)
             .then((response) => {
                 state.user.info = response.data;
@@ -46,6 +47,24 @@ export default {
             .catch((error) => {
                 console.error("There was an error!", error);
             });
+    },
+    RESERVE_BOOK(state, bookId) {
+        let e = {
+            Id: Date.now(),
+            BookId: bookId,
+            UserId: state.user.info.UserId,
+            BookStatus: 'Зарезервирована',
+            TimeStamp: Date.now()
+        }
+        axios
+            .post('http://localhost:3000/api/bookflow/create', e)
+            .then((response) => {
+                console.log("Responsed on reserve book with status: ", response.status)
+                state.user.info.CurrentReservedBooks.push(bookId)
+                // .push(bookId)
+            })
+            .catch(err => console.error(err))
+
     },
     CREATE_USER(state, user) {
         console.log("CREATE_USER: ", user)

@@ -52,12 +52,13 @@ export default {
         .then(() => {
           router.push({ path: "/" });
           console.log("logged in with email: ", vm.email);
-          this.fetchUser(vm.email);
         })
         .catch((err) => {
           router.push({ path: "/reg" });
           this.error = err.message;
         });
+      console.log("im");
+      this.fetchUser({ email: this.email });
     },
   },
 };

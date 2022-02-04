@@ -3,7 +3,8 @@
 export default {
   fetchUser({
     commit
-  }, userEmail) {
+  }, user) {
+
 
     if (userEmail) {
       commit("SET_LOGGED_IN", true);
@@ -13,11 +14,28 @@ export default {
       commit("SET_LOGGED_IN", false)
     }
   },
+  fetchUser({
+    commit
+  }, user) {
+    commit("SET_LOGGED_IN", user !== null);
+
+    if (user) {
+      commit("SET_USER", {
+        displayName: user.displayName,
+        email: user.email
+      });
+    } else {
+      commit("SET_USER", null);
+      commit("SET_LOGGED_IN", false)
+    }
+  },
 
   getAllBooks({ commit }) {
     commit('GET_ALL_BOOKS')
   },
-
+  reserveBook({ commit }, bookId) {
+    commit('RESERVE_BOOK', bookId)
+  },
   getAllBookflow({ commit }, bookflow) {
     commit('GET_ALL_BOOKFLOW', bookflow)
   },
