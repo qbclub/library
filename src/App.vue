@@ -111,6 +111,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { getAuth, signOut } from "firebase/auth";
+import axios from "axios";
 // import books from "../src/db/books";
 // import jsMethods from "./apiScripts/node";
 
@@ -174,19 +175,27 @@ export default {
 
       this.dialog = false;
     },
-    ...mapActions(["getAllBooks", "getAllBookflow"]),
+    ...mapActions(["getAllBooks", "getAllBookflow", "getUserInfo"]),
   },
   computed: {
     ...mapGetters({
       user: "user",
     }),
   },
-  mounted () {
-  
+
+  mounted() {
+    axios
+      .get("http://localhost:3000/api/users/get-all")
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+
     this.getAllBooks();
     this.getAllBookflow();
   },
-  
 };
 </script>
 <style lang="scss">

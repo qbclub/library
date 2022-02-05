@@ -2,6 +2,9 @@ export default {
     user(state) {
         return state.user
     },
+    userInfo(state) {
+        return state.userInfo
+    },
     books(state) {
         return state.books;
     },

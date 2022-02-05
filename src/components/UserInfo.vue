@@ -52,7 +52,7 @@
           <v-checkbox
           v-model="form.UserType"
           ></v-checkbox>
-          <span>{{form.isAdmin? 'Администратор': 'Пользователь'}}</span> 
+          <span>{{form.UserType? 'Администратор': 'Пользователь'}}</span> 
             </v-col>
           </v-row>
           <v-row class="align-center">
@@ -177,7 +177,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["updateUser"]),
+    ...mapActions(["createUser"]),
     clearingForm: function () {
       this.form = {
         FirstName: "",
@@ -197,8 +197,8 @@ export default {
       };
     },
     send: async function () {
-      // this.form.UserId = Date.now();
-      this.form.BirthDate = "2022-01-14T20:04:23.31Z";
+      this.form.UserId = Date.now();
+    
       this.form.UserType == true
         ? (this.form.UserType = "Администратор")
         : (this.form.UserType = "Пользователь");
@@ -206,8 +206,8 @@ export default {
         "content-type": "application/json",
       };
 
-      this.updateUser(this.form);
-      // jsMethods.getAllUsers();
+      this.createUser(this.form);
+      
     },
     setImage: function (img) {
       // img - объект, содержащий много ифнормации об изображении

@@ -4,8 +4,24 @@ export default {
         state.user.loggedIn = value;
     },
     SET_USER(state, data) {
-        console.log(data)
+
         state.user.data = data;
+       
+    },
+    GET_USER_INFO(state,email){
+        if(email){
+         
+            axios
+            .post("http://localhost:3000/api/users/get-by-email", {email: email})
+            .then((response) => state.userInfo = response.data)
+            .catch((error) => {
+                console.error("There was an error!", error);
+            })
+        } else{
+            state.userInfo = {};
+        }
+       
+
     },
     GET_ALL_BOOKS(state) {
         axios
@@ -31,9 +47,17 @@ export default {
                 console.error("There was an error!", error);
             });
     },
-    CLEAR_BOOKS_DB(state) {
+    CLEAR_BOOKS_DB() {
         axios
             .get("http://localhost:3000/api/books/clear")
+            .then((response) => console.log(response))
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+    },
+    CLEAR_USERS_DB() {
+        axios
+            .get("http://localhost:3000/api/users/clear")
             .then((response) => console.log(response))
             .catch((error) => {
                 console.error("There was an error!", error);
@@ -58,14 +82,14 @@ export default {
 
     },
     CREATE_USER(state, user) {
-        console.log("CREATE_USER: ", user)
+
         axios
             .post("http://localhost:3000/api/users/create", user)
             .then((response) => console.log("user created\nresponse status: ", response.status))
             .catch((error) => {
                 console.error("There was an error!", error);
             });
-        state.user = user;
+
     },
     UPDATE_USER(state, newUser) {
         axios

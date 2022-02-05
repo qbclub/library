@@ -111,6 +111,7 @@ export default {
     ...mapGetters({
       user: "user",
       books: "books",
+      userInfo: "userInfo",
     }),
   },
 

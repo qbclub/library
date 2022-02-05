@@ -15,6 +15,7 @@
       </v-row>
       <v-row class="justify-center">
         <v-col cols="8">
+          {{userInfo}}
           <v-btn @click="routeTo('/user-actions')" block class="mb-8"
             >Добавить пользователя</v-btn
           >
@@ -26,6 +27,9 @@
           >
           <v-btn @click.stop="dialog4 = true" block class="mb-8" color="error">
             Отчистить базу книг</v-btn
+          >
+            <v-btn @click.prevent = "clearUsersDB()" block class="mb-8" color="error">
+            Отчистить базу юзеров</v-btn
           >
       
         </v-col>
@@ -106,10 +110,11 @@ export default {
       user: "user",
       bookflow: "bookflow",
       backend: "backend",
+      userInfo: "userInfo",
     }),
   },
   methods: {
-    ...mapActions(["getAllBookflow", "clearBooksDB"]),
+    ...mapActions(["getAllBookflow", "clearBooksDB", "clearUsersDB"]),
     createBookflow: async function () {
       // Update bookflow in vuex
       let bookflow = await jsMethods.getAllBookflow();
