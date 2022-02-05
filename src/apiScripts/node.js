@@ -90,9 +90,17 @@ const jsMethods = {
                 console.error("There was an error!", error);
             });
     },
-    createUser: async function () {
+    createUser: async function (user) {
         await axios
-            .post("http://localhost:3000/api/users/create", this.user)
+            .post("http://localhost:3000/api/users/create", user)
+            .then((response) => console.log(response))
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+    },
+    updateUserFromAdmin: async function (userFromAdmin) {
+        await axios
+            .put("http://localhost:3000/api/users/update", userFromAdmin)
             .then((response) => console.log(response))
             .catch((error) => {
                 console.error("There was an error!", error);

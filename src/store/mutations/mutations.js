@@ -3,8 +3,18 @@ export default {
     SET_LOGGED_IN(state, value) {
         state.user.loggedIn = value;
     },
-    SET_USER(state, data) {
+    async SET_USER(state, data) {
+        let Email = data.email;
+        console.log(data.email)
         state.user.data = data;
+        await axios
+            .get(`http://localhost:3000/api/users/get-by-email?email=${Email}`)
+            .then((response) => {
+                state.user.info = response.data;
+            })
+            .catch((error) => {
+                console.error("There was an error!", error);
+            })
     },
     GET_ALL_BOOKS(state) {
         axios
@@ -38,12 +48,40 @@ export default {
                 console.error("There was an error!", error);
             });
     },
+    RESERVE_BOOK(state, bookId) {
+        let e = {
+            Id: Date.now(),
+            BookId: bookId,
+            UserId: state.user.info.UserId,
+            BookStatus: 'Зарезервирована',
+            TimeStamp: Date.now()
+        }
+        axios
+            .post('http://localhost:3000/api/bookflow/create', e)
+            .then((response) => {
+                console.log("Responsed on reserve book with status: ", response.status)
+                state.user.info.CurrentReservedBooks.push(bookId)
+                // .push(bookId)
+            })
+            .catch(err => console.error(err))
+
+    },
     CREATE_USER(state, user) {
+        console.log("CREATE_USER: ", user)
         axios
             .post("http://localhost:3000/api/users/create", user)
             .then((response) => console.log("user created\nresponse status: ", response.status))
             .catch((error) => {
                 console.error("There was an error!", error);
             });
+        state.user = user;
     },
+    UPDATE_USER(state, newUser) {
+        axios
+            .put("http://localhost:3000/api/users/update", newUser)
+            .then((response) => console.log("user updated\nresponse status: ", response.status))
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+    }
 }

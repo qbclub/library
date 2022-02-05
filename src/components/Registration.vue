@@ -2,6 +2,7 @@
   <div>
     <v-sheet class="d-flex align-center flex-column pa-10">
       <h2>Регистрация</h2>
+      <h1>Firebase отключён</h1>
       <v-container>
         <v-row class="align-center justify-center" no-gutters>
           <v-col cols="12" md="6">
@@ -54,7 +55,9 @@
                 </v-btn>
                 <v-btn @click="clear"> clear </v-btn>
               </form>
-               <router-link to="/auth"><p class="text-center  ma-8">Войти</p></router-link>
+              <router-link to="/auth"
+                ><p class="text-center ma-8">Войти</p></router-link
+              >
             </validation-observer>
           </v-col>
         </v-row>
@@ -102,7 +105,8 @@ extend("email", {
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 const auth = getAuth();
-import axios from "axios";
+
+import { mapActions } from "vuex";
 export default {
   components: {
     ValidationProvider,
@@ -116,6 +120,7 @@ export default {
   }),
 
   methods: {
+    ...mapActions(["createUser"]),
     submit() {
       this.$refs.observer.validate().then(this.userReg());
       setTimeout(this.clear, 1000);
@@ -126,7 +131,14 @@ export default {
       this.email = "";
       this.$refs.observer.reset();
     },
-    async userReg() {
+    userReg: async function () {
+      let user = {
+        UserId: Date.now(),
+        Contacts: { Email: this.email },
+      };
+
+      this.createUser(user);
+      return;
       createUserWithEmailAndPassword(auth, this.email, this.password)
         .then((data) => {
           console.log(data);
@@ -137,23 +149,6 @@ export default {
         .catch((err) => {
           this.error = err.message;
         });
-      return;
-      switch (this.$store.state.app.currentBackend) {
-        case "node":
-          console.log("use node");
-          let user = {
-            name: this.name,
-            email: this.email,
-            password: this.password,
-          };
-          await axios
-            .post("http://localhost:3000/api/users/create", user)
-            .then((response) => console.log(response))
-            .catch((error) => {
-              console.error("There was an error!", error);
-            });
-          break;
-      }
     },
   },
 };
