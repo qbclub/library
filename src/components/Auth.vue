@@ -38,14 +38,14 @@
 import router from "../router/index";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const auth = getAuth();
-import { mapActions } from "vuex";
+
 export default {
   data: () => ({
     email: "",
     password: "",
   }),
   methods: {
-    ...mapActions(["fetchUser"]),
+ 
     submit() {
       let vm = this;
       signInWithEmailAndPassword(auth, this.email, this.password)
@@ -57,8 +57,7 @@ export default {
           router.push({ path: "/reg" });
           this.error = err.message;
         });
-      console.log("im");
-      this.fetchUser({ email: this.email });
+   
     },
   },
 };

@@ -6,7 +6,7 @@
       <v-container>
         <v-row class="align-center justify-center" no-gutters>
           <v-col cols="12" md="6">
-            <validation-observer ref="observer" v-slot="{ invalid }">
+            <validation-observer ref="observer">
               <form @submit.prevent="submit">
                 <validation-provider
                   v-slot="{ errors }"
@@ -17,7 +17,6 @@
                     v-model="name"
                     :error-messages="errors"
                     label="Name"
-                    required
                   ></v-text-field>
                 </validation-provider>
 
@@ -30,7 +29,6 @@
                     v-model="email"
                     :error-messages="errors"
                     label="E-mail"
-                    required
                   ></v-text-field>
                 </validation-provider>
                 <validation-provider
@@ -46,13 +44,10 @@
                     minlength="6"
                     :error-messages="errors"
                     label="Password"
-                    required
                   ></v-text-field>
                 </validation-provider>
 
-                <v-btn class="mr-4" type="submit" :disabled="invalid">
-                  submit
-                </v-btn>
+                <v-btn class="mr-4" type="submit"> submit </v-btn>
                 <v-btn @click="clear"> clear </v-btn>
               </form>
               <router-link to="/auth"
@@ -103,14 +98,14 @@ extend("email", {
   message: "Email must be valid",
 });
 
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 const auth = getAuth();
 
-import { mapActions } from "vuex";
 export default {
   components: {
     ValidationProvider,
     ValidationObserver,
+    
   },
   data: () => ({
     name: null,
@@ -120,7 +115,6 @@ export default {
   }),
 
   methods: {
-    ...mapActions(["createUser"]),
     submit() {
       this.$refs.observer.validate().then(this.userReg());
       setTimeout(this.clear, 1000);
@@ -132,21 +126,23 @@ export default {
       this.$refs.observer.reset();
     },
     userReg: async function () {
-      let user = {
-        UserId: Date.now(),
-        Contacts: { Email: this.email },
-      };
-
-      this.createUser(user);
-     
+      let vm = this;
       createUserWithEmailAndPassword(auth, this.email, this.password)
         .then((data) => {
-          console.log(data);
-          data.user.updateProfile({
-            displayName: this.name,
-          });
+          updateProfile(data.user, {
+            displayName: vm.name,
+          })
+            .then(() => {
+              console.log("Hello, " + data.user.displayName);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+
+          
         })
         .catch((err) => {
+           console.log(err);
           this.error = err.message;
         });
     },

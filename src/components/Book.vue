@@ -20,12 +20,7 @@
                   :aspect-ratio="9 / 16"
                   contain
                   :src="currentBook.CoverPath"
-                ></v-img> 
-                 <div>
-                  <v-btn small class="ma-4 primary">Изменить</v-btn>
-                  <v-btn small class="ma-4 accent">Удалить</v-btn>
-                </div>
-                </v-col
+                ></v-img> </v-col
               ><v-col
                 ><div class="text-caption">
                   Автор: {{ currentBook.Authors }}
@@ -61,7 +56,6 @@
                   >Зарегистрироваться</v-btn
                 >
                 <div class="">Состояние: {{ currentBook.state }}</div>
-               
               </v-col>
             </v-row>
           </v-container>
@@ -72,6 +66,10 @@
             <b>Аннотация к книге "{{ currentBook.Name }}"</b>
           </div>
           <span class="text-caption">{{ currentBook.Annotation }}</span>
+          <div class="d-flex justify-center">
+            <v-btn small class="ma-4 primary">Изменить</v-btn>
+            <v-btn small class="ma-4 error">Удалить</v-btn>
+          </div>
         </v-col>
       </v-row>
     </v-container>

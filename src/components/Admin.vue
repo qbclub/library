@@ -16,25 +16,18 @@
       <v-row class="justify-center">
         <v-col cols="8">
           <v-btn @click="routeTo('/user-actions')" block class="mb-8"
-            >user actions</v-btn
+            >Добавить пользователя</v-btn
           >
           <v-btn @click="routeTo('/book-actions')" block class="mb-8"
-            >book actions</v-btn
+            >Внести книгу</v-btn
           >
           <v-btn @click="routeTo('/bookflow-actions')" block class="mb-8"
-            >bookflow actions</v-btn
+            >Движение книг</v-btn
           >
           <v-btn @click.stop="dialog4 = true" block class="mb-8" color="error">
             Отчистить базу книг</v-btn
           >
-          <v-col class="shrink">
-            <v-btn class="ma-2" color="primary" @click="expand = !expand">
-              Показать Книги
-            </v-btn>
-            <v-expand-transition>
-              <v-card v-show="expand" class="mx-auto"><MiniBook :book="book"></MiniBook></v-card>
-            </v-expand-transition>
-          </v-col>
+      
         </v-col>
         <v-dialog v-model="dialog4" max-width="290">
           <v-card>

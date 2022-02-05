@@ -3,18 +3,9 @@ export default {
     SET_LOGGED_IN(state, value) {
         state.user.loggedIn = value;
     },
-    async SET_USER(state, data) {
-        let Email = data.email;
-        console.log(data.email)
+    SET_USER(state, data) {
+        console.log(data)
         state.user.data = data;
-        await axios
-            .post(`http://localhost:3000/api/users/get-by-email`, { email: Email })
-            .then((response) => {
-                state.user.info = response.data;
-            })
-            .catch((error) => {
-                console.error("There was an error!", error);
-            })
     },
     GET_ALL_BOOKS(state) {
         axios

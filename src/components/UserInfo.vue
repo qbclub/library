@@ -147,7 +147,7 @@ import {
 } from "firebase/storage";
 const storage = getStorage();
 import { mapActions } from "vuex";
-import jsMethods from "../apiScripts/node";
+
 export default {
   components: { About, ImageUploader },
   data: function () {
