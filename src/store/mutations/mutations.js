@@ -8,7 +8,7 @@ export default {
         console.log(data.email)
         state.user.data = data;
         await axios
-            .get(`http://localhost:3000/api/users/get-by-email?email=${Email}`)
+            .post(`http://localhost:3000/api/users/get-by-email`, { email: Email })
             .then((response) => {
                 state.user.info = response.data;
             })
