@@ -12,6 +12,7 @@
             <v-row>
               <v-col class="pa-0 ma-0">
                 <v-img
+                loading="lazy"
                   contain
                   :aspect-ratio="10 / 16"
                   :src="book.CoverPath"

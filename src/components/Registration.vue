@@ -2,7 +2,7 @@
   <div>
     <v-sheet class="d-flex align-center flex-column pa-10">
       <h2>Регистрация</h2>
-      <h1>Firebase отключён</h1>
+
       <v-container>
         <v-row class="align-center justify-center" no-gutters>
           <v-col cols="12" md="6">
@@ -138,7 +138,7 @@ export default {
       };
 
       this.createUser(user);
-      return;
+     
       createUserWithEmailAndPassword(auth, this.email, this.password)
         .then((data) => {
           console.log(data);

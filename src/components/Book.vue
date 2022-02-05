@@ -1,7 +1,7 @@
 <template>
   <div class="book">
     <v-container>
-      <router-link to="/" style="text-decoration: none">
+      <router-link to="/books" style="text-decoration: none">
         <div>
           <span class="fi fi-rr-angle-left"> </span>
         </div>
@@ -15,11 +15,17 @@
             <v-row>
               <v-col>
                 <v-img
+                  loading="lazy"
                   max-width="250"
                   :aspect-ratio="9 / 16"
                   contain
                   :src="currentBook.CoverPath"
-                ></v-img> </v-col
+                ></v-img> 
+                 <div>
+                  <v-btn small class="ma-4 primary">Изменить</v-btn>
+                  <v-btn small class="ma-4 accent">Удалить</v-btn>
+                </div>
+                </v-col
               ><v-col
                 ><div class="text-caption">
                   Автор: {{ currentBook.Authors }}
@@ -55,6 +61,7 @@
                   >Зарегистрироваться</v-btn
                 >
                 <div class="">Состояние: {{ currentBook.state }}</div>
+               
               </v-col>
             </v-row>
           </v-container>
@@ -81,7 +88,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data: () => ({
     currentBook: {},
-    bookId: 1,
+
     snackbar: false,
     text: `Книга зарезервирована!`,
 
@@ -108,15 +115,11 @@ export default {
       books: "books",
     }),
   },
-  mounted() {
-    this.$route.query.book_id
-      ? (this.bookId = this.$route.query.book_id)
-      : (this.bookId = localStorage.getItem(bookId));
 
-    console.log(this.bookId);
-    this.currentBook = this.books.find((x) => x.Id == this.bookId);
-    localStorage.setItem("bookId", this.bookId);
-    console.log("showing book: ", this.currentBook);
+  mounted() {
+    this.currentBook = this.books.find(
+      (x) => x.Id == this.$route.query.book_id
+    );
   },
 };
 </script>

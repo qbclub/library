@@ -24,6 +24,11 @@ const routes = [
   },
   {
     path: '/',
+    name: 'StartPage',
+    component: () => import('../components/StartPage.vue')
+  },
+  {
+    path: '/books',
     name: 'ListOfBooks',
     component: () => import('../components/ListOfBooks.vue')
   },
