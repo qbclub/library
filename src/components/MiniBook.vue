@@ -3,7 +3,7 @@
     <v-hover>
       <template v-slot:default="{ hover }">
         <v-card
-          class="pa-2"
+          class="pa-1"
           max-width="250"
           max-height="400"
           :elevation="hover ? 10 : 4"
@@ -14,7 +14,7 @@
                 <v-img
                 loading="lazy"
                   contain
-                  :aspect-ratio="10 / 16"
+                  :aspect-ratio="10 / 14"
                   :src="book.CoverPath"
                 ></v-img>
               </v-col>

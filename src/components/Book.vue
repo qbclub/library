@@ -17,7 +17,7 @@
                 <v-img
                   loading="lazy"
                   max-width="250"
-                  :aspect-ratio="9 / 16"
+                  :aspect-ratio="10 / 14"
                   contain
                   :src="currentBook.CoverPath"
                 ></v-img> </v-col
@@ -41,9 +41,8 @@
                   v-if="user.loggedIn"
                   depressed
                   small
-                  @click="snackbar = true"
                   class="ma-4 secondary"
-                  v-on:click="takeBook"
+                  v-on:click="callDialog(takeBook)"
                   >Взять книгу</v-btn
                 >
                 <v-btn
@@ -66,7 +65,12 @@
             <b>Аннотация к книге "{{ currentBook.Name }}"</b>
           </div>
           <span class="text-caption">{{ currentBook.Annotation }}</span>
-          <div class="d-flex justify-center">
+          <div
+            v-if="userInfo && userInfo.isAdmin"
+            class="d-flex justify-center pb-8"
+          >
+            <v-btn small class="ma-4 secondary">Выдать</v-btn>
+            <v-btn small class="ma-4 secondary">Получить</v-btn>
             <v-btn small class="ma-4 primary">Изменить</v-btn>
             <v-btn small class="ma-4 error">Удалить</v-btn>
           </div>
@@ -74,10 +78,21 @@
       </v-row>
     </v-container>
     <v-snackbar v-model="snackbar" :timeout="timeout" color="primary">
-      <div class="text-center">
-        {{ text }}
-      </div>
+      <div class="text-center">книга зарезервирована на 3 дня</div>
     </v-snackbar>
+    <v-dialog v-model="dialog" max-width="290">
+      <v-card>
+        <v-card-title> Уверены? </v-card-title>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="red" text @click="dialog = false"> Нет </v-btn>
+
+          <v-btn text @click.prevent="dialogAction"> Да </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -86,21 +101,21 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data: () => ({
     currentBook: {},
-
     snackbar: false,
-    text: `Книга зарезервирована!`,
-
+    dialog: false,
+    dialogAction: null,
     timeout: 2000,
   }),
   methods: {
     ...mapActions(["reserveBook"]),
+    callDialog: function (method) {
+      this.dialog = true;
+      this.dialogAction = method;
+    },
     takeBook: function () {
-      if (this.user.loggedIn) {
-        let c = confirm("Зарезервировать книгу?");
-        if (c) {
-          this.reserveBook(this.currentBook.Id);
-        }
-      }
+      this.snackbar = true;
+      this.reserveBook(this.currentBook.Id);
+     this.dialog = false;
     },
     routeTo: function (path) {
       this.$router.push(path);

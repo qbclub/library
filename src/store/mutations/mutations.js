@@ -67,7 +67,7 @@ export default {
         let e = {
             Id: Date.now(),
             BookId: bookId,
-            UserId: state.user.info.UserId,
+            UserId: state.userInfo.UserId,
             BookStatus: 'Зарезервирована',
             TimeStamp: Date.now()
         }
@@ -75,7 +75,7 @@ export default {
             .post('http://localhost:3000/api/bookflow/create', e)
             .then((response) => {
                 console.log("Responsed on reserve book with status: ", response.status)
-                state.user.info.CurrentReservedBooks.push(bookId)
+                state.userInfo.CurrentReservedBooks.push(bookId)
                 // .push(bookId)
             })
             .catch(err => console.error(err))

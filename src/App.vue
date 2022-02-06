@@ -158,6 +158,7 @@ export default {
     ],
   }),
   methods: {
+   
     routeTo: function (path) {
       this.$router.push(path);
       this.drawer = false;

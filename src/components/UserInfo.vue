@@ -50,9 +50,9 @@
             </v-col>
             <v-col class="d-flex align-center"  cols="12" sm="6">
           <v-checkbox
-          v-model="form.UserType"
+          v-model="form.isAdmin"
           ></v-checkbox>
-          <span>{{form.UserType? 'Администратор': 'Пользователь'}}</span> 
+          <span>{{form.isAdmin? 'Администратор': 'Пользователь'}}</span> 
             </v-col>
           </v-row>
           <v-row class="align-center">
@@ -158,7 +158,7 @@ export default {
         BirthDate: "",
         EducationalInstitution: "",
         LivingAddress: "",
-        UserType: "",
+        isAdmin: false,
         CurrentTakenBooks: [],
         CurrentReservedBooks: [],
         Contacts: {
@@ -185,7 +185,7 @@ export default {
         BirthDate: "",
         EducationalInstitution: "",
         LivingAddress: "",
-        UserType: "",
+        isAdmin: false,
         CurrentTakenBooks: [],
         CurrentReservedBooks: [],
         Contacts: {
@@ -198,16 +198,13 @@ export default {
     },
     send: async function () {
       this.form.UserId = Date.now();
-    
-      this.form.UserType == true
-        ? (this.form.UserType = "Администратор")
-        : (this.form.UserType = "Пользователь");
       const headers = {
         "content-type": "application/json",
       };
 
       this.createUser(this.form);
-      
+      this.clearingForm()
+      this.$router.push({path: "/admin"})
     },
     setImage: function (img) {
       // img - объект, содержащий много ифнормации об изображении
