@@ -71,7 +71,7 @@
           >
             <v-btn small class="ma-4 secondary">Выдать</v-btn>
             <v-btn small class="ma-4 secondary">Получить</v-btn>
-            <v-btn small class="ma-4 primary">Изменить</v-btn>
+            <v-btn small class="ma-4 primary" to="/editbook">Изменить</v-btn>
             <v-btn small class="ma-4 error">Удалить</v-btn>
           </div>
         </v-col>
