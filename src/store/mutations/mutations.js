@@ -6,21 +6,21 @@ export default {
     SET_USER(state, data) {
 
         state.user.data = data;
-       
+
     },
-    GET_USER_INFO(state,email){
-        if(email){
-         
+    GET_USER_INFO(state, email) {
+        if (email) {
+
             axios
-            .post("http://localhost:3000/api/users/get-by-email", {email: email})
-            .then((response) => state.userInfo = response.data)
-            .catch((error) => {
-                console.error("There was an error!", error);
-            })
-        } else{
+                .post("http://localhost:3000/api/users/get-by-email", { email: email })
+                .then((response) => state.userInfo = response.data)
+                .catch((error) => {
+                    console.error("There was an error!", error);
+                })
+        } else {
             state.userInfo = {};
         }
-       
+
 
     },
     GET_ALL_BOOKS(state) {
@@ -80,6 +80,26 @@ export default {
             })
             .catch(err => console.error(err))
 
+        state.userInfo.CurrentReservedBooks.push(bookId);
+        return;
+        let newUser = state.userInfo;
+        axios
+            .put('http://localhost:3000/api/users/update', { options: { $set: { UserId: state.userInfo.UserId } } })
+            .then((response) => {
+                console.log('Update user ', response)
+            })
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+
+        axios
+            .put("http://localhost:3000/api/books/update", { query: { "Id": { $eq: bookId } }, id: bookId, event: "Зарезервирована" })
+            .then((response) => {
+                console.log('Update book ', response)
+            })
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
     },
     CREATE_USER(state, user) {
 

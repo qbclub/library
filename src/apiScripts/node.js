@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-const server = 'http://localhost:8080/api';
-
 const jsMethods = {
     // send request to get all books
     getAllBooks: async function () {

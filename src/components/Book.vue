@@ -51,7 +51,6 @@
                   depressed
                   small
                   class="ma-4 secondary"
-                  v-on:click="takeBook"
                   >Зарегистрироваться</v-btn
                 >
                 <div class="">Состояние: {{ currentBook.state }}</div>
@@ -115,7 +114,7 @@ export default {
     takeBook: function () {
       this.snackbar = true;
       this.reserveBook(this.currentBook.Id);
-     this.dialog = false;
+      this.dialog = false;
     },
     routeTo: function (path) {
       this.$router.push(path);
