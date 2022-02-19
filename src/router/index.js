@@ -86,6 +86,12 @@ const routes = [
     name: 'BookflowActions',
 
     component: () => import('../components/admin/bookflowActions.vue')
+  },
+  {
+    path: '/editbook',
+    name: 'EditBook',
+
+    component: () => import('../components/EditBook.vue')
   }
 ]
 
