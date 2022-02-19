@@ -81,10 +81,15 @@ export default {
             .catch(err => console.error(err))
 
         state.userInfo.CurrentReservedBooks.push(bookId);
-        return;
-        let newUser = state.userInfo;
+
         axios
-            .put('http://localhost:3000/api/users/update', { options: { $set: { UserId: state.userInfo.UserId } } })
+            .put('http://localhost:3000/api/users/update',
+                {
+                    setupOptions: {
+                        $set: { 'CurrentReservedBooks': state.userInfo.CurrentReservedBooks }
+                    },
+                    email: state.userInfo.Contacts.Email
+                })
             .then((response) => {
                 console.log('Update user ', response)
             })
@@ -93,7 +98,13 @@ export default {
             });
 
         axios
-            .put("http://localhost:3000/api/books/update", { query: { "Id": { $eq: bookId } }, id: bookId, event: "Зарезервирована" })
+            .put("http://localhost:3000/api/books/update",
+                {
+                    id: bookId,
+                    setupOptions: {
+                        $set: { "Status": "Зарезервирована" }
+                    }
+                })
             .then((response) => {
                 console.log('Update book ', response)
             })
