@@ -37,7 +37,8 @@
                 <div class="text-caption">
                   Страниц: {{ currentBook.PageCount }}
                 </div>
-                <div v-if="currentBook.Status.toLowerCase() == 'на месте'">
+              
+                <div v-if="currentBook.Status ==  '' || currentBook.Status ==  'на месте' ">
                   <v-btn
                     v-if="user.loggedIn"
                     depressed
@@ -56,7 +57,7 @@
                   >
                 </div>
 
-                <div class="text-caption font-weight-bold">
+                <div v-else class="text-caption font-weight-bold">
                   Книга {{ currentBook.Status.toLowerCase() }}
                 </div>
               </v-col>
