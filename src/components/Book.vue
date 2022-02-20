@@ -37,23 +37,28 @@
                 <div class="text-caption">
                   Страниц: {{ currentBook.PageCount }}
                 </div>
-                <v-btn
-                  v-if="user.loggedIn"
-                  depressed
-                  small
-                  class="ma-4 secondary"
-                  v-on:click="callDialog(takeBook)"
-                  >Взять книгу</v-btn
-                >
-                <v-btn
-                  v-else
-                  @click="routeTo('/reg')"
-                  depressed
-                  small
-                  class="ma-4 secondary"
-                  >Зарегистрироваться</v-btn
-                >
-                <div class="">Состояние: {{ currentBook.state }}</div>
+                <div v-if="currentBook.Status.toLowerCase() == 'на месте'">
+                  <v-btn
+                    v-if="user.loggedIn"
+                    depressed
+                    small
+                    class="ma-4 secondary"
+                    v-on:click="callDialog(takeBook)"
+                    >Взять книгу</v-btn
+                  >
+                  <v-btn
+                    v-else
+                    @click="routeTo('/reg')"
+                    depressed
+                    small
+                    class="ma-4 secondary"
+                    >Зарегистрироваться</v-btn
+                  >
+                </div>
+
+                <div class="text-caption font-weight-bold">
+                  Книга {{ currentBook.Status.toLowerCase() }}
+                </div>
               </v-col>
             </v-row>
           </v-container>

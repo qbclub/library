@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-      <v-row class="align-center justify-end">
+      <!-- <v-row class="align-center justify-end">
         <v-col class="d-flex" cols="12" md="2">
           <v-select
             :items="backends"
@@ -12,10 +12,10 @@
             class="ma-4"
           ></v-select>
         </v-col>
-      </v-row>
+      </v-row> -->
       <v-row class="justify-center">
-        <v-col cols="8">
-          {{userInfo}}
+        <v-col cols="8 ma-8">
+       
           <v-btn @click="routeTo('/user-actions')" block class="mb-8"
             >Добавить пользователя</v-btn
           >

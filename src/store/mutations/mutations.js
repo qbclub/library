@@ -75,6 +75,9 @@ export default {
             .post('http://localhost:3000/api/bookflow/create', e)
             .then((response) => {
                 console.log("Responsed on reserve book with status: ", response.status)
+
+                // ToDo: CurrentReservedBooks  надо сделать строкой а не массивом
+
                 state.userInfo.CurrentReservedBooks.push(bookId)
                 // .push(bookId)
             })

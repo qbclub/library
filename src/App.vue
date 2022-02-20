@@ -8,11 +8,15 @@
       app
     >
       <v-list nav>
-        <!-- active-class="deep-purple--text text--accent-4" -->
         <v-list-item-group>
           <v-list-item v-for="(item, key) in this.routes" :key="key">
             <v-list-item-content @click="routeTo(item.path)">
               <v-list-item-title v-text="item.title"> </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-if="userInfo.isAdmin">
+            <v-list-item-content @click="routeTo('/admin')">
+              <v-list-item-title> Админ панель </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
@@ -26,7 +30,7 @@
       ></v-app-bar-nav-icon>
       <v-toolbar-title @click="routeTo('/')">Библиотека</v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="d-none d-sm-flex">
+      <div>
         <template v-if="user.loggedIn">
           <div class="d-flex flex-column text-center navicons">
             <i @click.stop="dialog = true" class="fi fi-rr-sign-out"> </i>
@@ -63,17 +67,17 @@
           @click="routeTo('/')"
           class="d-flex flex-column justify-center navicons"
         >
-          <span class="fi fi-rr-align-justify"></span>
+          <span class="fi fi-rr-home"></span>
           <span class="icon_text">главная</span>
         </div>
-        <div @click="routeTo('/')" class="d-flex flex-column navicons">
-          <span class="fi fi-rr-bookmark"></span>
-          <span class="icon_text">закладки</span>
+        <div
+          @click="routeTo('/books')"
+          class="d-flex flex-column justify-center navicons"
+        >
+          <span class="fi fi-rr-align-justify"></span>
+          <span class="icon_text">каталог</span>
         </div>
-        <div @click="routeTo('/')" class="d-flex flex-column navicons">
-          <span class="fi fi-rr-search"></span>
-          <span class="icon_text">поиск</span>
-        </div>
+
         <div
           v-if="user.loggedIn"
           @click="routeTo('/cabinet')"
@@ -87,8 +91,16 @@
           @click="routeTo('/auth')"
           class="d-flex flex-column text-center navicons"
         >
-          <span class="fi fi-rr-sign-in"> </span>
-          <span class="icon_text">вход</span>
+          <span class="fi fi-rr-user"> </span>
+          <span class="icon_text">кабинет</span>
+        </div>
+        <div
+          v-if="userInfo.isAdmin"
+          @click="routeTo('/admin')"
+          class="d-flex flex-column justify-center navicons"
+        >
+          <span class="fi fi-rr-edit"></span>
+          <span class="icon_text">Админ</span>
         </div>
       </v-col>
     </v-footer>
@@ -112,8 +124,6 @@
 import { mapGetters, mapActions } from "vuex";
 import { getAuth, signOut } from "firebase/auth";
 import axios from "axios";
-// import books from "../src/db/books";
-// import jsMethods from "./apiScripts/node";
 
 export default {
   name: "App",
@@ -121,44 +131,23 @@ export default {
   data: () => ({
     drawer: false,
     dialog: false,
+  
     routes: [
       {
-        title: "Каталог",
+        title: "Главная",
         path: "/",
       },
       {
-        title: "Личный кабинет",
+        title: "Каталог",
+        path: "/books",
+      },
+      {
+        title: "Кабинет",
         path: "/cabinet",
-      },
-      {
-        title: "AddBook",
-        path: "/addbook",
-      },
-      {
-        title: "Регистрация",
-        path: "/reg",
-      },
-      {
-        title: "Аутентификация",
-        path: "/auth",
-      },
-
-      {
-        title: "Движение книг",
-        path: "/eventList",
-      },
-      {
-        title: "Информация о пользователе",
-        path: "/userinfo",
-      },
-      {
-        title: "Админ панель",
-        path: "/admin",
       },
     ],
   }),
   methods: {
-   
     routeTo: function (path) {
       this.$router.push(path);
       this.drawer = false;
@@ -181,6 +170,7 @@ export default {
   computed: {
     ...mapGetters({
       user: "user",
+      userInfo: "userInfo",
     }),
   },
 
