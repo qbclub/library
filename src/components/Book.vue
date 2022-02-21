@@ -1,14 +1,19 @@
 <template>
   <div class="book">
     <v-container>
-      <router-link to="/books" style="text-decoration: none">
+      <v-row>
+     <button onclick="history.back()">        
         <div>
-          <span class="fi fi-rr-angle-left"> </span>
+          <span class="subtitle-1 fi fi-rr-angle-left"> </span>
         </div>
-      </router-link>
+        </button>
+      </v-row>
+
+      <v-row>
       <span class="text-h6"
         >{{ currentBook.Authors }}: {{ currentBook.Name }}
       </span>
+      </v-row>
       <v-row class="mt-2">
         <v-col>
           <v-container>
@@ -126,6 +131,7 @@ export default {
       this.$router.push(path);
       this.drawer = false;
     },
+    
   },
   computed: {
     ...mapGetters({
