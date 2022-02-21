@@ -177,7 +177,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["createUser"]),
+    ...mapActions(["updateUser"]),
     clearingForm: function () {
       this.form = {
         FirstName: "",
@@ -202,9 +202,9 @@ export default {
         "content-type": "application/json",
       };
 
-      this.createUser(this.form);
-      this.clearingForm()
-      this.$router.push({path: "/admin"})
+      this.updateUser(this.form);
+      this.clearingForm();
+      this.$router.push({ path: "/admin" });
     },
     setImage: function (img) {
       // img - объект, содержащий много ифнормации об изображении

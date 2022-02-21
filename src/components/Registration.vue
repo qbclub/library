@@ -98,14 +98,19 @@ extend("email", {
   message: "Email must be valid",
 });
 
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 const auth = getAuth();
+
+import { mapActions } from "vuex";
 
 export default {
   components: {
     ValidationProvider,
     ValidationObserver,
-    
   },
   data: () => ({
     name: null,
@@ -115,6 +120,7 @@ export default {
   }),
 
   methods: {
+    ...mapActions(["createUser"]),
     submit() {
       this.$refs.observer.validate().then(this.userReg());
       setTimeout(this.clear, 1000);
@@ -127,22 +133,37 @@ export default {
     },
     userReg: async function () {
       let vm = this;
+      let user = {
+        FirstName: "",
+        LastName: "",
+        BirthDate: "",
+        EducationalInstitution: "",
+        LivingAddress: "",
+        isAdmin: false,
+        CurrentTakenBooks: [],
+        CurrentReservedBooks: [],
+        Contacts: {
+          PhoneNumber: "",
+          Email: this.email,
+          SocCeti: "",
+        },
+        PhotoPath: "",
+      };
+      await vm.createUser(user);
       createUserWithEmailAndPassword(auth, this.email, this.password)
         .then((data) => {
           updateProfile(data.user, {
             displayName: vm.name,
           })
-            .then(() => {
+            .then(async () => {
               console.log("Hello, " + data.user.displayName);
             })
             .catch((error) => {
               console.log(error);
             });
-
-          
         })
         .catch((err) => {
-           console.log(err);
+          console.log(err);
           this.error = err.message;
         });
     },

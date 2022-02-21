@@ -126,8 +126,15 @@ export default {
 
     },
     UPDATE_USER(state, newUser) {
+        console.log("update user: ", newUser)
         axios
-            .put("http://localhost:3000/api/users/update", newUser)
+            .put("http://localhost:3000/api/users/update",
+                {
+                    setupOptions: {
+                        $set: { newUser }
+                    },
+                    email: newUser.Contacts.Email
+                })
             .then((response) => console.log("user updated\nresponse status: ", response.status))
             .catch((error) => {
                 console.error("There was an error!", error);
