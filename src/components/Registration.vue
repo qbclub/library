@@ -49,6 +49,7 @@
 
                 <v-btn class="mr-4" type="submit"> submit </v-btn>
                 <v-btn @click="clear"> clear </v-btn>
+                <div>{{ error }}</div>
               </form>
               <router-link to="/auth"
                 ><p class="text-center ma-8">Войти</p></router-link
@@ -149,7 +150,8 @@ export default {
         },
         PhotoPath: "",
       };
-      await vm.createUser(user);
+      vm.createUser(user);
+      return;
       createUserWithEmailAndPassword(auth, this.email, this.password)
         .then((data) => {
           updateProfile(data.user, {

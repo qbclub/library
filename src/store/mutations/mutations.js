@@ -4,8 +4,9 @@ export default {
         state.user.loggedIn = value;
     },
     SET_USER(state, data) {
-
+        console.log(data);
         state.user.data = data;
+        state.userInfo = '';
 
     },
     GET_USER_INFO(state, email) {
@@ -116,7 +117,8 @@ export default {
             });
     },
     CREATE_USER(state, user) {
-
+        console.log(user)
+        state.userInfo = user;
         axios
             .post("http://localhost:3000/api/users/create", user)
             .then((response) => console.log("user created\nresponse status: ", response.status))
@@ -127,12 +129,29 @@ export default {
     },
     UPDATE_USER(state, newUser) {
         console.log("update user: ", newUser)
+        let _ = newUser;
+        let setupOptions = {
+            $set: {
+                FirstName: _.FirstName,
+                LastName: _.LastName,
+                BirthDate: _.BirthDate,
+                EducationalInstitution: _.EducationalInstitution,
+                LivingAddress: _.LivingAddress,
+                isAdmin: _.isAdmin,
+                CurrentTakenBooks: _.CurrenttakenBooks,
+                CurrentReservedBooks: _.CurrentReservedBooks,
+                Contacts: {
+                    PhoneNumber: _.Contacts.PhoneNumber,
+                    Email: _.Contacts.Email,
+                    SocCeti: _.Contacts.SocCeti
+                },
+                PhotoPath: _.PhotoPath,
+            }
+        }
         axios
             .put("http://localhost:3000/api/users/update",
                 {
-                    setupOptions: {
-                        $set: { newUser }
-                    },
+                    setupOptions,
                     email: newUser.Contacts.Email
                 })
             .then((response) => console.log("user updated\nresponse status: ", response.status))
