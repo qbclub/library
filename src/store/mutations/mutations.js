@@ -117,11 +117,10 @@ export default {
             });
     },
     CREATE_USER(state, user) {
-        console.log(user)
-        state.userInfo = user;
+        console.log("create user: ", user)
         axios
             .post("http://localhost:3000/api/users/create", user)
-            .then((response) => console.log("user created\nresponse status: ", response.status))
+            .then((response) => console.log("user created\nresponse: ", response))
             .catch((error) => {
                 console.error("There was an error!", error);
             });
@@ -154,7 +153,7 @@ export default {
                     setupOptions,
                     email: newUser.Contacts.Email
                 })
-            .then((response) => console.log("user updated\nresponse status: ", response.status))
+            .then((response) => console.log("user updated\nresponse: ", response))
             .catch((error) => {
                 console.error("There was an error!", error);
             });
