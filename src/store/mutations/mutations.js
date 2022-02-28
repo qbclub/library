@@ -68,7 +68,7 @@ export default {
         let e = {
             Id: Date.now(),
             BookId: bookId,
-            UserId: state.userInfo.UserId,
+            UserEmail: state.userInfo.Contacts.Email,
             BookStatus: 'Зарезервирована',
             TimeStamp: Date.now()
         }
@@ -107,6 +107,63 @@ export default {
                     id: bookId,
                     setupOptions: {
                         $set: { "Status": "Зарезервирована" }
+                    }
+                })
+            .then((response) => {
+                console.log('Update book ', response)
+            })
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+    },
+    GIVE_BOOK(state, pr) {
+        let dt = Date.now();
+        let e = {
+            Id: dt,
+            BookId: pr.bookId,
+            UserEmail: pr.userEmail,
+            BookStatus: 'Выдана',
+            TimeStamp: dt
+        }
+
+        console.log(pr.userEmail, pr.bookId, e)
+
+        axios
+            .post('http://localhost:3000/api/bookflow/create', e)
+            .then((response) => {
+                console.log("Responsed on GIVE book with status: ", response.status)
+
+                // ToDo: CurrentReservedBooks  надо сделать строкой а не массивом
+
+                // .push(bookId)
+            })
+            .catch(err => console.error(err))
+
+        return;
+        axios
+            .put('http://localhost:3000/api/users/update',
+                {
+                    setupOptions: {
+                        $set: { 'CurrentTakenBooks': state.userInfo.CurrentTakenBooks }
+                    },
+                    email: pr.userEmail
+                })
+            .then((response) => {
+                console.log('Update user ', response)
+            })
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+
+        // ReservedQueue // очередь FIFO Id-шников, кто из пользователей зарезервировал книгу - пока не знаю, надо или нет
+        // TemporaryOwner //кому книга выдана
+        // DateOfGivenOut // когда книга выдана
+        axios
+            .put("http://localhost:3000/api/books/update",
+                {
+                    id: pr.bookId,
+                    setupOptions: {
+                        $set: { "Status": "Выдана", "TemporaryOwner": pr.userEmail, "DateOfGivenOut": dt }
                     }
                 })
             .then((response) => {

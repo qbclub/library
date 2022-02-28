@@ -5,7 +5,7 @@ export default {
     commit("SET_LOGGED_IN", user !== null);
 
     if (user) {
-     
+
       commit("SET_USER", {
         displayName: user.displayName,
         email: user.email
@@ -27,6 +27,9 @@ export default {
     commit
   }, bookId) {
     commit('RESERVE_BOOK', bookId)
+  },
+  giveBook({ commit }, pr) {
+    commit('GIVE_BOOK', pr)
   },
   getAllBookflow({
     commit
