@@ -131,7 +131,7 @@ export default {
   data: () => ({
     drawer: false,
     dialog: false,
-  
+
     routes: [
       {
         title: "Главная",
@@ -165,7 +165,7 @@ export default {
 
       this.dialog = false;
     },
-    ...mapActions(["getAllBooks", "getAllBookflow", "getUserInfo"]),
+    ...mapActions(["getAllBooks", "getAllBookflow", "fetchUser"]),
   },
   computed: {
     ...mapGetters({
@@ -178,7 +178,7 @@ export default {
     axios
       .get("http://localhost:3000/api/users/get-all")
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error("There was an error!", error);
@@ -186,6 +186,7 @@ export default {
 
     this.getAllBooks();
     this.getAllBookflow();
+    this.fetchUser(this.user);
   },
 };
 </script>
