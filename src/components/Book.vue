@@ -74,9 +74,9 @@
             v-if="userInfo && userInfo.isAdmin"
             class="d-flex justify-center pb-8"
           >
-            <v-btn small class="ma-4 secondary">Выдать</v-btn>
-            <v-btn small class="ma-4 secondary">Получить</v-btn>
-            <v-btn small class="ma-4 primary" to="/editbook">Изменить</v-btn>
+            <v-btn small class="ma-4 accent">Выдать</v-btn>
+            <v-btn small class="ma-4 accent">Получить</v-btn>
+            <v-btn small class="ma-4 accent white-text" to="/editbook">Изменить</v-btn>
             <v-btn small class="ma-4 error">Удалить</v-btn>
           </div>
         </v-col>
@@ -145,6 +145,5 @@ export default {
 
 <style lang="scss" scoped>
 a {
-  color: #000 !important;
 }
 </style>

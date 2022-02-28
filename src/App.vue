@@ -23,7 +23,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app hide-on-scroll>
+    <v-app-bar app hide-on-scroll class="secondary">
       <v-app-bar-nav-icon
         class="d-none d-sm-flex"
         @click.stop="drawer = !drawer"
@@ -49,13 +49,13 @@
       </div>
     </v-app-bar>
 
-    <v-main>
+    <v-main class="secondary">
       <v-container>
         <router-view />
       </v-container>
     </v-main>
 
-    <v-footer class="d-none d-sm-flex" padless app>
+    <v-footer  class="d-none d-sm-flex secondary" padless app>
       <v-col cols="2"></v-col>
       <v-col class="text-center" cols="8">Сделано в Кубит</v-col>
       <v-col cols="2"></v-col>
