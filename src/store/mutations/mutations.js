@@ -173,6 +173,19 @@ export default {
                 console.error("There was an error!", error);
             });
     },
+    UPDATE_BOOK(state, newBook) {
+        console.log(newBook);
+        return;
+        axios
+            .put("http://localhost:3000/api/books/update", {
+                setupOptions: { $set: { ...newBook } },
+                id: newBook.Id
+            })
+            .then((response) => {
+                console.log("Succesfully update book ", response)
+            })
+            .catch(err => console.error("Update book with error: ", err))
+    },
     CREATE_USER(state, user) {
         console.log("create user: ", user)
         axios

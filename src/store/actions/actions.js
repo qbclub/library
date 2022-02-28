@@ -31,6 +31,9 @@ export default {
   giveBook({ commit }, pr) {
     commit('GIVE_BOOK', pr)
   },
+  updateBook({ commit }, newBook) {
+    commit('UPDATE_BOOK', newBook)
+  },
   getAllBookflow({
     commit
   }, bookflow) {
