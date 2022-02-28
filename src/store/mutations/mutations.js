@@ -173,6 +173,59 @@ export default {
                 console.error("There was an error!", error);
             });
     },
+    // temp содержит пользователя(емейл) и id книги
+    RETURN_BOOK(state, temp) {
+        console.log(temp)
+        return;
+        const dt = Date.now()
+        let e = {
+            Id: dt,
+            BookId: temp.bookId,
+            UserEmail: temp.userEmail,
+            BookStatus: 'На месте',
+            TimeStamp: dt
+        }
+
+        axios
+            .post('http://localhost:3000/api/bookflow/create', e)
+            .then((response) => {
+                console.log("Responsed on RETURN book with status: ", response.status)
+            })
+            .catch(err => console.error(err))
+
+        axios
+            .put('http://localhost:3000/api/users/update',
+                {
+                    setupOptions: {
+                        $set: { 'CurrentTakenBooks': [] }
+                    },
+                    email: pr.userEmail
+                })
+            .then((response) => {
+                console.log('Update user ', response)
+            })
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+
+        // ReservedQueue // очередь FIFO Id-шников, кто из пользователей зарезервировал книгу - пока не знаю, надо или нет
+        // TemporaryOwner //кому книга выдана
+        // DateOfGivenOut // когда книга выдана
+        axios
+            .put("http://localhost:3000/api/books/update",
+                {
+                    id: pr.bookId,
+                    setupOptions: {
+                        $set: { "Status": "На месте", "TemporaryOwner": null, "DateOfGivenOut": null }
+                    }
+                })
+            .then((response) => {
+                console.log('Update book ', response)
+            })
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+    },
     UPDATE_BOOK(state, newBook) {
         console.log(newBook);
         return;

@@ -31,6 +31,9 @@ export default {
   giveBook({ commit }, pr) {
     commit('GIVE_BOOK', pr)
   },
+  returnBook({ commit }, temp) {
+    commit('RETURN_BOOK', temp)
+  },
   updateBook({ commit }, newBook) {
     commit('UPDATE_BOOK', newBook)
   },
