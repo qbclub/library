@@ -140,7 +140,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 const storage = getStorage();
-
+import router from '../router/index'
 
 
 export default {
@@ -202,6 +202,9 @@ export default {
     ...mapActions(["createBook"]),
     
   },
+  mounted() {
+    this.form = this.$route.params
+  }
 };
 </script>
 

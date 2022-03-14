@@ -81,7 +81,7 @@
           >
             <v-btn small class="ma-4 secondary">Выдать</v-btn>
             <v-btn small class="ma-4 secondary">Получить</v-btn>
-            <v-btn small class="ma-4 primary" to="/editbook">Изменить</v-btn>
+            <v-btn small class="ma-4 primary" @click="callDialog(editBook)">Изменить</v-btn>
             <v-btn small class="ma-4 error">Удалить</v-btn>
           </div>
         </v-col>
@@ -108,6 +108,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+
 export default {
   data: () => ({
     currentBook: {},
@@ -126,6 +127,10 @@ export default {
       this.snackbar = true;
       this.reserveBook(this.currentBook.Id);
       this.dialog = false;
+    },
+    editBook: function() {
+      console.log(this.currentBook)
+      this.$router.push({name: 'EditBook', params: this.currentBook })
     },
     routeTo: function (path) {
       this.$router.push(path);
