@@ -123,7 +123,6 @@
 
           <v-btn color="success" class="mr-4" @click="send"> Отправить </v-btn>
         </v-form>
-       
       </v-col>
     </v-row>
   </v-container>
@@ -140,14 +139,11 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 const storage = getStorage();
-import router from '../router/index'
-
 
 export default {
   components: { About, ImageUploader },
   data: function () {
     return {
-     
       form: {
         Id: "",
         Name: "",
@@ -172,7 +168,6 @@ export default {
     };
   },
   methods: {
-    
     setImage: function (img) {
       // img - объект, содержащий много ифнормации об изображении
       this.cover.image = img.dataUrl;
@@ -180,7 +175,7 @@ export default {
       this.cover.newHeight = img.info.newHeight;
     },
     uploadImageComplete: function () {
-       this.form.Id = Date.now();
+      this.form.Id = Date.now();
       const storageRef = ref(storage, "books/" + this.form.Id);
       uploadString(storageRef, this.cover.image, "data_url").then(
         (snapshot) => {
@@ -193,18 +188,20 @@ export default {
             });
         }
       );
-      
+
       console.log("UPLOAD COVER IMAGE FINISHED");
+    },
+    send: function () {
+      this.updateBook(this.form);
     },
     uploadImageStart: function () {
       console.log("UPLOAD COVER IMAGE STARTED");
     },
-    ...mapActions(["createBook"]),
-    
+    ...mapActions(["updateBook"]),
   },
   mounted() {
-    this.form = this.$route.params
-  }
+    this.form = this.$route.params;
+  },
 };
 </script>
 

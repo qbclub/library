@@ -227,11 +227,27 @@ export default {
             });
     },
     UPDATE_BOOK(state, newBook) {
-        console.log(newBook);
-        return;
+        let _ = newBook
         axios
             .put("http://localhost:3000/api/books/update", {
-                setupOptions: { $set: { ...newBook } },
+                setupOptions: {
+                    $set: {
+                        Id: _.Id,
+                        Name: _.Name,
+                        Annotation: _.Annotation,
+                        CoverPath: _.CoverPath,
+                        Authors: _.Authors,
+                        Sections: _.Sections,
+                        ReleaseDate: _.ReleaseDate,
+                        PhysicalPlace: _.PhysicalPlace,
+                        ISBN: _.ISBN,
+                        PublisherName: _.PublisherName,
+                        PageCount: _.PageCount,
+                        Series: _.Series,
+                        Status: _.Status,
+                        TimeStamp: _.TimeStamp,
+                    }
+                },
                 id: newBook.Id
             })
             .then((response) => {
