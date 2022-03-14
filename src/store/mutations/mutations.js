@@ -276,7 +276,7 @@ export default {
                 EducationalInstitution: _.EducationalInstitution,
                 LivingAddress: _.LivingAddress,
                 isAdmin: _.isAdmin,
-                CurrentTakenBooks: _.CurrenttakenBooks,
+                CurrentTakenBooks: _.CurrentTakenBooks,
                 CurrentReservedBooks: _.CurrentReservedBooks,
                 Contacts: {
                     PhoneNumber: _.Contacts.PhoneNumber,
