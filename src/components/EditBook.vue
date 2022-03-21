@@ -41,7 +41,7 @@
                   <div class="d-flex flex-column text-center">
                     <i class="fi fi-rr-camera text-h4 ma-0 d-inline"></i>
 
-                    <span class="caption"> фото <br /></span>
+                    <span class="caption"> Фото <br /></span>
                   </div>
                 </label>
               </image-uploader>
