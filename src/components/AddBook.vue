@@ -123,7 +123,6 @@
 
           <v-btn color="success" class="mr-4" @click="send"> Отправить </v-btn>
         </v-form>
-       
       </v-col>
     </v-row>
   </v-container>
@@ -141,13 +140,10 @@ import {
 } from "firebase/storage";
 const storage = getStorage();
 
-
-
 export default {
   components: { About, ImageUploader },
   data: function () {
     return {
-     
       form: {
         Id: "",
         Name: "",
@@ -187,6 +183,9 @@ export default {
         PageCount: "",
         Series: "",
         Status: "",
+        ReservedQueue: "", // очередь FIFO Id-шников, кто из пользователей зарезервировал книгу
+        TemporaryOwner: "", //кому книга выдана
+        DateOfGivenOut: "", // когда книга выдана
         TimeStamp: "",
       };
     },
@@ -195,7 +194,7 @@ export default {
         "content-type": "application/json",
       };
       this.form.TimeStamp = Date.now();
-    
+
       this.createBook(this.form);
       this.clearingForm();
     },
@@ -206,7 +205,7 @@ export default {
       this.cover.newHeight = img.info.newHeight;
     },
     uploadImageComplete: function () {
-       this.form.Id = Date.now();
+      this.form.Id = Date.now();
       const storageRef = ref(storage, "books/" + this.form.Id);
       uploadString(storageRef, this.cover.image, "data_url").then(
         (snapshot) => {

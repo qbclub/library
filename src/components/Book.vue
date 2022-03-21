@@ -83,7 +83,9 @@
             v-if="userInfo && userInfo.isAdmin"
             class="d-flex justify-center pb-8"
           >
-            <v-btn small class="ma-4 secondary">Выдать</v-btn>
+            <v-btn small class="ma-4 secondary" @click="callDialog(_giveBook)"
+              >Выдать</v-btn
+            >
             <v-btn small class="ma-4 secondary">Получить</v-btn>
             <v-btn small class="ma-4 primary" @click="callDialog(editBook)"
               >Изменить</v-btn
@@ -124,7 +126,7 @@ export default {
     timeout: 2000,
   }),
   methods: {
-    ...mapActions(["reserveBook"]),
+    ...mapActions(["reserveBook", "giveBook"]),
     callDialog: function (method) {
       this.dialog = true;
       this.dialogAction = method;
@@ -137,6 +139,14 @@ export default {
     editBook: function () {
       console.log(this.currentBook);
       this.$router.push({ name: "EditBook", params: this.currentBook });
+    },
+    _giveBook: function () {
+      this.snackbar = true;
+      this.giveBook({
+        bookId: this.currentBook.Id,
+        userEmail: this.currentBook.ReservedQueue,
+      });
+      this.dialog = false;
     },
     routeTo: function (path) {
       this.$router.push(path);
