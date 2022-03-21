@@ -7,6 +7,7 @@
       temporary
       app
     >
+    
       <v-list nav>
         <v-list-item-group>
           <v-list-item v-for="(item, key) in this.routes" :key="key">
