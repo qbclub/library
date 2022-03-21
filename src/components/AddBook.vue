@@ -157,7 +157,7 @@ export default {
         PublisherName: "",
         PageCount: "",
         Series: "",
-        Status: "",
+        Status: "На месте",
         ReservedQueue: "", // очередь FIFO Id-шников, кто из пользователей зарезервировал книгу
         TemporaryOwner: "", //кому книга выдана
         DateOfGivenOut: "", // когда книга выдана
@@ -185,7 +185,7 @@ export default {
         PublisherName: "",
         PageCount: "",
         Series: "",
-        Status: "",
+        Status: "На месте",
         ReservedQueue: "", // очередь FIFO Id-шников, кто из пользователей зарезервировал книгу
         TemporaryOwner: "", //кому книга выдана
         DateOfGivenOut: "", // когда книга выдана

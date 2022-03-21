@@ -28,18 +28,18 @@ export default {
         ? (this.booksToShow = this.books)
         : (this.booksToShow = this.books.filter(
             (book) =>
-              book.name
-                .toLowerCase()
-                .includes(this.searchRequest.toLowerCase()) ||
-              book.authors
-                .toLowerCase()
-                .includes(this.searchRequest.toLowerCase()) ||
-              book.publisher
-                .toLowerCase()
-                .includes(this.searchRequest.toLowerCase()) ||
-              book.direction
-                .toLowerCase()
-                .includes(this.searchRequest.toLowerCase())
+              book.Name.toLowerCase().includes(
+                this.searchRequest.toLowerCase()
+              ) ||
+              book.Authors.toLowerCase().includes(
+                this.searchRequest.toLowerCase()
+              ) ||
+              book.PublisherName.toLowerCase().includes(
+                this.searchRequest.toLowerCase()
+              ) ||
+              book.Sections.toLowerCase().includes(
+                this.searchRequest.toLowerCase()
+              )
           ));
       this.$emit("findBooks", this.booksToShow);
     },
