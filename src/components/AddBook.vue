@@ -158,6 +158,9 @@ export default {
         PageCount: "",
         Series: "",
         Status: "",
+        ReservedQueue: "", // очередь FIFO Id-шников, кто из пользователей зарезервировал книгу
+        TemporaryOwner: "", //кому книга выдана
+        DateOfGivenOut: "", // когда книга выдана
         TimeStamp: "",
       },
       cover: {
@@ -194,6 +197,7 @@ export default {
         "content-type": "application/json",
       };
       this.form.TimeStamp = Date.now();
+      this.form.Id = Date.now();
 
       this.createBook(this.form);
       this.clearingForm();
