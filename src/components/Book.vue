@@ -2,17 +2,17 @@
   <div class="book">
     <v-container>
       <v-row>
-     <button onclick="history.back()">        
-        <div>
-          <span class="subtitle-1 fi fi-rr-angle-left"> </span>
-        </div>
+        <button onclick="history.back()">
+          <div>
+            <span class="subtitle-1 fi fi-rr-angle-left"> </span>
+          </div>
         </button>
       </v-row>
 
       <v-row>
-      <span class="text-h6"
-        >{{ currentBook.Authors }}: {{ currentBook.Name }}
-      </span>
+        <span class="text-h6"
+          >{{ currentBook.Authors }}: {{ currentBook.Name }}
+        </span>
       </v-row>
       <v-row class="mt-2">
         <v-col>
@@ -42,18 +42,23 @@
                 <div class="text-caption">
                   Страниц: {{ currentBook.PageCount }}
                 </div>
-              
-                <div v-if="currentBook.Status ==  '' || currentBook.Status ==  'на месте' ">
+
+                <!-- v-if="user.loggedIn" -->
+                <v-btn
+                  depressed
+                  small
+                  class="ma-4 secondary"
+                  v-on:click="callDialog(takeBook)"
+                  >Взять книгу</v-btn
+                >
+
+                <div
+                  v-if="
+                    currentBook.Status == '' || currentBook.Status == 'на месте'
+                  "
+                >
+                  <!-- v-else -->
                   <v-btn
-                    v-if="user.loggedIn"
-                    depressed
-                    small
-                    class="ma-4 secondary"
-                    v-on:click="callDialog(takeBook)"
-                    >Взять книгу</v-btn
-                  >
-                  <v-btn
-                    v-else
                     @click="routeTo('/reg')"
                     depressed
                     small
@@ -81,7 +86,9 @@
           >
             <v-btn small class="ma-4 secondary">Выдать</v-btn>
             <v-btn small class="ma-4 secondary">Получить</v-btn>
-            <v-btn small class="ma-4 primary" @click="callDialog(editBook)">Изменить</v-btn>
+            <v-btn small class="ma-4 primary" @click="callDialog(editBook)"
+              >Изменить</v-btn
+            >
             <v-btn small class="ma-4 error">Удалить</v-btn>
           </div>
         </v-col>
@@ -128,15 +135,14 @@ export default {
       this.reserveBook(this.currentBook.Id);
       this.dialog = false;
     },
-    editBook: function() {
-      console.log(this.currentBook)
-      this.$router.push({name: 'EditBook', params: this.currentBook })
+    editBook: function () {
+      console.log(this.currentBook);
+      this.$router.push({ name: "EditBook", params: this.currentBook });
     },
     routeTo: function (path) {
       this.$router.push(path);
       this.drawer = false;
     },
-    
   },
   computed: {
     ...mapGetters({

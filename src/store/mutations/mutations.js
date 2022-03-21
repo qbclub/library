@@ -65,6 +65,8 @@ export default {
             });
     },
     RESERVE_BOOK(state, bookId) {
+        state.userInfo.CurrentReservedBooks = bookId;
+
         let e = {
             Id: Date.now(),
             BookId: bookId,
@@ -73,48 +75,9 @@ export default {
             TimeStamp: Date.now()
         }
         axios
-            .post('http://localhost:3000/api/bookflow/create', e)
-            .then((response) => {
-                console.log("Responsed on reserve book with status: ", response.status)
-
-                // ToDo: CurrentReservedBooks  надо сделать строкой а не массивом
-
-                state.userInfo.CurrentReservedBooks.push(bookId)
-                // .push(bookId)
-            })
-            .catch(err => console.error(err))
-
-        state.userInfo.CurrentReservedBooks.push(bookId);
-
-        axios
-            .put('http://localhost:3000/api/users/update',
-                {
-                    setupOptions: {
-                        $set: { 'CurrentReservedBooks': state.userInfo.CurrentReservedBooks }
-                    },
-                    email: state.userInfo.Contacts.Email
-                })
-            .then((response) => {
-                console.log('Update user ', response)
-            })
-            .catch((error) => {
-                console.error("There was an error!", error);
-            });
-
-        axios
-            .put("http://localhost:3000/api/books/update",
-                {
-                    id: bookId,
-                    setupOptions: {
-                        $set: { "Status": "Зарезервирована" }
-                    }
-                })
-            .then((response) => {
-                console.log('Update book ', response)
-            })
-            .catch((error) => {
-                console.error("There was an error!", error);
-            });
+            .put('http://localhost:3000/api/books/change-state',
+                { e, eventType: 'reserve' }
+            )
     },
     GIVE_BOOK(state, pr) {
         let dt = Date.now();
