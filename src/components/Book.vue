@@ -45,7 +45,7 @@
 
                 <div
                   v-if="
-                    currentBook.Status == '' || currentBook.Status == 'на месте'
+                    currentBook.Status == '' || currentBook.Status == 'На месте'
                   "
                 >
                   <v-btn
@@ -86,7 +86,9 @@
             <v-btn small class="ma-4 secondary" @click="callDialog(_giveBook)"
               >Выдать</v-btn
             >
-            <v-btn small class="ma-4 secondary">Получить</v-btn>
+            <v-btn small class="ma-4 secondary" @click="callDialog(_returnBook)"
+              >Получить</v-btn
+            >
             <v-btn small class="ma-4 primary" @click="callDialog(editBook)"
               >Изменить</v-btn
             >
@@ -126,7 +128,7 @@ export default {
     timeout: 2000,
   }),
   methods: {
-    ...mapActions(["reserveBook", "giveBook"]),
+    ...mapActions(["reserveBook", "giveBook", "returnBook"]),
     callDialog: function (method) {
       this.dialog = true;
       this.dialogAction = method;
@@ -145,6 +147,14 @@ export default {
       this.giveBook({
         bookId: this.currentBook.Id,
         userEmail: this.currentBook.ReservedQueue,
+      });
+      this.dialog = false;
+    },
+    _returnBook: function () {
+      this.snackbar = true;
+      this.returnBook({
+        bookId: this.currentBook.Id,
+        userEmail: this.currentBook.TemporaryOwner,
       });
       this.dialog = false;
     },
