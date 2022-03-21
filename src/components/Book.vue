@@ -43,22 +43,21 @@
                   Страниц: {{ currentBook.PageCount }}
                 </div>
 
-                <!-- v-if="user.loggedIn" -->
-                <v-btn
-                  depressed
-                  small
-                  class="ma-4 secondary"
-                  v-on:click="callDialog(takeBook)"
-                  >Взять книгу</v-btn
-                >
-
                 <div
                   v-if="
                     currentBook.Status == '' || currentBook.Status == 'на месте'
                   "
                 >
-                  <!-- v-else -->
                   <v-btn
+                    v-if="user.loggedIn"
+                    depressed
+                    small
+                    class="ma-4 secondary"
+                    v-on:click="callDialog(takeBook)"
+                    >Взять книгу</v-btn
+                  >
+                  <v-btn
+                    v-else
                     @click="routeTo('/reg')"
                     depressed
                     small

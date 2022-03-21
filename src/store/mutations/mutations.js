@@ -65,7 +65,7 @@ export default {
             });
     },
     RESERVE_BOOK(state, bookId) {
-        state.userInfo.CurrentReservedBooks = bookId;
+        state.userInfo.CurrentTakenBooks = bookId;
 
         let e = {
             Id: Date.now(),
@@ -89,8 +89,12 @@ export default {
             TimeStamp: dt
         }
 
-        console.log(pr.userEmail, pr.bookId, e)
+        axios
+            .put('http://localhost:3000/api/books/change-state',
+                { e, eventType: 'give' }
+            )
 
+        return;
         axios
             .post('http://localhost:3000/api/bookflow/create', e)
             .then((response) => {
@@ -102,7 +106,7 @@ export default {
             })
             .catch(err => console.error(err))
 
-        return;
+
         axios
             .put('http://localhost:3000/api/users/update',
                 {
