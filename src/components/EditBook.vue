@@ -3,12 +3,18 @@
     <v-row class="justify-center">
       <v-col class="col-md-6 col-12">
         <v-form>
+
+          <v-img
+                contain
+                :src="form.CoverPath"
+                :max-height="150"
+          ></v-img>
+
           <v-text-field
             v-model="form.Name"
             label="Название книги"
             required
           ></v-text-field>
-
           <v-textarea
             v-model="form.Annotation"
             label="Краткое описание книги"
@@ -35,11 +41,12 @@
                   <div class="d-flex flex-column text-center">
                     <i class="fi fi-rr-camera text-h4 ma-0 d-inline"></i>
 
-                    <span class="caption"> фото <br /></span>
+                    <span class="caption"> Фото <br /></span>
                   </div>
                 </label>
               </image-uploader>
             </v-col>
+          
             <v-col cols="6">
               <v-img
                 contain
@@ -200,8 +207,10 @@ export default {
     ...mapActions(["updateBook"]),
   },
   mounted() {
-    this.form = this.$route.params;
-  },
+    this.form = this.$route.params
+    this.cover.image = this.this.$route.params.CoverPath
+    console.log(this.$route.params)
+  }
 };
 </script>
 
