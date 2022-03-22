@@ -34,6 +34,12 @@ export default {
                 console.error("There was an error!", error);
             });
     },
+    DELETE_BOOK_BY_ID(state, id) {
+        axios
+            .post("http://localhost:3000/api/books/delete-by-id", id)
+            .then((response) => console.log(`delete book with id ${id} with status`, response.status))
+            .catch((err) => console.error(`cannot delete book with id ${id} with error `, err))
+    },
     GET_ALL_BOOKFLOW(state, bookflow) {
         state.bookflow = bookflow;
     },
@@ -65,6 +71,8 @@ export default {
             });
     },
     RESERVE_BOOK(state, bookId) {
+        state.userInfo.CurrentReservedBooks = bookId;
+
         let e = {
             Id: Date.now(),
             BookId: bookId,
@@ -73,48 +81,9 @@ export default {
             TimeStamp: Date.now()
         }
         axios
-            .post('http://localhost:3000/api/bookflow/create', e)
-            .then((response) => {
-                console.log("Responsed on reserve book with status: ", response.status)
-
-                // ToDo: CurrentReservedBooks  надо сделать строкой а не массивом
-
-                state.userInfo.CurrentReservedBooks.push(bookId)
-                // .push(bookId)
-            })
-            .catch(err => console.error(err))
-
-        state.userInfo.CurrentReservedBooks.push(bookId);
-
-        axios
-            .put('http://localhost:3000/api/users/update',
-                {
-                    setupOptions: {
-                        $set: { 'CurrentReservedBooks': state.userInfo.CurrentReservedBooks }
-                    },
-                    email: state.userInfo.Contacts.Email
-                })
-            .then((response) => {
-                console.log('Update user ', response)
-            })
-            .catch((error) => {
-                console.error("There was an error!", error);
-            });
-
-        axios
-            .put("http://localhost:3000/api/books/update",
-                {
-                    id: bookId,
-                    setupOptions: {
-                        $set: { "Status": "Зарезервирована" }
-                    }
-                })
-            .then((response) => {
-                console.log('Update book ', response)
-            })
-            .catch((error) => {
-                console.error("There was an error!", error);
-            });
+            .put('http://localhost:3000/api/books/change-state',
+                { e, eventType: 'reserve' }
+            )
     },
     GIVE_BOOK(state, pr) {
         let dt = Date.now();
@@ -126,57 +95,14 @@ export default {
             TimeStamp: dt
         }
 
-        console.log(pr.userEmail, pr.bookId, e)
-
         axios
-            .post('http://localhost:3000/api/bookflow/create', e)
-            .then((response) => {
-                console.log("Responsed on GIVE book with status: ", response.status)
+            .put('http://localhost:3000/api/books/change-state',
+                { e, eventType: 'give' }
+            )
 
-                // ToDo: CurrentReservedBooks  надо сделать строкой а не массивом
-
-                // .push(bookId)
-            })
-            .catch(err => console.error(err))
-
-        return;
-        axios
-            .put('http://localhost:3000/api/users/update',
-                {
-                    setupOptions: {
-                        $set: { 'CurrentTakenBooks': state.userInfo.CurrentTakenBooks }
-                    },
-                    email: pr.userEmail
-                })
-            .then((response) => {
-                console.log('Update user ', response)
-            })
-            .catch((error) => {
-                console.error("There was an error!", error);
-            });
-
-        // ReservedQueue // очередь FIFO Id-шников, кто из пользователей зарезервировал книгу - пока не знаю, надо или нет
-        // TemporaryOwner //кому книга выдана
-        // DateOfGivenOut // когда книга выдана
-        axios
-            .put("http://localhost:3000/api/books/update",
-                {
-                    id: pr.bookId,
-                    setupOptions: {
-                        $set: { "Status": "Выдана", "TemporaryOwner": pr.userEmail, "DateOfGivenOut": dt }
-                    }
-                })
-            .then((response) => {
-                console.log('Update book ', response)
-            })
-            .catch((error) => {
-                console.error("There was an error!", error);
-            });
     },
     // temp содержит пользователя(емейл) и id книги
     RETURN_BOOK(state, temp) {
-        console.log(temp)
-        return;
         const dt = Date.now()
         let e = {
             Id: dt,
@@ -187,51 +113,32 @@ export default {
         }
 
         axios
-            .post('http://localhost:3000/api/bookflow/create', e)
-            .then((response) => {
-                console.log("Responsed on RETURN book with status: ", response.status)
-            })
-            .catch(err => console.error(err))
-
-        axios
-            .put('http://localhost:3000/api/users/update',
-                {
-                    setupOptions: {
-                        $set: { 'CurrentTakenBooks': [] }
-                    },
-                    email: pr.userEmail
-                })
-            .then((response) => {
-                console.log('Update user ', response)
-            })
-            .catch((error) => {
-                console.error("There was an error!", error);
-            });
-
-        // ReservedQueue // очередь FIFO Id-шников, кто из пользователей зарезервировал книгу - пока не знаю, надо или нет
-        // TemporaryOwner //кому книга выдана
-        // DateOfGivenOut // когда книга выдана
-        axios
-            .put("http://localhost:3000/api/books/update",
-                {
-                    id: pr.bookId,
-                    setupOptions: {
-                        $set: { "Status": "На месте", "TemporaryOwner": null, "DateOfGivenOut": null }
-                    }
-                })
-            .then((response) => {
-                console.log('Update book ', response)
-            })
-            .catch((error) => {
-                console.error("There was an error!", error);
-            });
+            .put('http://localhost:3000/api/books/change-state',
+                { e, eventType: 'return' }
+            )
     },
     UPDATE_BOOK(state, newBook) {
-        console.log(newBook);
-        return;
+        let _ = newBook
         axios
             .put("http://localhost:3000/api/books/update", {
-                setupOptions: { $set: { ...newBook } },
+                setupOptions: {
+                    $set: {
+                        Id: _.Id,
+                        Name: _.Name,
+                        Annotation: _.Annotation,
+                        CoverPath: _.CoverPath,
+                        Authors: _.Authors,
+                        Sections: _.Sections,
+                        ReleaseDate: _.ReleaseDate,
+                        PhysicalPlace: _.PhysicalPlace,
+                        ISBN: _.ISBN,
+                        PublisherName: _.PublisherName,
+                        PageCount: _.PageCount,
+                        Series: _.Series,
+                        Status: _.Status,
+                        TimeStamp: _.TimeStamp,
+                    }
+                },
                 id: newBook.Id
             })
             .then((response) => {
@@ -260,7 +167,7 @@ export default {
                 EducationalInstitution: _.EducationalInstitution,
                 LivingAddress: _.LivingAddress,
                 isAdmin: _.isAdmin,
-                CurrentTakenBooks: _.CurrenttakenBooks,
+                CurrentTakenBooks: _.CurrentTakenBooks,
                 CurrentReservedBooks: _.CurrentReservedBooks,
                 Contacts: {
                     PhoneNumber: _.Contacts.PhoneNumber,

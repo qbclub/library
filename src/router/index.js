@@ -92,7 +92,13 @@ const routes = [
     name: 'EditBook',
 
     component: () => import('../components/EditBook.vue')
-  }
+  },
+  {
+    path: '/UserList',
+    name: 'UserList',
+
+    component: () => import('../components/UserList.vue')
+  },
 ]
 
 

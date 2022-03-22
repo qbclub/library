@@ -1,14 +1,19 @@
 <template>
   <div class="book">
     <v-container>
-      <router-link to="/books" style="text-decoration: none">
-        <div>
-          <span class="fi fi-rr-angle-left"> </span>
-        </div>
-      </router-link>
-      <span class="text-h6"
-        >{{ currentBook.Authors }}: {{ currentBook.Name }}
-      </span>
+      <v-row>
+        <button onclick="history.back()">
+          <div>
+            <span class="subtitle-1 fi fi-rr-angle-left"> </span>
+          </div>
+        </button>
+      </v-row>
+
+      <v-row>
+        <span class="text-h6"
+          >{{ currentBook.Authors }}: {{ currentBook.Name }}
+        </span>
+      </v-row>
       <v-row class="mt-2">
         <v-col>
           <v-container>
@@ -37,8 +42,8 @@
                 <div class="text-caption">
                   Страниц: {{ currentBook.PageCount }}
                 </div>
-              
-                <div v-if="currentBook.Status ==  '' || currentBook.Status ==  'на месте' ">
+
+                <div v-if="currentBook.Status == 'На месте'">
                   <v-btn
                     v-if="user.loggedIn"
                     depressed
@@ -58,7 +63,7 @@
                 </div>
 
                 <div v-else class="text-caption font-weight-bold">
-                  Книга {{ currentBook.Status.toLowerCase() }}
+                  Книга {{ currentBook.Status }}
                 </div>
               </v-col>
             </v-row>
@@ -74,10 +79,18 @@
             v-if="userInfo && userInfo.isAdmin"
             class="d-flex justify-center pb-8"
           >
-            <v-btn small class="ma-4 accent">Выдать</v-btn>
-            <v-btn small class="ma-4 accent">Получить</v-btn>
-            <v-btn small class="ma-4 accent white-text" to="/editbook">Изменить</v-btn>
-            <v-btn small class="ma-4 error">Удалить</v-btn>
+            <v-btn small class="ma-4 secondary" @click="callDialog(_giveBook)"
+              >Выдать</v-btn
+            >
+            <v-btn small class="ma-4 secondary" @click="callDialog(_returnBook)"
+              >Получить</v-btn
+            >
+            <v-btn small class="ma-4 primary" @click="callDialog(editBook)"
+              >Изменить</v-btn
+            >
+            <v-btn small class="ma-4 error" @click="callDialog(deleteBook)"
+              >Удалить</v-btn
+            >
           </div>
         </v-col>
       </v-row>
@@ -103,6 +116,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+
 export default {
   data: () => ({
     currentBook: {},
@@ -112,7 +126,7 @@ export default {
     timeout: 2000,
   }),
   methods: {
-    ...mapActions(["reserveBook"]),
+    ...mapActions(["reserveBook", "giveBook", "returnBook", "deleteBookById"]),
     callDialog: function (method) {
       this.dialog = true;
       this.dialogAction = method;
@@ -120,6 +134,31 @@ export default {
     takeBook: function () {
       this.snackbar = true;
       this.reserveBook(this.currentBook.Id);
+      this.dialog = false;
+    },
+    editBook: function () {
+      console.log(this.currentBook);
+      this.$router.push({ name: "EditBook", params: this.currentBook });
+    },
+    _giveBook: function () {
+      this.snackbar = true;
+      this.giveBook({
+        bookId: this.currentBook.Id,
+        userEmail: this.currentBook.ReservedQueue,
+      });
+      this.dialog = false;
+    },
+    _returnBook: function () {
+      this.snackbar = true;
+      this.returnBook({
+        bookId: this.currentBook.Id,
+        userEmail: this.currentBook.TemporaryOwner,
+      });
+      this.dialog = false;
+    },
+    deleteBook: function () {
+      this.snackbar = true;
+      this.deleteBookById(this.currentBook.Id);
       this.dialog = false;
     },
     routeTo: function (path) {
@@ -139,6 +178,7 @@ export default {
     this.currentBook = this.books.find(
       (x) => x.Id == this.$route.query.book_id
     );
+    console.log(this.currentBook);
   },
 };
 </script>

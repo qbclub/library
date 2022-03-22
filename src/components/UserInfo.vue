@@ -1,5 +1,12 @@
 <<template>
   <v-container>
+      <v-row>
+        <button onclick="history.back()">        
+        <div>
+          <span class="subtitle-1 fi fi-rr-angle-left"> </span>
+        </div>
+        </button>
+      </v-row>
     <v-row class="justify-center">
       <v-col class="col-md-6 col-12">
         

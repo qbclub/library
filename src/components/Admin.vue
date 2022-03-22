@@ -1,6 +1,13 @@
 <template>
   <div>
     <v-container>
+      <v-row>
+        <button onclick="history.back()">
+          <div>
+            <span class="subtitle-1 fi fi-rr-angle-left"> </span>
+          </div>
+        </button>
+      </v-row>
       <!-- <v-row class="align-center justify-end">
         <v-col class="d-flex" cols="12" md="2">
           <v-select
@@ -15,7 +22,6 @@
       </v-row> -->
       <v-row class="justify-center">
         <v-col cols="8 ma-8">
-       
           <v-btn @click="routeTo('/user-actions')" block class="mb-8"
             >Добавить пользователя</v-btn
           >
@@ -25,13 +31,20 @@
           <v-btn @click="routeTo('/bookflow-actions')" block class="mb-8"
             >Движение книг</v-btn
           >
+          <v-btn @click="routeTo('/UserList')" block class="mb-8"
+            >Список пользователей</v-btn
+          >
           <v-btn @click.stop="dialog4 = true" block class="mb-8" color="error">
             Отчистить базу книг</v-btn
           >
-            <v-btn @click.prevent = "clearUsersDB()" block class="mb-8" color="error">
+          <v-btn
+            @click.prevent="clearUsersDB()"
+            block
+            class="mb-8"
+            color="error"
+          >
             Отчистить базу юзеров</v-btn
           >
-      
         </v-col>
         <v-dialog v-model="dialog4" max-width="290">
           <v-card>
