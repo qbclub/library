@@ -23,6 +23,9 @@ export default {
   }) {
     commit('GET_ALL_BOOKS')
   },
+  deleteBookById({ commit }, Id) {
+    commit('DELETE_BOOK_BY_ID')
+  },
   reserveBook({
     commit
   }, bookId) {

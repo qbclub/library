@@ -88,7 +88,9 @@
             <v-btn small class="ma-4 primary" @click="callDialog(editBook)"
               >Изменить</v-btn
             >
-            <v-btn small class="ma-4 error">Удалить</v-btn>
+            <v-btn small class="ma-4 error" @click="callDialog(deleteBook)"
+              >Удалить</v-btn
+            >
           </div>
         </v-col>
       </v-row>
@@ -124,7 +126,7 @@ export default {
     timeout: 2000,
   }),
   methods: {
-    ...mapActions(["reserveBook", "giveBook", "returnBook"]),
+    ...mapActions(["reserveBook", "giveBook", "returnBook", "deleteBookById"]),
     callDialog: function (method) {
       this.dialog = true;
       this.dialogAction = method;
@@ -152,6 +154,11 @@ export default {
         bookId: this.currentBook.Id,
         userEmail: this.currentBook.TemporaryOwner,
       });
+      this.dialog = false;
+    },
+    deleteBook: function () {
+      this.snackbar = true;
+      this.deleteBookById(this.currentBook.Id);
       this.dialog = false;
     },
     routeTo: function (path) {
