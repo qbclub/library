@@ -34,11 +34,11 @@ export default {
                 console.error("There was an error!", error);
             });
     },
-    DELETE_BOOK_BY_ID(state, id) {
+    DELETE_BOOK_BY_ID(state, BookId) {
         axios
-            .post("http://localhost:3000/api/books/delete-by-id", id)
-            .then((response) => console.log(`delete book with id ${id} with status`, response.status))
-            .catch((err) => console.error(`cannot delete book with id ${id} with error `, err))
+            .post("http://localhost:3000/api/books/delete-by-id", { id: BookId })
+            .then((response) => console.log(`delete book with id ${BookId} with status`, response.status))
+            .catch((err) => console.error(`cannot delete book with id ${BookId} with error `, err))
     },
     GET_ALL_BOOKFLOW(state, bookflow) {
         state.bookflow = bookflow;

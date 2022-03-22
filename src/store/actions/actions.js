@@ -23,8 +23,8 @@ export default {
   }) {
     commit('GET_ALL_BOOKS')
   },
-  deleteBookById({ commit }, Id) {
-    commit('DELETE_BOOK_BY_ID')
+  deleteBookById({ commit }, BookId) {
+    commit('DELETE_BOOK_BY_ID', BookId)
   },
   reserveBook({
     commit
