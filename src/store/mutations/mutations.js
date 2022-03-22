@@ -65,7 +65,7 @@ export default {
             });
     },
     RESERVE_BOOK(state, bookId) {
-        state.userInfo.CurrentTakenBooks = bookId;
+        state.userInfo.CurrentReservedBooks = bookId;
 
         let e = {
             Id: Date.now(),
