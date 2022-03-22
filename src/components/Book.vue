@@ -48,7 +48,7 @@
                     v-if="user.loggedIn"
                     depressed
                     small
-                    class="ma-4 secondary"
+                    class="ma-4 accent"
                     v-on:click="callDialog(takeBook)"
                     >Взять книгу</v-btn
                   >
@@ -57,7 +57,7 @@
                     @click="routeTo('/reg')"
                     depressed
                     small
-                    class="ma-4 secondary"
+                    class="ma-4 accent"
                     >Зарегистрироваться</v-btn
                   >
                 </div>
@@ -79,16 +79,16 @@
             v-if="userInfo && userInfo.isAdmin"
             class="d-flex justify-center pb-8"
           >
-            <v-btn small class="ma-4 secondary" @click="callDialog(_giveBook)"
+            <v-btn small class="ma-4 accent" @click="callDialog(_giveBook)"
               >Выдать</v-btn
             >
-            <v-btn small class="ma-4 secondary" @click="callDialog(_returnBook)"
+            <v-btn small class="ma-4 accent" @click="callDialog(_returnBook)"
               >Получить</v-btn
             >
-            <v-btn small class="ma-4 primary" @click="callDialog(editBook)"
+            <v-btn small class="ma-4 accent" @click="callDialog(editBook)"
               >Изменить</v-btn
             >
-            <v-btn small class="ma-4 error" @click="callDialog(deleteBook)"
+            <v-btn small class="ma-4 accentz" @click="callDialog(deleteBook)"
               >Удалить</v-btn
             >
           </div>
