@@ -178,7 +178,6 @@ export default {
     this.currentBook = this.books.find(
       (x) => x.Id == this.$route.query.book_id
     );
-    console.log(this.currentBook);
   },
 };
 </script>

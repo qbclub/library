@@ -11,7 +11,6 @@ export default {
     },
     GET_USER_INFO(state, email) {
         if (email) {
-
             axios
                 .post("http://localhost:3000/api/users/get-by-email", { email: email })
                 .then((response) => state.userInfo = response.data)
@@ -21,8 +20,6 @@ export default {
         } else {
             state.userInfo = {};
         }
-
-
     },
     GET_ALL_BOOKS(state) {
         axios
@@ -51,15 +48,15 @@ export default {
             .post("http://localhost:3000/api/books/create", book)
             .then((response) => console.log("book created\nresponse status: ", response.status))
             .catch((error) => {
-                console.error("There was an error!", error);
+                console.error("Cannot create book, error: ", error);
             });
     },
     CLEAR_BOOKS_DB() {
         axios
             .get("http://localhost:3000/api/books/clear")
-            .then((response) => console.log(response))
+            .then((response) => console.log('clear books with status ', response.status))
             .catch((error) => {
-                console.error("There was an error!", error);
+                console.error("Cannot clear books, error: ", error);
             });
     },
     CLEAR_USERS_DB() {
@@ -67,7 +64,7 @@ export default {
             .get("http://localhost:3000/api/users/clear")
             .then((response) => console.log(response))
             .catch((error) => {
-                console.error("There was an error!", error);
+                console.error("Cannot clear users, error: ", error);
             });
     },
     RESERVE_BOOK(state, bookId) {
@@ -81,9 +78,9 @@ export default {
             TimeStamp: Date.now()
         }
         axios
-            .put('http://localhost:3000/api/books/change-state',
-                { e, eventType: 'reserve' }
-            )
+            .put('http://localhost:3000/api/books/change-state', { e, eventType: 'reserve' })
+            .then((response) => console.log('reserve book with status', response.status))
+            .catch((err) => console.error('cannot reserve book, error: ', err))
     },
     GIVE_BOOK(state, pr) {
         let dt = Date.now();
@@ -96,9 +93,9 @@ export default {
         }
 
         axios
-            .put('http://localhost:3000/api/books/change-state',
-                { e, eventType: 'give' }
-            )
+            .put('http://localhost:3000/api/books/change-state', { e, eventType: 'give' })
+            .then((response) => console.log('give book with status: ', response.status))
+            .catch((err) => console.error('cannot give book, error: ', err))
 
     },
     // temp содержит пользователя(емейл) и id книги
@@ -113,9 +110,9 @@ export default {
         }
 
         axios
-            .put('http://localhost:3000/api/books/change-state',
-                { e, eventType: 'return' }
-            )
+            .put('http://localhost:3000/api/books/change-state', { e, eventType: 'return' })
+            .then((response) => console.log('return book with status: ', response.status))
+            .catch((err) => console.error('cannot return book, error: ', err))
     },
     UPDATE_BOOK(state, newBook) {
         let _ = newBook
@@ -142,17 +139,17 @@ export default {
                 id: newBook.Id
             })
             .then((response) => {
-                console.log("Succesfully update book ", response)
+                console.log("update book with status: ", response.status)
             })
-            .catch(err => console.error("Update book with error: ", err))
+            .catch(err => console.error("cannot update book, error: ", err))
     },
     CREATE_USER(state, user) {
         console.log("create user: ", user)
         axios
             .post("http://localhost:3000/api/users/create", user)
-            .then((response) => console.log("user created\nresponse: ", response))
+            .then((response) => console.log("create user with status: ", response.status))
             .catch((error) => {
-                console.error("There was an error!", error);
+                console.error("cannot create user, error: ", error);
             });
 
     },
@@ -183,9 +180,10 @@ export default {
                     setupOptions,
                     email: newUser.Contacts.Email
                 })
-            .then((response) => console.log("user updated\nresponse: ", response))
+            .then((response) => console.log("update user with status: ", response.status))
             .catch((error) => {
-                console.error("There was an error!", error);
+                console.error("cannot update user, error: ", error);
             });
+
     }
 }
