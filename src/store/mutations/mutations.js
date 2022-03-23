@@ -28,7 +28,7 @@ export default {
                 state.books = response.data
             })
             .catch((error) => {
-                console.error("There was an error!", error);
+                console.error("cannot get all books, error: ", error);
             });
     },
     DELETE_BOOK_BY_ID(state, BookId) {
@@ -79,7 +79,10 @@ export default {
         }
         axios
             .put('http://localhost:3000/api/books/change-state', { e, eventType: 'reserve' })
-            .then((response) => console.log('reserve book with status', response.status))
+            .then(response => {
+                this.GET_BOOK_BY_ID(state, bookId)
+                console.log('reserve book with status', response.status)
+            })
             .catch((err) => console.error('cannot reserve book, error: ', err))
     },
     GIVE_BOOK(state, pr) {
@@ -111,7 +114,7 @@ export default {
 
         axios
             .put('http://localhost:3000/api/books/change-state', { e, eventType: 'return' })
-            .then((response) => console.log('return book with status: ', response.status))
+            .then((res) => console.log('return book with status: ', res.status))
             .catch((err) => console.error('cannot return book, error: ', err))
     },
     UPDATE_BOOK(state, newBook) {

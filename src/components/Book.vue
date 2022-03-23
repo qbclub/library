@@ -134,6 +134,9 @@ export default {
     takeBook: function () {
       this.snackbar = true;
       this.reserveBook(this.currentBook.Id);
+      let c = this.currentBook;
+      c.Status = "Зарезервирована";
+      c.ReservedQueue = this.userInfo.Contacts.Email;
       this.dialog = false;
     },
     editBook: function () {
@@ -146,6 +149,9 @@ export default {
         bookId: this.currentBook.Id,
         userEmail: this.currentBook.ReservedQueue,
       });
+      let c = this.currentBook;
+      c.Status = "Выдана";
+      c.TemporaryOwner = this.userInfo.Contacts.Email;
       this.dialog = false;
     },
     _returnBook: function () {
@@ -154,6 +160,10 @@ export default {
         bookId: this.currentBook.Id,
         userEmail: this.currentBook.TemporaryOwner,
       });
+      let c = this.currentBook;
+      c.Status = "На месте";
+      c.ReservedQueue = "";
+      c.TemporaryOwner = "";
       this.dialog = false;
     },
     deleteBook: function () {
