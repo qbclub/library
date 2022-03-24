@@ -166,9 +166,9 @@ export default {
       c.TemporaryOwner = "";
       this.dialog = false;
     },
-    deleteBook: function () {
-      this.snackbar = true;
+    deleteBook: async function () {
       this.deleteBookById(this.currentBook.Id);
+      this.snackbar = true;
       this.dialog = false;
     },
     routeTo: function (path) {

@@ -21,21 +21,17 @@ export default {
             state.userInfo = {};
         }
     },
-    GET_ALL_BOOKS(state) {
-        axios
-            .get("http://localhost:3000/api/books/get-all")
-            .then((response) => {
-                state.books = response.data
-            })
-            .catch((error) => {
-                console.error("cannot get all books, error: ", error);
-            });
+    GET_ALL_BOOKS(state, books) {
+        state.books = books;
     },
     DELETE_BOOK_BY_ID(state, BookId) {
-        axios
-            .post("http://localhost:3000/api/books/delete-by-id", { id: BookId })
-            .then((response) => console.log(`delete book with id ${BookId} with status`, response.status))
-            .catch((err) => console.error(`cannot delete book with id ${BookId} with error `, err))
+        let books = state.books;
+        for (let i = 0; i < books.length; i++) {
+            if (books[i].Id == BookId) {
+                books.splice(i, 1)
+                break;
+            }
+        }
     },
     GET_ALL_BOOKFLOW(state, bookflow) {
         state.bookflow = bookflow;
@@ -70,52 +66,39 @@ export default {
     RESERVE_BOOK(state, bookId) {
         state.userInfo.CurrentReservedBooks = bookId;
 
-        let e = {
-            Id: Date.now(),
-            BookId: bookId,
-            UserEmail: state.userInfo.Contacts.Email,
-            BookStatus: 'Зарезервирована',
-            TimeStamp: Date.now()
+        let books = state.books;
+        for (let i = 0; i < books.length; i++) {
+            if (books[i].Id == bookId) {
+                books[i].ReservedQueue = state.userInfo.Contacts.Email;
+                break;
+            }
         }
-        axios
-            .put('http://localhost:3000/api/books/change-state', { e, eventType: 'reserve' })
-            .then(response => {
-                this.GET_BOOK_BY_ID(state, bookId)
-                console.log('reserve book with status', response.status)
-            })
-            .catch((err) => console.error('cannot reserve book, error: ', err))
     },
-    GIVE_BOOK(state, pr) {
-        let dt = Date.now();
-        let e = {
-            Id: dt,
-            BookId: pr.bookId,
-            UserEmail: pr.userEmail,
-            BookStatus: 'Выдана',
-            TimeStamp: dt
+    GIVE_BOOK(state, bookIdUserEmailAndDt) {
+        state.userInfo.CurrentTakenBooks = bookIdUserEmailAndDt.bookId;
+
+        let books = state.books;
+        for (let i = 0; i < books.length; i++) {
+            if (books[i].Id == bookIdUserEmailAndDt.bookId) {
+                books[i].TemporaryOwner = bookIdUserEmailAndDt.userEmail;
+                books[i].DateOfGivenOut = bookIdUserEmailAndDt.dt;
+                break;
+            }
         }
-
-        axios
-            .put('http://localhost:3000/api/books/change-state', { e, eventType: 'give' })
-            .then((response) => console.log('give book with status: ', response.status))
-            .catch((err) => console.error('cannot give book, error: ', err))
-
     },
-    // temp содержит пользователя(емейл) и id книги
-    RETURN_BOOK(state, temp) {
-        const dt = Date.now()
-        let e = {
-            Id: dt,
-            BookId: temp.bookId,
-            UserEmail: temp.userEmail,
-            BookStatus: 'На месте',
-            TimeStamp: dt
-        }
+    RETURN_BOOK(state, bookId) {
+        state.userInfo.CurrentTakenBooks = '';
+        state.userInfo.CurrentReservedBooks = '';
 
-        axios
-            .put('http://localhost:3000/api/books/change-state', { e, eventType: 'return' })
-            .then((res) => console.log('return book with status: ', res.status))
-            .catch((err) => console.error('cannot return book, error: ', err))
+        let books = state.books;
+        for (let i = 0; i < books.length; i++) {
+            if (books[i].Id == bookId) {
+                books[i].ReservedQueue = '';
+                books[i].TemporaryOwner = '';
+                books[i].DateOfGivenOut = '';
+                break;
+            }
+        }
     },
     UPDATE_BOOK(state, newBook) {
         let _ = newBook
