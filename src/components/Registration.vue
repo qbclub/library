@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-sheet class="d-flex align-center flex-column pa-10">
+    <div class="d-flex align-center flex-column pa-10 secondary">
       <h2>Регистрация</h2>
 
       <v-container>
@@ -47,18 +47,21 @@
                   ></v-text-field>
                 </validation-provider>
 
-                <v-btn class="mr-4" type="submit"> submit </v-btn>
-                <v-btn @click="clear"> clear </v-btn>
+                <div class="d-flex justify-space-around">
+                  <v-btn class="accent" type="submit"> да </v-btn>
+                  <v-btn class="error" @click="clear"> нет </v-btn>
+                </div>
+
                 <div>{{ error }}</div>
               </form>
               <router-link to="/auth"
-                ><p class="text-center ma-8">Войти</p></router-link
+                ><p class="text-center accent--text ma-8">Войти</p></router-link
               >
             </validation-observer>
           </v-col>
         </v-row>
       </v-container>
-    </v-sheet>
+    </div>
   </div>
 </template>
 
