@@ -28,11 +28,15 @@
           <v-btn @click="routeTo('/book-actions')" block class="mb-8"
             >Внести книгу</v-btn
           >
+
           <v-btn @click="routeTo('/bookflow-actions')" block class="mb-8"
             >Движение книг</v-btn
           >
           <v-btn @click="routeTo('/UserList')" block class="mb-8"
             >Список пользователей</v-btn
+          >
+          <v-btn @click="unreserveAll" block class="mb-8" color="error"
+            >Отменить резервацию всех книг</v-btn
           >
           <v-btn @click.stop="dialog4 = true" block class="mb-8" color="error">
             Отчистить базу книг</v-btn
@@ -127,7 +131,12 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(["getAllBookflow", "clearBooksDB", "clearUsersDB"]),
+    ...mapActions([
+      "getAllBookflow",
+      "clearBooksDB",
+      "clearUsersDB",
+      "unreserveAllBooks",
+    ]),
     createBookflow: async function () {
       // Update bookflow in vuex
       let bookflow = await jsMethods.getAllBookflow();
@@ -138,6 +147,11 @@ export default {
       bookflowForm.TimeStamp = Date.now();
 
       jsMethods.createBookflow(this.bookflowForm);
+    },
+    unreserveAll: function () {
+      if (confirm("Вы уверены?")) {
+        this.unreserveAllBooks();
+      }
     },
     routeTo(path) {
       this.$router.push(path);

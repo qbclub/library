@@ -25,7 +25,6 @@ export default {
         return axios
             .get("http://localhost:3000/api/books/get-all")
             .then((response) => {
-                console.log('get all boks')
                 commit('GET_ALL_BOOKS', response.data)
             })
             .catch((error) => {
@@ -70,7 +69,14 @@ export default {
             })
             .catch((err) => console.error('cannot reserve book, error: ', err))
     },
-
+    unreserveAllBooks() {
+        axios
+            .post('http://localhost:3000/api/books/unreserve-all')
+            .then(response => {
+                console.log('books unreserved with status ', response.status)
+            })
+            .catch(err => console.error('cannot unreserve books, error: ', err))
+    },
     giveBook({ commit }, bookIdAndUserEmail) {
         let dt = Date.now();
         let e = {
