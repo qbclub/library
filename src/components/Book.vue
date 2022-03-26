@@ -88,7 +88,7 @@
             <v-btn small class="ma-4 accent" @click="callDialog(editBook)"
               >Изменить</v-btn
             >
-            <v-btn small class="ma-4 accentz" @click="callDialog(deleteBook)"
+            <v-btn small class="ma-4 error" @click="callDialog(deleteBook)"
               >Удалить</v-btn
             >
           </div>

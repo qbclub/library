@@ -121,7 +121,7 @@
             </v-col>
           </v-row>
 
-          <v-btn color="success" class="mr-4" @click="send"> Отправить </v-btn>
+          <v-btn  class="mb-b success" @click="send"> Отправить </v-btn>
         </v-form>
       </v-col>
     </v-row>
