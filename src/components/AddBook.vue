@@ -171,6 +171,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["createBook"]),
     clearingForm: function () {
       this.form = {
         Id: "",
@@ -193,9 +194,6 @@ export default {
       };
     },
     send: function () {
-      const headers = {
-        "content-type": "application/json",
-      };
       this.form.TimeStamp = Date.now();
       this.form.Id = Date.now();
 
@@ -209,7 +207,6 @@ export default {
       this.cover.newHeight = img.info.newHeight;
     },
     uploadImageComplete: function () {
-      this.form.Id = Date.now();
       const storageRef = ref(storage, "books/" + this.form.Id);
       uploadString(storageRef, this.cover.image, "data_url").then(
         (snapshot) => {
@@ -227,7 +224,6 @@ export default {
     uploadImageStart: function () {
       console.log("UPLOAD COVER IMAGE STARTED");
     },
-    ...mapActions(["createBook"]),
   },
 };
 </script>

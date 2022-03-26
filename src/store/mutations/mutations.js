@@ -11,7 +11,6 @@ export default {
     },
     GET_USER_INFO(state, email) {
         if (email) {
-
             axios
                 .post("http://localhost:3000/api/users/get-by-email", { email: email })
                 .then((response) => state.userInfo = response.data)
@@ -21,24 +20,18 @@ export default {
         } else {
             state.userInfo = {};
         }
-
-
     },
-    GET_ALL_BOOKS(state) {
-        axios
-            .get("http://localhost:3000/api/books/get-all")
-            .then((response) => {
-                state.books = response.data
-            })
-            .catch((error) => {
-                console.error("There was an error!", error);
-            });
+    GET_ALL_BOOKS(state, books) {
+        state.books = books;
     },
-    DELETE_BOOK_BY_ID(state, id) {
-        axios
-            .post("http://localhost:3000/api/books/delete-by-id", id)
-            .then((response) => console.log(`delete book with id ${id} with status`, response.status))
-            .catch((err) => console.error(`cannot delete book with id ${id} with error `, err))
+    DELETE_BOOK_BY_ID(state, BookId) {
+        let books = state.books;
+        for (let i = 0; i < books.length; i++) {
+            if (books[i].Id == BookId) {
+                books.splice(i, 1)
+                break;
+            }
+        }
     },
     GET_ALL_BOOKFLOW(state, bookflow) {
         state.bookflow = bookflow;
@@ -51,15 +44,15 @@ export default {
             .post("http://localhost:3000/api/books/create", book)
             .then((response) => console.log("book created\nresponse status: ", response.status))
             .catch((error) => {
-                console.error("There was an error!", error);
+                console.error("Cannot create book, error: ", error);
             });
     },
     CLEAR_BOOKS_DB() {
         axios
             .get("http://localhost:3000/api/books/clear")
-            .then((response) => console.log(response))
+            .then((response) => console.log('clear books with status ', response.status))
             .catch((error) => {
-                console.error("There was an error!", error);
+                console.error("Cannot clear books, error: ", error);
             });
     },
     CLEAR_USERS_DB() {
@@ -67,55 +60,45 @@ export default {
             .get("http://localhost:3000/api/users/clear")
             .then((response) => console.log(response))
             .catch((error) => {
-                console.error("There was an error!", error);
+                console.error("Cannot clear users, error: ", error);
             });
     },
     RESERVE_BOOK(state, bookId) {
         state.userInfo.CurrentReservedBooks = bookId;
 
-        let e = {
-            Id: Date.now(),
-            BookId: bookId,
-            UserEmail: state.userInfo.Contacts.Email,
-            BookStatus: 'Зарезервирована',
-            TimeStamp: Date.now()
+        let books = state.books;
+        for (let i = 0; i < books.length; i++) {
+            if (books[i].Id == bookId) {
+                books[i].ReservedQueue = state.userInfo.Contacts.Email;
+                break;
+            }
         }
-        axios
-            .put('http://localhost:3000/api/books/change-state',
-                { e, eventType: 'reserve' }
-            )
     },
-    GIVE_BOOK(state, pr) {
-        let dt = Date.now();
-        let e = {
-            Id: dt,
-            BookId: pr.bookId,
-            UserEmail: pr.userEmail,
-            BookStatus: 'Выдана',
-            TimeStamp: dt
+    GIVE_BOOK(state, bookIdUserEmailAndDt) {
+        state.userInfo.CurrentTakenBooks = bookIdUserEmailAndDt.bookId;
+
+        let books = state.books;
+        for (let i = 0; i < books.length; i++) {
+            if (books[i].Id == bookIdUserEmailAndDt.bookId) {
+                books[i].TemporaryOwner = bookIdUserEmailAndDt.userEmail;
+                books[i].DateOfGivenOut = bookIdUserEmailAndDt.dt;
+                break;
+            }
         }
-
-        axios
-            .put('http://localhost:3000/api/books/change-state',
-                { e, eventType: 'give' }
-            )
-
     },
-    // temp содержит пользователя(емейл) и id книги
-    RETURN_BOOK(state, temp) {
-        const dt = Date.now()
-        let e = {
-            Id: dt,
-            BookId: temp.bookId,
-            UserEmail: temp.userEmail,
-            BookStatus: 'На месте',
-            TimeStamp: dt
-        }
+    RETURN_BOOK(state, bookId) {
+        state.userInfo.CurrentTakenBooks = '';
+        state.userInfo.CurrentReservedBooks = '';
 
-        axios
-            .put('http://localhost:3000/api/books/change-state',
-                { e, eventType: 'return' }
-            )
+        let books = state.books;
+        for (let i = 0; i < books.length; i++) {
+            if (books[i].Id == bookId) {
+                books[i].ReservedQueue = '';
+                books[i].TemporaryOwner = '';
+                books[i].DateOfGivenOut = '';
+                break;
+            }
+        }
     },
     UPDATE_BOOK(state, newBook) {
         let _ = newBook
@@ -142,17 +125,17 @@ export default {
                 id: newBook.Id
             })
             .then((response) => {
-                console.log("Succesfully update book ", response)
+                console.log("update book with status: ", response.status)
             })
-            .catch(err => console.error("Update book with error: ", err))
+            .catch(err => console.error("cannot update book, error: ", err))
     },
     CREATE_USER(state, user) {
         console.log("create user: ", user)
         axios
             .post("http://localhost:3000/api/users/create", user)
-            .then((response) => console.log("user created\nresponse: ", response))
+            .then((response) => console.log("create user with status: ", response.status))
             .catch((error) => {
-                console.error("There was an error!", error);
+                console.error("cannot create user, error: ", error);
             });
 
     },
@@ -183,9 +166,10 @@ export default {
                     setupOptions,
                     email: newUser.Contacts.Email
                 })
-            .then((response) => console.log("user updated\nresponse: ", response))
+            .then((response) => console.log("update user with status: ", response.status))
             .catch((error) => {
-                console.error("There was an error!", error);
+                console.error("cannot update user, error: ", error);
             });
+
     }
 }
