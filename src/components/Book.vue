@@ -85,7 +85,7 @@
             <v-btn small class="ma-4 accent" @click="callDialog(_returnBook)"
               >Получить</v-btn
             >
-            <v-btn small class="ma-4 accent" @click="callDialog(editBook)"
+            <v-btn small class="ma-4 accent" @click="editBook"
               >Изменить</v-btn
             >
             <v-btn small class="ma-4 error" @click="callDialog(deleteBook)"
@@ -95,8 +95,8 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-snackbar v-model="snackbar" :timeout="timeout" color="primary">
-      <div class="text-center">книга зарезервирована на 3 дня</div>
+    <v-snackbar v-model="snackbar" :timeout="timeout" color="accent">
+      <div class="text-center">{{snackbarText}}</div>
     </v-snackbar>
     <v-dialog v-model="dialog" max-width="290">
       <v-card>
@@ -123,7 +123,8 @@ export default {
     snackbar: false,
     dialog: false,
     dialogAction: null,
-    timeout: 2000,
+    timeout: 3000,
+    snackbarText:""
   }),
   methods: {
     ...mapActions(["reserveBook", "giveBook", "returnBook", "deleteBookById"]),
@@ -132,6 +133,7 @@ export default {
       this.dialogAction = method;
     },
     takeBook: function () {
+      this.snackbarText = "Книга зарезервирована на 3 дня"
       this.snackbar = true;
       this.reserveBook(this.currentBook.Id);
       let c = this.currentBook;
@@ -140,10 +142,11 @@ export default {
       this.dialog = false;
     },
     editBook: function () {
-      console.log(this.currentBook);
+     
       this.$router.push({ name: "EditBook", params: this.currentBook });
     },
     _giveBook: function () {
+      this.snackbarText = "Книга выдана"
       this.snackbar = true;
       this.giveBook({
         bookId: this.currentBook.Id,
@@ -155,6 +158,7 @@ export default {
       this.dialog = false;
     },
     _returnBook: function () {
+       this.snackbarText = "Книга получена"
       this.snackbar = true;
       this.returnBook({
         bookId: this.currentBook.Id,
@@ -168,6 +172,7 @@ export default {
     },
     deleteBook: async function () {
       this.deleteBookById(this.currentBook.Id);
+       this.snackbarText = "Книга удалена"
       this.snackbar = true;
       this.dialog = false;
     },
