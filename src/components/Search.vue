@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-text-field
+   
       append-icon="mdi-search"
       v-model="searchRequest"
       label="Поиск"

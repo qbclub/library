@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-sheet class="d-flex justify-center align-center flex-column pa-10">
+    <div class="d-flex justify-center align-center flex-column pa-10 secondary">
       <h2>Войти</h2>
       <v-container>
         <v-row class="align-center justify-center" no-gutters>
@@ -20,17 +20,20 @@
                 label="Password"
                 required
               ></v-text-field>
-
-              <v-btn class="mr-4" type="submit"> submit </v-btn>
-              <v-btn> clear </v-btn>
+              <div class="d-flex justify-space-around">
+                <v-btn class="accent" type="submit"> да </v-btn>
+                <v-btn class="error"> нет </v-btn>
+              </div>
             </form>
             <router-link to="/reg"
-              ><p class="text-center ma-8">Зарегистрироваться</p></router-link
+              ><p class="text-center accent--text ma-8">
+                Зарегистрироваться
+              </p></router-link
             >
           </v-col>
         </v-row>
       </v-container>
-    </v-sheet>
+    </div>
   </div>
 </template>
 
@@ -45,7 +48,6 @@ export default {
     password: "",
   }),
   methods: {
- 
     submit() {
       let vm = this;
       signInWithEmailAndPassword(auth, this.email, this.password)
@@ -57,7 +59,6 @@ export default {
           router.push({ path: "/reg" });
           this.error = err.message;
         });
-   
     },
   },
 };
