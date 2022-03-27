@@ -147,8 +147,8 @@ export default {
         EducationalInstitution: "",
         LivingAddress: "",
         isAdmin: false,
-        CurrentTakenBooks: [],
-        CurrentReservedBooks: [],
+        CurrentTakenBooks: "",
+        CurrentReservedBooks: "",
         Contacts: {
           PhoneNumber: "",
           Email: this.email,

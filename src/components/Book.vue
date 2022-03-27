@@ -45,7 +45,7 @@
 
                 <div v-if="currentBook.Status == 'На месте'">
                   <v-btn
-                    v-if="user.loggedIn"
+                    v-if="user.loggedIn && !userInfo.CurrentReservedBooks"
                     depressed
                     small
                     class="ma-4 accent"
@@ -53,13 +53,19 @@
                     >Взять книгу</v-btn
                   >
                   <v-btn
-                    v-else
+                    v-if="!user.loggedIn"
                     @click="routeTo('/reg')"
                     depressed
                     small
                     class="ma-4 accent"
                     >Зарегистрироваться</v-btn
                   >
+                  <div
+                    v-if="userInfo.CurrentReservedBooks"
+                    class="text-caption font-weight-bold"
+                  >
+                    У вас зарезервирована другая книга
+                  </div>
                 </div>
 
                 <div v-else class="text-caption font-weight-bold">
@@ -85,9 +91,7 @@
             <v-btn small class="ma-4 accent" @click="callDialog(_returnBook)"
               >Получить</v-btn
             >
-            <v-btn small class="ma-4 accent" @click="editBook"
-              >Изменить</v-btn
-            >
+            <v-btn small class="ma-4 accent" @click="editBook">Изменить</v-btn>
             <v-btn small class="ma-4 error" @click="callDialog(deleteBook)"
               >Удалить</v-btn
             >
@@ -96,7 +100,7 @@
       </v-row>
     </v-container>
     <v-snackbar v-model="snackbar" :timeout="timeout" color="accent">
-      <div class="text-center">{{snackbarText}}</div>
+      <div class="text-center">{{ snackbarText }}</div>
     </v-snackbar>
     <v-dialog v-model="dialog" max-width="290">
       <v-card>
@@ -124,7 +128,7 @@ export default {
     dialog: false,
     dialogAction: null,
     timeout: 3000,
-    snackbarText:""
+    snackbarText: "",
   }),
   methods: {
     ...mapActions(["reserveBook", "giveBook", "returnBook", "deleteBookById"]),
@@ -133,7 +137,7 @@ export default {
       this.dialogAction = method;
     },
     takeBook: function () {
-      this.snackbarText = "Книга зарезервирована на 3 дня"
+      this.snackbarText = "Книга зарезервирована на 3 дня";
       this.snackbar = true;
       this.reserveBook(this.currentBook.Id);
       let c = this.currentBook;
@@ -142,11 +146,10 @@ export default {
       this.dialog = false;
     },
     editBook: function () {
-     
       this.$router.push({ name: "EditBook", params: this.currentBook });
     },
     _giveBook: function () {
-      this.snackbarText = "Книга выдана"
+      this.snackbarText = "Книга выдана";
       this.snackbar = true;
       this.giveBook({
         bookId: this.currentBook.Id,
@@ -158,7 +161,7 @@ export default {
       this.dialog = false;
     },
     _returnBook: function () {
-       this.snackbarText = "Книга получена"
+      this.snackbarText = "Книга получена";
       this.snackbar = true;
       this.returnBook({
         bookId: this.currentBook.Id,
@@ -172,7 +175,7 @@ export default {
     },
     deleteBook: async function () {
       this.deleteBookById(this.currentBook.Id);
-       this.snackbarText = "Книга удалена"
+      this.snackbarText = "Книга удалена";
       this.snackbar = true;
       this.dialog = false;
     },
