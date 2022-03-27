@@ -4,10 +4,8 @@ export default {
         state.user.loggedIn = value;
     },
     SET_USER(state, data) {
-        console.log(data);
         state.user.data = data;
         state.userInfo = '';
-
     },
     GET_USER_INFO(state, email) {
         if (email) {
@@ -42,7 +40,6 @@ export default {
     CREATE_BOOK(state, book) {
         axios
             .post("http://localhost:3000/api/books/create", book)
-            .then((response) => console.log("book created\nresponse status: ", response.status))
             .catch((error) => {
                 console.error("Cannot create book, error: ", error);
             });
@@ -130,14 +127,7 @@ export default {
             .catch(err => console.error("cannot update book, error: ", err))
     },
     CREATE_USER(state, user) {
-        console.log("create user: ", user)
-        axios
-            .post("http://localhost:3000/api/users/create", user)
-            .then((response) => console.log("create user with status: ", response.status))
-            .catch((error) => {
-                console.error("cannot create user, error: ", error);
-            });
-
+        axios.post("http://localhost:3000/api/users/create", user)
     },
     UPDATE_USER(state, newUser) {
         console.log("update user: ", newUser)

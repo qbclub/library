@@ -7,7 +7,6 @@
       temporary
       app
     >
-    
       <v-list nav>
         <v-list-item-group>
           <v-list-item v-for="(item, key) in this.routes" :key="key">
@@ -56,7 +55,7 @@
       </v-container>
     </v-main>
 
-    <v-footer  class="d-none d-sm-flex secondary" padless app>
+    <v-footer class="d-none d-sm-flex secondary" padless app>
       <v-col cols="2"></v-col>
       <v-col class="text-center" cols="8">Сделано в Кубит</v-col>
       <v-col cols="2"></v-col>
@@ -176,15 +175,6 @@ export default {
   },
 
   mounted() {
-    axios
-      .get("http://localhost:3000/api/users/get-all")
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("There was an error!", error);
-      });
-
     this.getAllBooks();
     this.getAllBookflow();
     this.fetchUser(this.user);

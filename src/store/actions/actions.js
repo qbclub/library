@@ -7,7 +7,6 @@ export default {
         commit("SET_LOGGED_IN", user !== null);
 
         if (user) {
-
             commit("SET_USER", {
                 displayName: user.displayName,
                 email: user.email
@@ -22,31 +21,31 @@ export default {
     getAllBooks({
         commit
     }) {
-        return axios
+        axios
             .get("http://localhost:3000/api/books/get-all")
             .then((response) => {
                 commit('GET_ALL_BOOKS', response.data)
             })
-            .catch((error) => {
-                console.error("cannot get all books, error: ", error);
-                return error;
-            });
+        // .catch((error) => {
+        //     console.error("cannot get all books, error: ", error);
+        //     return error;
+        // });
     },
     deleteBookById({ commit }, BookId) {
         commit('DELETE_BOOK_BY_ID', BookId)
         axios.post("http://localhost:3000/api/books/delete-by-id", { id: BookId })
-            .then((response) => {
-                console.log(
-                    `delete book with id ${BookId} with status: `,
-                    response.status
-                );
-            })
-            .catch((err) => {
-                console.error(
-                    `cannot delete book with id ${BookId} with error: `,
-                    err
-                );
-            });
+        // .then((response) => {
+        //     console.log(
+        //         `delete book with id ${BookId} with status: `,
+        //         response.status
+        //     );
+        // })
+        // .catch((err) => {
+        //     console.error(
+        //         `cannot delete book with id ${BookId} with error: `,
+        //         err
+        //     );
+        // });
     },
     // updateBooksInStateAfterDeletingOne({ commit, dispatch }) {
     //     await dispatch('deleteBookById')
@@ -63,19 +62,12 @@ export default {
         }
         axios
             .put('http://localhost:3000/api/books/change-state', { e, eventType: 'reserve' })
-            .then(response => {
+            .then(() => {
                 commit('RESERVE_BOOK', bookId)
-                console.log('reserve book with status', response.status)
             })
-            .catch((err) => console.error('cannot reserve book, error: ', err))
     },
     unreserveAllBooks() {
-        axios
-            .post('http://localhost:3000/api/books/unreserve-all')
-            .then(response => {
-                console.log('books unreserved with status ', response.status)
-            })
-            .catch(err => console.error('cannot unreserve books, error: ', err))
+        axios.post('http://localhost:3000/api/books/unreserve-all')
     },
     giveBook({ commit }, bookIdAndUserEmail) {
         let dt = Date.now();
@@ -88,17 +80,13 @@ export default {
         }
         axios
             .put('http://localhost:3000/api/books/change-state', { e, eventType: 'give' })
-            .then((response) => {
-                console.log('give book with status: ', response.status)
+            .then(() => {
                 commit('GIVE_BOOK', {
                     bookId: bookIdAndUserEmail.bookId,
                     userEmail: bookIdAndUserEmail.userEmail,
                     dt: dt
                 })
             })
-            .catch((err) => {
-                console.error("cannot give book, error: ", err);
-            });
     },
     returnBook({ commit }, bookIdAndUserEmail) {
         const dt = Date.now()
@@ -112,13 +100,9 @@ export default {
 
         axios
             .put('http://localhost:3000/api/books/change-state', { e, eventType: 'return' })
-            .then((response) => {
-                console.log("return book with status: ", response.status);
+            .then(() => {
                 commit('RETURN_BOOK', bookIdAndUserEmail.bookId)
             })
-            .catch((err) => {
-                console.error("cannot return book, error: ", err);
-            });
     },
     updateBook({ commit }, newBook) {
         commit('UPDATE_BOOK', newBook)
