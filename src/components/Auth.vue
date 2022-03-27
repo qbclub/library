@@ -9,6 +9,7 @@
               <v-text-field
                 v-model="email"
                 label="E-mail"
+                color="accent"
                 required
               ></v-text-field>
 
@@ -18,6 +19,7 @@
                 onfocus="this.removeAttribute('readonly')"
                 v-model="password"
                 label="Password"
+                color="accent"
                 required
               ></v-text-field>
               <div class="d-flex justify-space-around">

@@ -1,23 +1,27 @@
 <template>
   <v-container>
+    <v-row>
+      <button onclick="history.back()">
+        <div>
+          <span class="subtitle-1 fi fi-rr-angle-left"> </span>
+        </div>
+      </button>
+    </v-row>
     <v-row class="justify-center">
       <v-col class="col-md-6 col-12">
         <v-form>
-
-          <v-img
-                contain
-                :src="form.CoverPath"
-                :max-height="150"
-          ></v-img>
+          <v-img contain :src="form.CoverPath" :max-height="150"></v-img>
 
           <v-text-field
             v-model="form.Name"
             label="Название книги"
+            color="accent"
             required
           ></v-text-field>
           <v-textarea
             v-model="form.Annotation"
             label="Краткое описание книги"
+            color="accent"
             counter
             maxlength="1000"
             full-width
@@ -46,7 +50,7 @@
                 </label>
               </image-uploader>
             </v-col>
-          
+
             <v-col cols="6">
               <v-img
                 contain
@@ -69,6 +73,7 @@
           <v-text-field
             v-model="form.Authors"
             label="Имя автора"
+            color="accent"
             required
           ></v-text-field>
           <v-row>
@@ -76,6 +81,7 @@
               <v-text-field
                 v-model="form.Sections"
                 label="Теги"
+                color="accent"
                 required
               ></v-text-field>
             </v-col>
@@ -83,6 +89,7 @@
               <v-text-field
                 v-model="form.ReleaseDate"
                 label="Год издания книги"
+                color="accent"
                 required
               ></v-text-field>
             </v-col>
@@ -90,6 +97,7 @@
           <v-text-field
             v-model="form.PhysicalPlace"
             label="Расположение книги"
+            color="accent"
             required
           ></v-text-field>
 
@@ -98,6 +106,7 @@
               <v-text-field
                 v-model="form.ISBN"
                 label="Уникальный номер книги"
+                color="accent"
                 required
               ></v-text-field>
             </v-col>
@@ -106,6 +115,7 @@
               <v-text-field
                 v-model="form.PublisherName"
                 label="Издатель книги"
+                color="accent"
                 required
               ></v-text-field>
             </v-col>
@@ -116,6 +126,7 @@
               <v-text-field
                 v-model="form.PageCount"
                 label="Количество страниц"
+                color="accent"
                 required
               ></v-text-field>
             </v-col>
@@ -123,6 +134,7 @@
               <v-text-field
                 v-model="form.Series"
                 label="Серия"
+                color="accent"
                 required
               ></v-text-field>
             </v-col>
@@ -207,10 +219,10 @@ export default {
     ...mapActions(["updateBook"]),
   },
   mounted() {
-    this.form = this.$route.params
-    this.cover.image = this.this.$route.params.CoverPath
-    console.log(this.$route.params)
-  }
+    this.form = this.$route.params;
+    this.cover.image = this.this.$route.params.CoverPath;
+    console.log(this.$route.params);
+  },
 };
 </script>
 

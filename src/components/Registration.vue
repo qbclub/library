@@ -17,6 +17,7 @@
                     v-model="name"
                     :error-messages="errors"
                     label="Name"
+                    color="accent"
                   ></v-text-field>
                 </validation-provider>
 
@@ -29,6 +30,7 @@
                     v-model="email"
                     :error-messages="errors"
                     label="E-mail"
+                    color="accent"
                   ></v-text-field>
                 </validation-provider>
                 <validation-provider
@@ -41,6 +43,7 @@
                     readonly
                     onfocus="this.removeAttribute('readonly')"
                     v-model="password"
+                    color="accent"
                     minlength="6"
                     :error-messages="errors"
                     label="Password"

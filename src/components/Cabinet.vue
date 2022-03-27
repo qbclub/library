@@ -8,7 +8,7 @@
       </button>
     </v-row>
     <v-row class="align-center justify-center">
-      <v-col cols="10"
+      <v-col
         ><p
           class="
             text--primary text-xl-h4 text-md-h6 text-sm-body-1 text-body-1
@@ -21,61 +21,31 @@
         </p></v-col
       ></v-row
     >
-    <p class="text-center">Книги на руках</p>
-    <v-row class="align-center justify-center">
-      <v-col
-        cols="6"
-        class="ma-0"
-        v-for="(bookid, i) in TakenBooks"
-        :key="i"
-        sm="4"
-        md="3"
-        lg="3"
-        ><div
-          class="
-            text-lg-body-1
-            text-md-body-1
-            text-sm-body-2
-            text--primary
-            text-center
-          "
-        >
-          <v-img
-            max-width="250"
-            :aspect-ratio="9 / 16"
-            contain
-            :src="books[i].image"
-          ></v-img>
-        </div>
-      </v-col>
-    </v-row>
-    <p class="text-center">Зарезервированные</p>
-    <v-row class="align-center justify-center">
-      <v-col
-        cols="6"
-        class="ma-0"
-        v-for="(bookid, i) in ReservedBooks"
-        :key="i"
-        sm="4"
-        md="3"
-        lg="3"
-        ><div
-          class="
-            text-lg-body-1
-            text-md-body-1
-            text-sm-body-2
-            text--primary
-            text-center
-          "
-        >
-          <v-img
-            max-width="250"
-            :aspect-ratio="9 / 16"
-            contain
-            :src="books[i].image"
-          ></v-img>
-        </div>
-      </v-col>
+    <v-row>
+      <v-col cols="6">
+        <p class="text-center">Книги на руках</p>
+        <p class="font-weight-bold">Вернуть до</p>
+        <v-img
+          v-if="takenBook"
+          loading="lazy"
+          contain
+          max-width="250"
+          :aspect-ratio="10 / 14"
+          :src="takenBook.CoverPath"
+        ></v-img
+      ></v-col>
+      <v-col class="justify-center"  cols="6">
+        <p class="text-center">Зарезервированнo</p>
+        <p class="font-weight-bold">Взять до</p>
+        <v-img
+          v-if="reservvedBook"
+          loading="lazy"
+          contain
+          max-width="250"
+          :aspect-ratio="10 / 14"
+          :src="reservvedBook.CoverPath"
+        ></v-img
+      ></v-col>
     </v-row>
   </v-container>
 </template>
@@ -83,20 +53,29 @@
 import { mapGetters } from "vuex";
 export default {
   data: () => ({
-    TakenBooks: [],
-    ReservedBooks: [],
+    reservvedBook: null,
+    takenBook: null,
   }),
-  mounted() {
-    if (this.user.loggedIn) {
-      this.TakenBooks = user.info.CurrentTakenBooks;
-      this.ReservedBooks = user.info.CurrentReservedBooks;
-    }
-  },
   methods: {
+    findBookById: function (id) {
+      return this.books.find(({ Id }) => Id == id);
+    },
+  },
+
+  computed: {
     ...mapGetters({
       user: "user",
       books: "books",
+      userInfo: "userInfo",
     }),
+  },
+  mounted() {
+    if (this.user.loggedIn) {
+      this.reservvedBook = this.findBookById(
+        this.userInfo.CurrentReservedBooks
+      );
+      this.takenBook = this.findBookById(this.userInfo.CurrentTakenBooks);
+    }
   },
 };
 </script>

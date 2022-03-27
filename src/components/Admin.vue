@@ -36,7 +36,7 @@
             >Список пользователей</v-btn
           >
           <v-btn @click="unreserveAll" block class="mb-8" color="error"
-            >Отменить резервацию всех книг</v-btn
+            >Отменить резерв книг</v-btn
           >
           <v-btn @click.stop="dialog4 = true" block class="mb-8" color="error">
             Отчистить базу книг</v-btn

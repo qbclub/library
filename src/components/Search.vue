@@ -5,6 +5,7 @@
       append-icon="mdi-search"
       v-model="searchRequest"
       label="Поиск"
+      color="accent"
     ></v-text-field>
   </div>
 </template>

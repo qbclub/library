@@ -7,11 +7,13 @@
             v-model="form.Name"
             label="Название книги"
             required
+            color="accent"
           ></v-text-field>
 
           <v-textarea
             v-model="form.Annotation"
             label="Краткое описание книги"
+            color="accent"
             counter
             maxlength="1000"
             full-width
@@ -62,6 +64,7 @@
           <v-text-field
             v-model="form.Authors"
             label="Имя автора"
+            color="accent"
             required
           ></v-text-field>
           <v-row>
@@ -69,6 +72,7 @@
               <v-text-field
                 v-model="form.Sections"
                 label="Теги"
+                color="accent"
                 required
               ></v-text-field>
             </v-col>
@@ -76,6 +80,7 @@
               <v-text-field
                 v-model="form.ReleaseDate"
                 label="Год издания книги"
+                color="accent"
                 required
               ></v-text-field>
             </v-col>
@@ -83,6 +88,7 @@
           <v-text-field
             v-model="form.PhysicalPlace"
             label="Расположение книги"
+            color="accent"
             required
           ></v-text-field>
 
@@ -91,6 +97,7 @@
               <v-text-field
                 v-model="form.ISBN"
                 label="Уникальный номер книги"
+                color="accent"
                 required
               ></v-text-field>
             </v-col>
@@ -99,6 +106,7 @@
               <v-text-field
                 v-model="form.PublisherName"
                 label="Издатель книги"
+                color="accent"
                 required
               ></v-text-field>
             </v-col>
@@ -109,6 +117,7 @@
               <v-text-field
                 v-model="form.PageCount"
                 label="Количество страниц"
+                color="accent"
                 required
               ></v-text-field>
             </v-col>
@@ -116,6 +125,7 @@
               <v-text-field
                 v-model="form.Series"
                 label="Серия"
+                color="accent"
                 required
               ></v-text-field>
             </v-col>
