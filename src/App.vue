@@ -29,7 +29,8 @@
         class="d-none d-sm-flex"
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
-      <v-toolbar-title @click="routeTo('/')">Библиотека</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-title @click="routeTo('/')" class="text-uppercase">Библиотека Кубита</v-toolbar-title>
       <v-spacer></v-spacer>
       <div>
         <template v-if="user.loggedIn">
