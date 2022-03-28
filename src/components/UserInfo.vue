@@ -19,6 +19,7 @@
             v-model="form.FirstName"
             label="Имя"
             required
+            color="accent"
           ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6">
@@ -26,6 +27,7 @@
             v-model="form.LastName"
             label="Фамилия"
             required
+            color="accent"
           ></v-text-field>
             </v-col>
           </v-row>
@@ -36,6 +38,7 @@
             v-model="form.BirthDate"
             label="Дата рождения"
             required
+            color="accent"
           ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6">
@@ -43,6 +46,7 @@
             v-model="form.EducationalInstitution"
             label="Учебное заведение"
             required
+            color="accent"
           ></v-text-field>
             </v-col>
           </v-row>  
@@ -53,6 +57,7 @@
             v-model="form.LivingAddress"
             label="Адрес проживания"
             required
+            color="accent"
           ></v-text-field>
             </v-col>
             <v-col class="d-flex align-center"  cols="12" sm="6">
@@ -116,6 +121,7 @@
                 v-model="form.Contacts.PhoneNumber"
                 label="Номер телефона"
                 required
+                color="accent"
               ></v-text-field>
             </v-col>
 
@@ -124,6 +130,7 @@
                 v-model="form.Contacts.Email"
                 label="Почта"
                 required
+                color="accent"
               ></v-text-field>
             </v-col>
 
@@ -132,6 +139,7 @@
                 v-model="form.Contacts.SocCeti"
                 label="Соц.сети"
                 required
+                color="accent"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -241,6 +249,7 @@ export default {
     },
   },
 };
+
 </script>
 
 <style lang="scss" scoped>
