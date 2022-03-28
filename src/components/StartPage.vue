@@ -25,6 +25,7 @@
           max-width="450"
           src="../assets/image/test.png"
         ></v-img> -->
+        <div class="rules"><v-btn text color="accent" to="/rules">Правила пользования библиотекой</v-btn></div>
       </v-col>
     </v-row>
   </v-container>
@@ -45,5 +46,8 @@ export default {};
   background-repeat: no-repeat;
   background-size:contain;
   position: relative;
+}
+.rules{
+  text-align: center;
 }
 </style>
