@@ -20,11 +20,12 @@
                 v-model="password"
                 label="Password"
                 color="accent"
+
                 required
               ></v-text-field>
               <div class="d-flex justify-space-around">
-                <v-btn class="accent" type="submit"> да </v-btn>
-                <v-btn class="error"> нет </v-btn>
+                <v-btn text color="accent"  type="submit"> да </v-btn>
+                <v-btn text color="error" > нет </v-btn>
               </div>
             </form>
             <router-link to="/reg"

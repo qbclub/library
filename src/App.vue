@@ -31,23 +31,7 @@
       <v-spacer></v-spacer>
       <v-toolbar-title @click="routeTo('/')" class="text-uppercase">Библиотека Кубита</v-toolbar-title>
       <v-spacer></v-spacer>
-      <div>
-        <template v-if="user.loggedIn">
-          <div class="d-flex flex-column text-center navicons">
-            <i @click.stop="dialog = true" class="fi fi-rr-sign-out"> </i>
-            <span class="icon_text">выход</span>
-          </div>
-        </template>
-        <template v-else>
-          <div
-            v-on:click="routeTo('/auth')"
-            class="d-flex flex-column text-center navicons"
-          >
-            <i class="fi fi-rr-sign-in"> </i>
-            <span class="icon_text">вход</span>
-          </div>
-        </template>
-      </div>
+  
     </v-app-bar>
 
     <v-main class="secondary">
@@ -103,6 +87,23 @@
           <span class="fi fi-rr-edit"></span>
           <span class="icon_text">Админ</span>
         </div>
+            <div>
+        <template v-if="user.loggedIn">
+          <div class="d-flex flex-column text-center navicons">
+            <i @click.stop="dialog = true" class="fi fi-rr-sign-out"> </i>
+            <span class="icon_text">выход</span>
+          </div>
+        </template>
+        <template v-else>
+          <div
+            v-on:click="routeTo('/auth')"
+            class="d-flex flex-column text-center navicons"
+          >
+            <i class="fi fi-rr-sign-in"> </i>
+            <span class="icon_text">вход</span>
+          </div>
+        </template>
+      </div>
       </v-col>
     </v-footer>
     <v-dialog v-model="dialog" max-width="290">

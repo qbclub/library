@@ -83,7 +83,7 @@
           <span class="text-caption">{{ currentBook.Annotation }}</span>
           <div
             v-if="userInfo && userInfo.isAdmin"
-            class="d-flex justify-center pb-8"
+            class="d-flex flex-wrap justify-center pb-8"
           >
             <v-btn small class="ma-4 accent" @click="callDialog(_giveBook)"
               >Выдать</v-btn

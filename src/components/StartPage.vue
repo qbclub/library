@@ -1,5 +1,5 @@
 <template>
-  <v-containner class="startPage d-flex align-center">
+  <v-container class="startPage d-flex align-center">
     <v-row>
       <v-col
         class="
@@ -13,20 +13,21 @@
       >
         <p class="text-center text-h5 text-uppercase mt-20">
           программирование <br />
-          графика и дизайна <br />
+          графика и дизайн <br />
           управление проектами
         </p>
         <v-btn text color="accent" to="/books">Вход</v-btn>
       </v-col>
       <v-col class="col-12 col-sm-6">
-        <v-img
+        <div class="backgroundImage"></div>
+        <!-- <v-img
           loading="lazy"
           max-width="450"
           src="../assets/image/test.png"
-        ></v-img>
+        ></v-img> -->
       </v-col>
     </v-row>
-  </v-containner>
+  </v-container>
 </template>
 
 <script>
@@ -37,5 +38,12 @@ export default {};
 .startPage {
   height: calc(100vh - 200px);
 }
-
+.backgroundImage {
+  background: url(../assets/image/test.png);
+  height: calc(100vh / 2);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:contain;
+  position: relative;
+}
 </style>

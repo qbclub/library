@@ -51,8 +51,8 @@
                 </validation-provider>
 
                 <div class="d-flex justify-space-around">
-                  <v-btn class="accent" type="submit"> да </v-btn>
-                  <v-btn class="error" @click="clear"> нет </v-btn>
+                  <v-btn text color="accent"  type="submit"> да </v-btn>
+                  <v-btn text color="error"  @click="clear"> нет </v-btn>
                 </div>
 
                 <div>{{ error }}</div>
