@@ -60,16 +60,24 @@
                     class="ma-4 accent"
                     >Зарегистрироваться</v-btn
                   >
-                  <div
-                    v-if="userInfo.CurrentReservedBooks"
+                </div>
+
+                <div v-else class="text-caption font-weight-bold">
+                  <div>Книга {{ currentBook.Status }}</div>
+                  <!-- <div
+                    v-if="
+                      userInfo.CurrentReservedBooks &&
+                      userInfo.CurrentReservedBooks !== currentBook.Id
+                    "
                     class="text-caption font-weight-bold"
                   >
                     У вас зарезервирована другая книга
                   </div>
-                </div>
-
-                <div v-else class="text-caption font-weight-bold">
-                  Книга {{ currentBook.Status }}
+                  <div
+                    v-else-if="userInfo.CurrentReservedBooks == currentBook.Id"
+                  >
+                    Будет зарезервирована до {{ currentBook.DateOfReserved }}
+                  </div> -->
                 </div>
               </v-col>
             </v-row>
