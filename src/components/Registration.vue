@@ -156,14 +156,15 @@ export default {
         },
         PhotoPath: "",
       };
-      vm.createUser(user);
-      return;
+      
+      
       createUserWithEmailAndPassword(auth, this.email, this.password)
         .then((data) => {
           updateProfile(data.user, {
             displayName: vm.name,
           })
             .then(async () => {
+              vm.createUser(user);
               console.log("Hello, " + data.user.displayName);
             })
             .catch((error) => {
