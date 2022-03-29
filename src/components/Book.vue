@@ -80,15 +80,19 @@
                     >
                       У вас зарезервирована другая книга
                     </div>
-                    <div v-else-if="currentBook.DateOfReserved">
+                    <div
+                      v-else-if="
+                        currentBook.DateOfReserved &&
+                        userInfo.CurrentReservedBooks == currentBook.Id
+                      "
+                    >
                       Будет зарезервирована до {{ reserveLimit }}
                     </div>
-                  </div>
-                  <!-- <div v-else>
                     <div v-if="currentBook.Id == userInfo.CurrentTakenBooks">
                       Эта книга у вас на руках
                     </div>
-                  </div> -->
+                  </div>
+
                   <div v-if="userInfo.isAdmin && currentBook.ReservedQueue">
                     Зарезервировал "{{ currentBook.ReservedQueue }}"
                   </div>
