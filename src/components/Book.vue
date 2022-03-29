@@ -63,21 +63,22 @@
                 </div>
 
                 <div v-else class="text-caption font-weight-bold">
-                  <div>Книга {{ currentBook.Status }}</div>
-                  <!-- <div
-                    v-if="
-                      userInfo.CurrentReservedBooks &&
-                      userInfo.CurrentReservedBooks !== currentBook.Id
-                    "
-                    class="text-caption font-weight-bold"
-                  >
-                    У вас зарезервирована другая книга
+                  <div v-if="!userInfo.CurrentReservedBooks">
+                    Книга {{ currentBook.Status }}
                   </div>
-                  <div
-                    v-else-if="userInfo.CurrentReservedBooks == currentBook.Id"
-                  >
-                    Будет зарезервирована до {{ currentBook.DateOfReserved }}
-                  </div> -->
+                  <div v-else class="text-caption font-weight-bold">
+                    <div
+                      v-if="userInfo.CurrentReservedBooks !== currentBook.Id"
+                    >
+                      У вас зарезервирована другая книга
+                    </div>
+                    <div v-else>
+                      Будет зарезервирована до {{ reserveLimit }}
+                    </div>
+                  </div>
+                  <div v-if="userInfo.isAdmin">
+                    Зарезервировал "{{ currentBook.ReservedQueue }}"
+                  </div>
                 </div>
               </v-col>
             </v-row>
@@ -137,6 +138,7 @@ export default {
     dialogAction: null,
     timeout: 3000,
     snackbarText: "",
+    reserveLimit: "",
   }),
   methods: {
     ...mapActions(["reserveBook", "giveBook", "returnBook", "deleteBookById"]),
@@ -204,6 +206,19 @@ export default {
     this.currentBook = this.books.find(
       (x) => x.Id == this.$route.query.book_id
     );
+    let date = new Date(
+      Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
+    );
+    this.reserveLimit =
+      date.getDate() +
+      "." +
+      date.getMonth() +
+      "." +
+      date.getFullYear() +
+      " " +
+      date.getHours() +
+      ":" +
+      date.getMinutes();
   },
 };
 </script>
