@@ -139,6 +139,12 @@ const routes = [
     },
     component: () => import('../components/UserList.vue')
   },
+  {
+    path: '/rules',
+    name: 'Rules',
+
+    component: () => import('../components/Rules.vue')
+  },
 ]
 
 
