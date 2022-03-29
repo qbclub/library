@@ -53,17 +53,18 @@ export default {
     reserveBook({
         commit, state
     }, bookId) {
+        let dt = Date.now()
         let e = {
-            Id: Date.now(),
+            Id: dt,
             BookId: bookId,
             UserEmail: state.userInfo.Contacts.Email,
             BookStatus: 'Зарезервирована',
-            TimeStamp: Date.now()
+            TimeStamp: dt
         }
         axios
             .put('http://localhost:3000/api/books/change-state', { e, eventType: 'reserve' })
             .then(() => {
-                commit('RESERVE_BOOK', bookId)
+                commit('RESERVE_BOOK', bookId, dt)
             })
     },
     unreserveAllBooks() {

@@ -60,39 +60,41 @@ export default {
                 console.error("Cannot clear users, error: ", error);
             });
     },
-    RESERVE_BOOK(state, bookId) {
+    RESERVE_BOOK(state, bookId, dateofReserved) {
         state.userInfo.CurrentReservedBooks = bookId;
 
         let books = state.books;
         for (let i = 0; i < books.length; i++) {
             if (books[i].Id == bookId) {
+                books[i].Status = 'Зарезервирована'
                 books[i].ReservedQueue = state.userInfo.Contacts.Email;
+                books[i].DateOfReserved = dateofReserved
                 break;
             }
         }
     },
     GIVE_BOOK(state, bookIdUserEmailAndDt) {
-        state.userInfo.CurrentTakenBooks = bookIdUserEmailAndDt.bookId;
-
         let books = state.books;
         for (let i = 0; i < books.length; i++) {
             if (books[i].Id == bookIdUserEmailAndDt.bookId) {
                 books[i].TemporaryOwner = bookIdUserEmailAndDt.userEmail;
                 books[i].DateOfGivenOut = bookIdUserEmailAndDt.dt;
+                books[i].Status = 'Выдана'
+                books[i].ReservedQueue = ''
+                books[i].DateOfReserved = ''
                 break;
             }
         }
     },
     RETURN_BOOK(state, bookId) {
-        state.userInfo.CurrentTakenBooks = '';
-        state.userInfo.CurrentReservedBooks = '';
-
         let books = state.books;
         for (let i = 0; i < books.length; i++) {
             if (books[i].Id == bookId) {
                 books[i].ReservedQueue = '';
                 books[i].TemporaryOwner = '';
                 books[i].DateOfGivenOut = '';
+                books[i].DateOfReserved = '';
+                books[i].Status = 'На месте';
                 break;
             }
         }
