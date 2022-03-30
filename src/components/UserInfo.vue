@@ -231,13 +231,13 @@ export default {
       this.$router.push({ path: "/admin" });
     },
     checkUser: function (email) {
-      console.log(this.form.Contacts.Email);
+    
       axios
         .post("http://localhost:3000/api/users/get-by-email", {
           email: this.form.Contacts.Email,
         })
         .then((response) => {
-          console.log(response.data);
+        
           if (response.data) {
             this.form.FirstName = response.data.FirstName;
             this.form.LastName = response.data.LastName;
