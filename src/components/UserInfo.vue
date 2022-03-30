@@ -152,11 +152,14 @@
         </v-form>
       </v-col>
     </v-row>
+    <v-snackbar v-model="snackbar" timeout="2000" color="error">
+      <div class="text-center">Пользователь не найден</div>
+    </v-snackbar>
   </v-container>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 import About from "../views/About.vue";
 import ImageUploader from "vue-image-upload-resize";
 import {
@@ -194,6 +197,7 @@ export default {
         newWidth: 0,
         image: null,
       },
+      snackbar: false,
     };
   },
   methods: {
@@ -228,24 +232,31 @@ export default {
     },
     checkUser: function (email) {
       console.log(this.form.Contacts.Email);
-        axios
-                .post("http://localhost:3000/api/users/get-by-email", { email: this.form.Contacts.Email })
-                .then((response) => {
-                this.form.FirstName = response.data.FirstName
-                this.form.LastName = response.data.LastName
-                 this.form.BirthDate = response.data.BirthDate
-                this.form.EducationalInstitution = response.data.EducationalInstitution
-                this.form.LivingAddress = response.data.LivingAddress
-                this.form.isAdmin = response.data.isAdmin
-                this.form.Contacts.PhoneNumber = response.data.Contacts.PhoneNumber
-                this.form.Contacts.SocCeti = response.data.Contacts.SocCeti
-                this.form.PhotoPath = response.data.PhotoPath
-                })
-                
+      axios
+        .post("http://localhost:3000/api/users/get-by-email", {
+          email: this.form.Contacts.Email,
+        })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data) {
+            this.form.FirstName = response.data.FirstName;
+            this.form.LastName = response.data.LastName;
+            this.form.BirthDate = response.data.BirthDate;
+            this.form.EducationalInstitution =
+              response.data.EducationalInstitution;
+            this.form.LivingAddress = response.data.LivingAddress;
+            this.form.isAdmin = response.data.isAdmin;
+            this.form.Contacts.PhoneNumber = response.data.Contacts.PhoneNumber;
+            this.form.Contacts.SocCeti = response.data.Contacts.SocCeti;
+            this.form.PhotoPath = response.data.PhotoPath;
+          } else {
+            this.snackbar = true;
+          }
+        })
 
-                .catch((error) => {
-                    console.error("There was an error!", error);
-                })
+        .catch((error) => {
+          console.error("There was an error!", error);
+        });
     },
     setImage: function (img) {
       // img - объект, содержащий много ифнормации об изображении
