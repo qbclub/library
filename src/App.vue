@@ -4,7 +4,8 @@
       class="d-none d-sm-flex"
       v-model="drawer"
       fixed
-      temporary
+      
+      color="secondary"
       app
     >
       <v-list nav>
@@ -29,6 +30,7 @@
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
+      <v-img max-width="40" src="./assets/image/logo.png"></v-img>
       <v-toolbar-title @click="routeTo('/')" class="text-uppercase">Библиотека Кубита</v-toolbar-title>
       <v-spacer></v-spacer>
   
@@ -46,7 +48,7 @@
       <v-col cols="2"></v-col>
     </v-footer>
 
-    <v-footer class="d-sm-none justify-center" padless app>
+    <v-footer class="d-sm-none justify-center" color="primary" padless app>
       <v-col class="text-center col-12 col-sm-6 d-flex justify-space-around">
         <div
           @click="routeTo('/')"
