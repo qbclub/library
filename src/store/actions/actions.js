@@ -28,31 +28,15 @@ export default {
     }, BookId) {
         commit('DELETE_BOOK_BY_ID', BookId)
     },
-  
     reserveBook({
         commit,
-        state
     }, bookId) {
-        let dt = Date.now()
-        let e = {
-            Id: dt,
-            BookId: bookId,
-            UserEmail: state.userInfo.Contacts.Email,
-            BookStatus: 'Зарезервирована',
-            TimeStamp: dt
-        }
-        axios
-            .put('http://localhost:3000/api/books/change-state', {
-                e,
-                eventType: 'reserve'
-            })
-            .then(() => {
-                commit('RESERVE_BOOK', bookId, dt)
-            })
+        commit('RESERVE_BOOK', bookId)
     },
-    unreserveAllBooks() {
-        axios.post('http://localhost:3000/api/books/unreserve-all')
-    },
+    // В экшене нет необходимости, вызов перенесен в компоненту
+    // unreserveAllBooks() {
+    //     axios.post('http://localhost:3000/api/books/unreserve-all')
+    // },
     giveBook({
         commit
     }, bookIdAndUserEmail) {
