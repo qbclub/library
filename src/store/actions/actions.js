@@ -27,25 +27,8 @@ export default {
         commit
     }, BookId) {
         commit('DELETE_BOOK_BY_ID', BookId)
-        axios.post("http://localhost:3000/api/books/delete-by-id", {
-            id: BookId
-        })
-        // .then((response) => {
-        //     console.log(
-        //         `delete book with id ${BookId} with status: `,
-        //         response.status
-        //     );
-        // })
-        // .catch((err) => {
-        //     console.error(
-        //         `cannot delete book with id ${BookId} with error: `,
-        //         err
-        //     );
-        // });
     },
-    // updateBooksInStateAfterDeletingOne({ commit, dispatch }) {
-    //     await dispatch('deleteBookById')
-    // },
+  
     reserveBook({
         commit,
         state

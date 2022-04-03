@@ -34,13 +34,29 @@ export default {
 
     },
     DELETE_BOOK_BY_ID(state, BookId) {
-        let books = state.books;
-        for (let i = 0; i < books.length; i++) {
-            if (books[i].Id == BookId) {
-                books.splice(i, 1)
-                break;
+        axios.post("http://localhost:3000/api/books/delete-by-id", {
+            id: BookId
+        })
+        .then((response) => {
+            let books = state.books;
+            for (let i = 0; i < books.length; i++) {
+                if (books[i].Id == BookId) {
+                    books.splice(i, 1)
+                    state.books = books
+                    break;
+                }
             }
-        }
+            console.log(
+                `delete book with id ${BookId} with status: `,
+                response.status
+            );
+        })
+        .catch((err) => {
+            console.error(
+                `cannot delete book with id ${BookId} with error: `,
+                err
+            );
+        });
     },
     GET_ALL_BOOKFLOW(state, bookflow) {
         state.bookflow = bookflow;
