@@ -7,6 +7,9 @@ export default {
         state.user.data = data;
         state.userInfo = '';
     },
+    SET_USER_INFO(state, data) {
+        state.userInfo = data
+    },
     GET_USER_INFO(state, email) {
         if (email) {
             axios
@@ -61,30 +64,33 @@ export default {
             });
     },
     RESERVE_BOOK(state, bookId, dateofReserved) {
-        state.userInfo.CurrentReservedBooks = bookId;
+        // get all changes into state
 
-        let books = state.books;
-        for (let i = 0; i < books.length; i++) {
-            if (books[i].Id == bookId) {
-                books[i].Status = 'Зарезервирована'
-                books[i].ReservedQueue = state.userInfo.Contacts.Email;
-                books[i].DateOfReserved = dateofReserved
-                break;
-            }
-        }
+
+
+        // state.userInfo.CurrentReservedBooks = bookId;
+        // let books = state.books;
+        // for (let i = 0; i < books.length; i++) {
+        //     if (books[i].Id == bookId) {
+        //         books[i].Status = 'Зарезервирована'
+        //         books[i].ReservedQueue = state.userInfo.Contacts.Email;
+        //         books[i].DateOfReserved = dateofReserved
+        //         break;
+        //     }
+        // }
     },
     GIVE_BOOK(state, bookIdUserEmailAndDt) {
-        let books = state.books;
-        for (let i = 0; i < books.length; i++) {
-            if (books[i].Id == bookIdUserEmailAndDt.bookId) {
-                books[i].TemporaryOwner = bookIdUserEmailAndDt.userEmail;
-                books[i].DateOfGivenOut = bookIdUserEmailAndDt.dt;
-                books[i].Status = 'Выдана'
-                books[i].ReservedQueue = ''
-                books[i].DateOfReserved = ''
-                break;
-            }
-        }
+        // let books = state.books;
+        // for (let i = 0; i < books.length; i++) {
+        //     if (books[i].Id == bookIdUserEmailAndDt.bookId) {
+        //         books[i].TemporaryOwner = bookIdUserEmailAndDt.userEmail;
+        //         books[i].DateOfGivenOut = bookIdUserEmailAndDt.dt;
+        //         books[i].Status = 'Выдана'
+        //         books[i].ReservedQueue = ''
+        //         books[i].DateOfReserved = ''
+        //         break;
+        //     }
+        // }
     },
     RETURN_BOOK(state, bookId) {
         let books = state.books;

@@ -64,13 +64,34 @@ export default {
         axios
             .put('http://localhost:3000/api/books/change-state', { e, eventType: 'reserve' })
             .then(() => {
-                commit('RESERVE_BOOK', bookId, dt)
+                axios
+                    .get("http://localhost:3000/api/books/get-all")
+                    .then((response) => {
+                        commit('GET_ALL_BOOKS', response.data)
+
+                        axios
+                            .post("http://localhost:3000/api/users/get-by-email", { email: e.UserEmail })
+                            .then((response) => {
+                                console.log(response.data)
+                                commit('SET_USER_INFO', response.data)
+                            })
+                            .catch((error) => {
+                                console.error(error);
+                            })
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    })
+
+
+                // commit('RESERVE_BOOK', bookId, dt)
             })
+            .catch((err) => console.error(err))
     },
     unreserveAllBooks() {
         axios.post('http://localhost:3000/api/books/unreserve-all')
     },
-    giveBook({ commit }, bookIdAndUserEmail) {
+    giveBook({ commit, state }, bookIdAndUserEmail) {
         let dt = Date.now();
         let e = {
             Id: dt,
@@ -79,14 +100,29 @@ export default {
             BookStatus: 'Выдана',
             TimeStamp: dt
         }
+
         axios
             .put('http://localhost:3000/api/books/change-state', { e, eventType: 'give' })
             .then(() => {
-                commit('GIVE_BOOK', {
-                    bookId: bookIdAndUserEmail.bookId,
-                    userEmail: bookIdAndUserEmail.userEmail,
-                    dt: dt
-                })
+                axios
+                    .get("http://localhost:3000/api/books/get-all")
+                    .then((response) => {
+                        commit('GET_ALL_BOOKS', response.data)
+                        // axios
+                        //     .post("http://localhost:3000/api/users/get-by-email", { email: e.UserEmail })
+                        //     .then((response) => {
+                        //         commit('SET_USER_INFO', response.data)
+                        //     })
+                        //     .catch((error) => { console.error(error); })
+                    })
+                    .catch((error) => { console.error(error); })
+
+
+                // commit('GIVE_BOOK', {
+                //     bookId: bookIdAndUserEmail.bookId,
+                //     userEmail: bookIdAndUserEmail.userEmail,
+                //     dt: dt
+                // })
             })
     },
     returnBook({ commit }, bookIdAndUserEmail) {
@@ -102,7 +138,21 @@ export default {
         axios
             .put('http://localhost:3000/api/books/change-state', { e, eventType: 'return' })
             .then(() => {
-                commit('RETURN_BOOK', bookIdAndUserEmail.bookId)
+                axios
+                    .get("http://localhost:3000/api/books/get-all")
+                    .then((response) => {
+                        commit('GET_ALL_BOOKS', response.data)
+
+                        // axios
+                        //     .post("http://localhost:3000/api/users/get-by-email", { email: e.UserEmail })
+                        //     .then((response) => {
+                        //         commit('SET_USER_INFO', response.data)
+                        //     })
+                        //     .catch((error) => { console.error(error); })
+                    })
+                    .catch((error) => { console.error(error); })
+
+                // commit('RETURN_BOOK', bookIdAndUserEmail.bookId)
             })
     },
     updateBook({ commit }, newBook) {
