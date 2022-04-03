@@ -29,34 +29,34 @@ export default {
             })
             .catch((error) => {
                 console.error("cannot get all books, error: ", error);
-
+               
             });
 
     },
     DELETE_BOOK_BY_ID(state, BookId) {
         axios.post("http://localhost:3000/api/books/delete-by-id", {
-                id: BookId
-            })
-            .then((response) => {
-                let books = state.books;
-                for (let i = 0; i < books.length; i++) {
-                    if (books[i].Id == BookId) {
-                        books.splice(i, 1)
-                        state.books = books
-                        break;
-                    }
+            id: BookId
+        })
+        .then((response) => {
+            let books = state.books;
+            for (let i = 0; i < books.length; i++) {
+                if (books[i].Id == BookId) {
+                    books.splice(i, 1)
+                    state.books = books
+                    break;
                 }
-                console.log(
-                    `delete book with id ${BookId} with status: `,
-                    response.status
-                );
-            })
-            .catch((err) => {
-                console.error(
-                    `cannot delete book with id ${BookId} with error: `,
-                    err
-                );
-            });
+            }
+            console.log(
+                `delete book with id ${BookId} with status: `,
+                response.status
+            );
+        })
+        .catch((err) => {
+            console.error(
+                `cannot delete book with id ${BookId} with error: `,
+                err
+            );
+        });
     },
     GET_ALL_BOOKFLOW(state, bookflow) {
         state.bookflow = bookflow;
@@ -87,36 +87,18 @@ export default {
                 console.error("Cannot clear users, error: ", error);
             });
     },
-    RESERVE_BOOK(state, bookId) {
-        let dt = Date.now()
-        let e = {
-            Id: dt,
-            BookId: bookId,
-            UserEmail: state.userInfo.Contacts.Email,
-            BookStatus: 'Зарезервирована',
-            TimeStamp: dt
+    RESERVE_BOOK(state, bookId, dateofReserved) {
+        state.userInfo.CurrentReservedBooks = bookId;
+
+        let books = state.books;
+        for (let i = 0; i < books.length; i++) {
+            if (books[i].Id == bookId) {
+                books[i].Status = 'Зарезервирована'
+                books[i].ReservedQueue = state.userInfo.Contacts.Email;
+                books[i].DateOfReserved = dateofReserved
+                break;
+            }
         }
-        axios
-            .put('http://localhost:3000/api/books/change-state', {
-                e,
-                eventType: 'reserve'
-            })
-            .then(() => {
-                state.userInfo.CurrentReservedBooks = bookId;
-
-                let books = state.books;
-                for (let i = 0; i < books.length; i++) {
-                    if (books[i].Id == bookId) {
-                        books[i].Status = 'Зарезервирована'
-                        books[i].ReservedQueue = state.userInfo.Contacts.Email;
-                        books[i].DateOfReserved = dateofReserved
-                        break;
-                    }
-                }
-            }).catch((error) => {
-                console.error("Cannot reserved, error: ", error);
-            });
-
     },
     GIVE_BOOK(state, bookIdUserEmailAndDt) {
         let books = state.books;
