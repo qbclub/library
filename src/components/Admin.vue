@@ -8,7 +8,18 @@
           </div>
         </button>
       </v-row>
-
+      <!-- <v-row class="align-center justify-end">
+        <v-col class="d-flex" cols="12" md="2">
+          <v-select
+            :items="backends"
+            label="Backend"
+            dense
+            solo
+            v-on:change="getBackend(chosenBackend)"
+            class="ma-4"
+          ></v-select>
+        </v-col>
+      </v-row> -->
       <v-row class="justify-center">
         <v-col cols="8 ma-8">
           <v-btn @click="routeTo('/user-actions')" block class="mb-8"
@@ -53,12 +64,40 @@
           </v-card>
         </v-dialog>
       </v-row>
+
+      <!-- <v-row class="flex-column text-center">
+        <h2>Обращение к серверу на Node</h2>
+        <v-col class="d-flex justify-space-around">
+        </v-col>
+        <h4>createBookflow</h4>
+        <v-col class="col-8">
+          <v-form>
+            <v-text-field
+              v-model="bookflowForm.BookId"
+              label="BookId"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="bookflowForm.UserId"
+              label="UserId"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="bookflowForm.BookStatus"
+              label="BookStatus"
+              required
+            ></v-text-field>
+            <v-btn color="success" class="mr-4" @click="createBookflow">
+              Отправить
+            </v-btn>
+          </v-form>
+        </v-col>
+      </v-row> -->
     </v-container>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
 import { mapGetters, mapActions } from "vuex";
 import jsMethods from "../apiScripts/node";
 import MiniBook from "./MiniBook.vue";
@@ -68,6 +107,7 @@ export default {
     MiniBook,
   },
   data: () => ({
+    backends: ["node", "c#"],
     chosenBackend: null,
     bookflowForm: {
       Id: "",
@@ -110,12 +150,7 @@ export default {
     },
     unreserveAll: function () {
       if (confirm("Вы уверены?")) {
-        axios
-          .post("http://localhost:3000/api/books/unreserve-all")
-          .then((response) => console.log("Books unreserved"))
-          .catch((error) => {
-            console.error("error: ", error);
-          });
+        this.unreserveAllBooks();
       }
     },
     routeTo(path) {
