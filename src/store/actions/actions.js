@@ -21,19 +21,15 @@ export default {
     getAllBooks({
         commit
     }) {
-        axios
-            .get("http://localhost:3000/api/books/get-all")
-            .then((response) => {
-                commit('GET_ALL_BOOKS', response.data)
-            })
-        // .catch((error) => {
-        //     console.error("cannot get all books, error: ", error);
-        //     return error;
-        // });
+        commit('GET_ALL_BOOKS')
     },
-    deleteBookById({ commit }, BookId) {
+    deleteBookById({
+        commit
+    }, BookId) {
         commit('DELETE_BOOK_BY_ID', BookId)
-        axios.post("http://localhost:3000/api/books/delete-by-id", { id: BookId })
+        axios.post("http://localhost:3000/api/books/delete-by-id", {
+            id: BookId
+        })
         // .then((response) => {
         //     console.log(
         //         `delete book with id ${BookId} with status: `,
@@ -51,7 +47,8 @@ export default {
     //     await dispatch('deleteBookById')
     // },
     reserveBook({
-        commit, state
+        commit,
+        state
     }, bookId) {
         let dt = Date.now()
         let e = {
@@ -62,7 +59,10 @@ export default {
             TimeStamp: dt
         }
         axios
-            .put('http://localhost:3000/api/books/change-state', { e, eventType: 'reserve' })
+            .put('http://localhost:3000/api/books/change-state', {
+                e,
+                eventType: 'reserve'
+            })
             .then(() => {
                 commit('RESERVE_BOOK', bookId, dt)
             })
@@ -70,7 +70,9 @@ export default {
     unreserveAllBooks() {
         axios.post('http://localhost:3000/api/books/unreserve-all')
     },
-    giveBook({ commit }, bookIdAndUserEmail) {
+    giveBook({
+        commit
+    }, bookIdAndUserEmail) {
         let dt = Date.now();
         let e = {
             Id: dt,
@@ -80,7 +82,10 @@ export default {
             TimeStamp: dt
         }
         axios
-            .put('http://localhost:3000/api/books/change-state', { e, eventType: 'give' })
+            .put('http://localhost:3000/api/books/change-state', {
+                e,
+                eventType: 'give'
+            })
             .then(() => {
                 commit('GIVE_BOOK', {
                     bookId: bookIdAndUserEmail.bookId,
@@ -89,7 +94,9 @@ export default {
                 })
             })
     },
-    returnBook({ commit }, bookIdAndUserEmail) {
+    returnBook({
+        commit
+    }, bookIdAndUserEmail) {
         const dt = Date.now()
         let e = {
             Id: dt,
@@ -100,12 +107,17 @@ export default {
         }
 
         axios
-            .put('http://localhost:3000/api/books/change-state', { e, eventType: 'return' })
+            .put('http://localhost:3000/api/books/change-state', {
+                e,
+                eventType: 'return'
+            })
             .then(() => {
                 commit('RETURN_BOOK', bookIdAndUserEmail.bookId)
             })
     },
-    updateBook({ commit }, newBook) {
+    updateBook({
+        commit
+    }, newBook) {
         commit('UPDATE_BOOK', newBook)
     },
     getAllBookflow({
