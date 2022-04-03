@@ -167,6 +167,8 @@ export default {
       this.dialogAction = method;
     },
     takeBook: function () {
+
+      
       if (!this.userInfo.CurrentReservedBooks) {
         this.snackbarText = "Книга зарезервирована на 3 дня";
         this.snackbar = true;
