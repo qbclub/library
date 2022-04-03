@@ -10,9 +10,7 @@ export default {
     GET_USER_INFO(state, email) {
         if (email) {
             axios
-                .post("http://localhost:3000/api/users/get-by-email", {
-                    email: email
-                })
+                .post("http://localhost:3000/api/users/get-by-email", { email: email })
                 .then((response) => state.userInfo = response.data)
                 .catch((error) => {
                     console.error("There was an error!", error);
@@ -21,17 +19,8 @@ export default {
             state.userInfo = {};
         }
     },
-    GET_ALL_BOOKS(state) {
-        axios
-            .get("http://localhost:3000/api/books/get-all")
-            .then((response) => {
-                state.books = response.data
-            })
-            .catch((error) => {
-                console.error("cannot get all books, error: ", error);
-               
-            });
-
+    GET_ALL_BOOKS(state, books) {
+        state.books = books;
     },
     DELETE_BOOK_BY_ID(state, BookId) {
         let books = state.books;
@@ -164,10 +153,11 @@ export default {
             }
         }
         axios
-            .put("http://localhost:3000/api/users/update", {
-                setupOptions,
-                email: newUser.Contacts.Email
-            })
+            .put("http://localhost:3000/api/users/update",
+                {
+                    setupOptions,
+                    email: newUser.Contacts.Email
+                })
             .then((response) => console.log("update user with status: ", response.status))
             .catch((error) => {
                 console.error("cannot update user, error: ", error);

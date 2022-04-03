@@ -171,10 +171,9 @@ export default {
         this.snackbarText = "Книга зарезервирована на 3 дня";
         this.snackbar = true;
         this.reserveBook(this.currentBook.Id);
-        
-        // let c = this.currentBook;
-        // c.Status = "Зарезервирована";
-        // c.ReservedQueue = this.userInfo.Contacts.Email;
+        let c = this.currentBook;
+        c.Status = "Зарезервирована";
+        c.ReservedQueue = this.userInfo.Contacts.Email;
         this.dialog = false;
       } else {
         this.snackbarText = "У вас уже есть зарезервированная книга";
