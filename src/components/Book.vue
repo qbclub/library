@@ -44,8 +44,16 @@
                 </div>
 
                 <div v-if="currentBook.Status == 'На месте'">
+                  <div
+                    v-if="
+                      userInfo.CurrentReservedBooks &&
+                      userInfo.CurrentReservedBooks !== currentBook.Id
+                    "
+                  >
+                    У вас зарезервирована другая книга
+                  </div>
                   <v-btn
-                    v-if="user.loggedIn"
+                    v-else-if="user.loggedIn"
                     depressed
                     small
                     class="ma-4 accent"
@@ -65,31 +73,23 @@
                 <div v-else class="text-caption font-weight-bold">
                   <div
                     v-if="
-                      !userInfo.CurrentReservedBooks &&
-                      !userInfo.CurrentTakenBooks
+                      userInfo.CurrentTakenBooks &&
+                      currentBook.Id == userInfo.CurrentTakenBooks
                     "
                   >
+                    Эта книга у вас на руках
+                  </div>
+                  <div v-else-if="!userInfo.CurrentReservedBooks">
                     Книга {{ currentBook.Status }}
                   </div>
                   <div v-else class="text-caption font-weight-bold">
                     <div
                       v-if="
-                        userInfo.CurrentReservedBooks &&
-                        userInfo.CurrentReservedBooks !== currentBook.Id
-                      "
-                    >
-                      У вас зарезервирована другая книга
-                    </div>
-                    <div
-                      v-else-if="
                         currentBook.DateOfReserved &&
                         userInfo.CurrentReservedBooks == currentBook.Id
                       "
                     >
                       Будет зарезервирована до {{ reserveLimit }}
-                    </div>
-                    <div v-if="currentBook.Id == userInfo.CurrentTakenBooks">
-                      Эта книга у вас на руках
                     </div>
                   </div>
 
@@ -162,6 +162,7 @@ export default {
   }),
   methods: {
     ...mapActions(["reserveBook", "giveBook", "returnBook", "deleteBookById"]),
+
     callDialog: function (method) {
       this.dialog = true;
       this.dialogAction = method;
@@ -171,10 +172,28 @@ export default {
         this.snackbarText = "Книга зарезервирована на 3 дня";
         this.snackbar = true;
         this.reserveBook(this.currentBook.Id);
+        this.dialog = false;
         let c = this.currentBook;
         c.Status = "Зарезервирована";
         c.ReservedQueue = this.userInfo.Contacts.Email;
-        this.dialog = false;
+        c.DateOfReserved = Date.now();
+        let date = new Date(
+          Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
+        );
+        // usual time format
+        let minutes = date.getMinutes() + "0";
+        let hours = date.getHours() + "0";
+
+        this.reserveLimit =
+          date.getDate() +
+          "." +
+          date.getMonth() +
+          "." +
+          date.getFullYear() +
+          " " +
+          hours.slice(0, 2) +
+          ":" +
+          minutes.slice(0, 2);
       } else {
         this.snackbarText = "У вас уже есть зарезервированная книга";
         this.dialog = false;
@@ -193,6 +212,7 @@ export default {
           userEmail: this.currentBook.ReservedQueue,
         });
         let c = this.currentBook;
+        c.ReservedQueue = "";
         c.Status = "Выдана";
         c.TemporaryOwner = this.currentBook.ReservedQueue;
         this.dialog = false;
@@ -236,8 +256,9 @@ export default {
 
   mounted() {
     this.currentBook = this.books.find(
-      (x) => x.Id == this.$route.query.book_id
+      (book) => book.Id == this.$route.query.book_id
     );
+
     if (this.currentBook.DateOfReserved) {
       let date = new Date(
         Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
