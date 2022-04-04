@@ -24,13 +24,13 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app hide-on-scroll class="secondary">
+    <v-app-bar app class="secondary">
       <v-app-bar-nav-icon
         class="d-none d-sm-flex"
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
-      <v-img max-width="40" src="./assets/image/logo.png"></v-img>
+      <v-img max-width="75" src="../public/img/icons/StartPageLogo.png" class=""></v-img>
       <v-toolbar-title @click="routeTo('/')" class="text-uppercase">Библиотека Кубита</v-toolbar-title>
       <v-spacer></v-spacer>
   
