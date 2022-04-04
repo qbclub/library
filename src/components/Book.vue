@@ -43,7 +43,10 @@
                   Страниц: {{ currentBook.PageCount }}
                 </div>
 
-                <div v-if="currentBook.Status == 'На месте'">
+                <div
+                  v-if="currentBook.Status == 'На месте'"
+                  class="text-caption font-weight-bold"
+                >
                   <div
                     v-if="
                       userInfo.CurrentReservedBooks &&
@@ -168,8 +171,6 @@ export default {
       this.dialogAction = method;
     },
     takeBook: function () {
-
-      
       if (!this.userInfo.CurrentReservedBooks) {
         this.snackbarText = "Книга зарезервирована на 3 дня";
         this.snackbar = true;
