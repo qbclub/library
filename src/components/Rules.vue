@@ -1,5 +1,14 @@
 <template>
   <div>
+    <v-row>
+    <v-col cols="1">
+      <button onclick="history.back()">
+        <div>
+          <span class="subtitle-1 fi fi-rr-angle-left"> </span>
+        </div>
+      </button>
+    </v-col>
+    <v-col cols="11">
     <div class="d-flex align-center flex-column pa-10 secondary">
       <div class="title">
         Lorem Ipsum - это текст-"рыба", часто используемый в печати и
@@ -7,6 +16,8 @@
         латинице с начала XVI века.
       </div>
     </div>
+    </v-col>
+    </v-row>
     <div class="d-flex align-center flex-column secondary">
       <div class="title"><h2>Правила</h2></div>
     </div>
@@ -18,7 +29,10 @@
             <li>Относитесь к книгам бережно</li>
             <li>Книга выдается на 21 день</li>
             <li>Книга резервируется на 3 дня</li>
-            <li>Залоговая стоимость книги 5000 рублей. В случае невозврата книги в течении 60 дней взимается залоговая стоимость</li>
+            <li>
+              Залоговая стоимость книги 5000 рублей. В случае невозврата книги в
+              течении 60 дней взимается залоговая стоимость
+            </li>
           </ol>
         </v-col>
       </v-row>
