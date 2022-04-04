@@ -2,21 +2,21 @@
   <v-container>
     <v-row>
       <v-col cols="">
-         <button onclick="history.back()">
-        <div>
-          <span class="subtitle-1 fi fi-rr-angle-left"> </span>
-        </div>
-      </button>
-      </v-col>
-            <v-col cols="2">
-        <div>
-        <template v-if="user.loggedIn">
-          <div class="d-flex flex-column text-center navicons">
-            <i @click.stop="dialog = true" class="fi fi-rr-sign-out"> </i>
-            <span class="icon_text">выход</span>
+        <button onclick="history.back()">
+          <div>
+            <span class="subtitle-1 fi fi-rr-angle-left"> </span>
           </div>
-        </template>
-        <!-- <template v-else>
+        </button>
+      </v-col>
+      <v-col cols="2">
+        <div>
+          <template v-if="user.loggedIn">
+            <div class="d-flex flex-column text-center navicons">
+              <i @click.stop="dialog = true" class="fi fi-rr-sign-out"> </i>
+              <span class="icon_text">выход</span>
+            </div>
+          </template>
+          <!-- <template v-else>
           <div
             v-on:click="routeTo('/auth')"
             class="d-flex flex-column text-center navicons"
@@ -25,10 +25,10 @@
             <span class="icon_text">вход</span>
           </div>
         </template> -->
-      </div>
+        </div>
       </v-col>
     </v-row>
-    
+
     <v-row class="align-center justify-center">
       <v-col
         ><p
@@ -43,7 +43,7 @@
         </p></v-col
       >
     </v-row>
-    
+
     <v-row>
       <v-col cols="6">
         <p class="text-center">Книги на руках</p>
@@ -59,7 +59,7 @@
       ></v-col>
       <v-col class="justify-center" cols="6">
         <p class="text-center">Зарезервированнo</p>
-        <p class="font-weight-bold">Взять до</p>
+        <p class="font-weight-bold">Взять до {{ reserveLimit }}</p>
         <v-img
           v-if="reservvedBook"
           loading="lazy"
@@ -93,12 +93,13 @@ export default {
     reservvedBook: null,
     takenBook: null,
     dialog: false,
+    reserveLimit: 0,
   }),
   methods: {
     findBookById: function (id) {
       return this.books.find(({ Id }) => Id == id);
     },
-        signOut: function () {
+    signOut: function () {
       signOut(getAuth())
         .then(() => {
           this.$router.replace({
@@ -126,6 +127,25 @@ export default {
         this.userInfo.CurrentReservedBooks
       );
       this.takenBook = this.findBookById(this.userInfo.CurrentTakenBooks);
+      console.log(this.reservvedBook);
+
+      let date = new Date(
+        Number(this.reservvedBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
+      );
+      // usual time format
+      let minutes = date.getMinutes() + "0";
+      let hours = date.getHours() + "0";
+
+      this.reserveLimit =
+        date.getDate() +
+        "." +
+        date.getMonth() +
+        "." +
+        date.getFullYear() +
+        " " +
+        hours.slice(0, 2) +
+        ":" +
+        minutes.slice(0, 2);
     }
   },
 };
