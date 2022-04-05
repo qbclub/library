@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="overflow">
     <v-navigation-drawer
       class="d-none d-sm-flex"
       v-model="drawer"
@@ -159,4 +159,5 @@ export default {
   line-height: 1;
   font-size: 10px;
 }
+
 </style>
