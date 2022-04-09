@@ -20,7 +20,7 @@ module.exports = {
      }
     },
     pwa: {
-      name: 'library',
+      name: 'Библиотека',
       description: "книги по программированию графике и дизайну, управлению проектами",
       themeColor: '#FDEDDB',
       msTileColor: '#000000',
