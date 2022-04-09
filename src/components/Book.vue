@@ -46,7 +46,7 @@
                 </div>
 
                 <div v-if="currentBook.Status == 'На месте'">
-                  <div
+                  <div class="text-caption font-weight-bold"
                     v-if="
                       userInfo.CurrentReservedBooks &&
                       userInfo.CurrentReservedBooks !== currentBook.Id
@@ -268,19 +268,15 @@ export default {
         Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
       );
       // usual time format
-      let minutes = date.getMinutes() + "0";
-      let hours = date.getHours() + "0";
+  
 
       this.reserveLimit =
         date.getDate() +
         "." +
         date.getMonth() +
         "." +
-        date.getFullYear() +
-        " " +
-        hours.slice(0, 2) +
-        ":" +
-        minutes.slice(0, 2);
+        date.getFullYear()
+       
     }
   },
 };
