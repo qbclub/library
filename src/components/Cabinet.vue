@@ -93,7 +93,7 @@ export default {
     reservvedBook: null,
     takenBook: null,
     dialog: false,
-    reserveLimit: 0,
+    reserveLimit: null,
   }),
   methods: {
     findBookById: function (id) {
@@ -127,25 +127,14 @@ export default {
         this.userInfo.CurrentReservedBooks
       );
       this.takenBook = this.findBookById(this.userInfo.CurrentTakenBooks);
-      console.log(this.reservvedBook);
 
-      let date = new Date(
-        Number(this.reservvedBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
-      );
-      // usual time format
-      let minutes = date.getMinutes() + "0";
-      let hours = date.getHours() + "0";
-
-      this.reserveLimit =
-        date.getDate() +
-        "." +
-        date.getMonth() +
-        "." +
-        date.getFullYear() +
-        " " +
-        hours.slice(0, 2) +
-        ":" +
-        minutes.slice(0, 2);
+      if (this.reservvedBook) {
+        let date = new Date(
+          Number(this.reservvedBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
+        );
+        this.reserveLimit =
+          date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
+      }
     }
   },
 };
