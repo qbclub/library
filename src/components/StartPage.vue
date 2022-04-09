@@ -1,5 +1,5 @@
 <template>
-  <v-container class="startPage d-flex align-center ">
+  <v-container class="startPage d-flex align-center">
     <v-row>
       <v-col
         class="
@@ -25,7 +25,10 @@
           max-width="450"
           src="../assets/image/test.png"
         ></v-img> -->
-        <div class="rules"><v-btn text color="accent" to="/rules">Правила пользования библиотекой</v-btn></div>
+        <div class="rules">
+          <v-btn text color="accent" to="/rules">О библиотеке</v-btn>
+          <v-btn text color="accent" to="/rules">Правила</v-btn>
+        </div>
       </v-col>
     </v-row>
   </v-container>
@@ -44,10 +47,10 @@ export default {};
   height: calc(100vh / 2.5);
   background-position: center;
   background-repeat: no-repeat;
-  background-size:contain;
+  background-size: contain;
   position: relative;
 }
-.rules{
+.rules {
   text-align: center;
 }
 </style>

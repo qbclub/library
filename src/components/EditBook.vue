@@ -222,8 +222,8 @@ export default {
   },
   mounted() {
     this.form = this.$route.params;
-    this.cover.image = this.this.$route.params.CoverPath;
-    console.log(this.$route.params);
+    this.cover.image = this.$route.params.CoverPath;
+    
   },
 };
 </script>
