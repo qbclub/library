@@ -1,5 +1,5 @@
 <template>
-  <v-container class="startPage d-flex align-center">
+  <v-container class="startPage d-flex align-center ">
     <v-row>
       <v-col
         class="
@@ -11,7 +11,7 @@
           align-center
         "
       >
-        <p class="text-center text-h5 text-uppercase mt-20">
+        <p class="text-center text-subtitle-2 text-sm-h5 text-uppercase pt-10">
           программирование <br />
           графика и дизайн <br />
           управление проектами
@@ -37,11 +37,11 @@ export default {};
 
 <style lang="scss" scoped>
 .startPage {
-  height: calc(100vh - 200px);
+  height: calc(100vh - 300px);
 }
 .backgroundImage {
   background: url(../assets/image/test.png);
-  height: calc(100vh / 2);
+  height: calc(100vh / 2.5);
   background-position: center;
   background-repeat: no-repeat;
   background-size:contain;

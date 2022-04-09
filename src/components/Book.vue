@@ -2,11 +2,13 @@
   <div class="book">
     <v-container>
       <v-row>
-        <button onclick="history.back()">
-          <div>
-            <span class="subtitle-1 fi fi-rr-angle-left"> </span>
-          </div>
-        </button>
+        <v-col>
+          <button onclick="history.back()">
+            <div>
+              <span class="subtitle-1 fi fi-rr-angle-left"> </span>
+            </div>
+          </button>
+        </v-col>
       </v-row>
 
       <v-row>
@@ -267,19 +269,9 @@ export default {
         Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
       );
       // usual time format
-      let minutes = date.getMinutes() + "0";
-      let hours = date.getHours() + "0";
 
       this.reserveLimit =
-        date.getDate() +
-        "." +
-        date.getMonth() +
-        "." +
-        date.getFullYear() +
-        " " +
-        hours.slice(0, 2) +
-        ":" +
-        minutes.slice(0, 2);
+        date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
     }
   },
 };

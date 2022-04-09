@@ -2,11 +2,13 @@
   <div>
     <v-container>
       <v-row>
-        <button onclick="history.back()">
-          <div>
-            <span class="subtitle-1 fi fi-rr-angle-left"> </span>
-          </div>
-        </button>
+        <v-col>
+          <button onclick="history.back()">
+            <div>
+              <span class="subtitle-1 fi fi-rr-angle-left"> </span>
+            </div>
+          </button>
+        </v-col>
       </v-row>
       <!-- <v-row class="align-center justify-end">
         <v-col class="d-flex" cols="12" md="2">

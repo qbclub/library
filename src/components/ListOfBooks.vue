@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="justify-end">
-      <v-col cols="md-6 pa-0"
+      <v-col cols="pa-0"
         ><Search :books="books" @findBooks="showBooks"
       /></v-col>
     </v-row>
