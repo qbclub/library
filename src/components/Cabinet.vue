@@ -1,10 +1,10 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="">
+      <v-col >
         <button onclick="history.back()">
           <div>
-            <span class="subtitle-1 fi fi-rr-angle-left"> </span>
+            <span class="fi fi-rr-angle-left navicons"> </span>
           </div>
         </button>
       </v-col>
@@ -150,5 +150,13 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
+.navicons {
+  cursor: pointer;
+  opacity: 0.6;
+  &:hover {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
 </style>

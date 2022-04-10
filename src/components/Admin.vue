@@ -1,15 +1,7 @@
 <template>
   <div>
     <v-container>
-      <v-row>
-        <v-col>
-          <button onclick="history.back()">
-            <div>
-              <span class="subtitle-1 fi fi-rr-angle-left"> </span>
-            </div>
-          </button>
-        </v-col>
-      </v-row>
+   <BackArrow></BackArrow>
       <!-- <v-row class="align-center justify-end">
         <v-col class="d-flex" cols="12" md="2">
           <v-select
@@ -101,12 +93,13 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import BackArrow from "./BackArrow.vue";
 import jsMethods from "../apiScripts/node";
 import MiniBook from "./MiniBook.vue";
 
 export default {
   components: {
-    MiniBook,
+    MiniBook, BackArrow,
   },
   data: () => ({
     backends: ["node", "c#"],

@@ -1,14 +1,6 @@
 <template>
   <v-container>
-    <v-row>
-        <v-col>
-          <button onclick="history.back()">
-            <div>
-              <span class="subtitle-1 fi fi-rr-angle-left"> </span>
-            </div>
-          </button>
-        </v-col>
-    </v-row>
+   <BackArrow></BackArrow>
     <v-row class="justify-center">
       <v-col class="col-md-6 col-12">
         <v-form>
@@ -151,6 +143,7 @@
 
 <script>
 import About from "../views/About.vue";
+import BackArrow from "./BackArrow.vue";
 import { mapActions } from "vuex";
 import ImageUploader from "vue-image-upload-resize";
 import {
@@ -162,7 +155,7 @@ import {
 const storage = getStorage();
 
 export default {
-  components: { About, ImageUploader },
+  components: { About, ImageUploader,BackArrow, },
   data: function () {
     return {
       form: {

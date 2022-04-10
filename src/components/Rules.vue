@@ -1,14 +1,6 @@
 <template>
   <div>
-    <v-row>
-      <v-col cols="1">
-        <button onclick="history.back()">
-          <div>
-            <span class="subtitle-1 fi fi fi-br-arrow-left">Назад</span>
-          </div>
-        </button>
-      </v-col>
-    </v-row>
+    <BackArrow></BackArrow>
     <v-container fluid>
       <div class="d-flex align-center flex-column">
         <div class="title mb-10">Правила</div>
@@ -26,6 +18,17 @@
     </v-container>
   </div>
 </template>
+<script>
+import BackArrow from "./BackArrow.vue";
+export default {
+  components: {
+    BackArrow,
+  },
+};
+</script>
+
+
+
 <style lang="scss" scoped>
 .title {
   text-align: center;

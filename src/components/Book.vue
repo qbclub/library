@@ -1,15 +1,7 @@
 <template>
   <div class="book">
     <v-container>
-      <v-row>
-        <v-col>
-          <button onclick="history.back()">
-            <div>
-              <span class="subtitle-1 fi fi-rr-angle-left"> </span>
-            </div>
-          </button>
-        </v-col>
-      </v-row>
+  <BackArrow></BackArrow>
 
       <v-row>
         <span class="text-h6"
@@ -154,6 +146,7 @@
 </template>
 
 <script>
+import BackArrow from "./BackArrow.vue";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -167,6 +160,9 @@ export default {
     reserveLimit: "",
     givenOutLimit:""
   }),
+   components: {
+    BackArrow,
+  },
   methods: {
     ...mapActions(["reserveBook", "giveBook", "returnBook", "deleteBookById"]),
 
