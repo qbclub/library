@@ -4,16 +4,16 @@
       <v-col cols="1">
         <button onclick="history.back()">
           <div>
-            <span class="subtitle-1 fi fi fi-br-arrow-left">Назад</span>
+            <span class="subtitle-1 fi fi-rr-angle-left">Назад</span>
           </div>
         </button>
       </v-col>
     </v-row>
     <v-container fluid>
       <div class="d-flex align-center flex-column">
-        <div class="title mb-10">Правила</div>
+        <div class="title mb-10"><h3>О нас</h3></div>
         <v-row no-gutters>
-          <v-col class="body-1">
+          <v-col>
             <ol>
               <li>Относитесь к книгам бережно</li>
               <li>Книга выдается на ровно 21 день</li>

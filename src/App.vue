@@ -34,7 +34,7 @@
         src="../public/img/icons/StartPageLogo.png"
         class=""
       ></v-img>
-      <v-toolbar-title @click="routeTo('/')" class="text-uppercase"
+      <v-toolbar-title @click="routeTo('/')" class="headline"
         >Библиотека Кубита</v-toolbar-title
       >
       <v-spacer></v-spacer>

@@ -11,7 +11,7 @@
           align-center
         "
       >
-        <p class="text-center text-subtitle-2 text-sm-h5 text-uppercase pt-10">
+        <p class="text-center title text-sm-h5 text-uppercase pt-10">
           программирование <br />
           графика и дизайн <br />
           управление проектами
@@ -26,7 +26,7 @@
           src="../assets/image/test.png"
         ></v-img> -->
         <div class="rules">
-          <v-btn text color="accent" to="/rules">О библиотеке</v-btn>
+          <v-btn text color="accent" to="/present">О библиотеке</v-btn>
           <v-btn text color="accent" to="/rules">Правила</v-btn>
         </div>
       </v-col>
