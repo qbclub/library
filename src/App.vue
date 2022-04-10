@@ -150,7 +150,6 @@ export default {
 
   mounted() {
     this.getAllBooks();
-    this.getAllBookflow();
     this.fetchUser(this.user);
 
     this.onResize();

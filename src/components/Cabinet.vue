@@ -137,14 +137,14 @@ export default {
           Number(this.reservvedBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
         );
 
-        this.reserveLimit = date.toLocaleString();
+        this.reserveLimit = date.toLocaleString("ru-RU", { year: 'numeric', month: 'long', day: 'numeric' });
       }
       if (this.takenBook) {
         let dateReserve = new Date(
           Number(this.takenBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
         );
 
-        this.returnLimit = dateReserve.toLocaleString();
+        this.returnLimit = dateReserve.toLocaleString("ru-RU", { year: 'numeric', month: 'long', day: 'numeric' });
       }
     }
   },
