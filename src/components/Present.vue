@@ -1,6 +1,6 @@
 <template>
-  <div>
-  <BackArrow></BackArrow>
+  <div class="top">
+    <BackArrow></BackArrow>
     <v-container fluid>
       <div class="d-flex align-center flex-column">
         <div class="title mb-10"><h3>О библиотеке</h3></div>
