@@ -208,6 +208,7 @@ export default {
       this.form.Id = Date.now();
 
       this.createBook(this.form);
+      this.cover.image = null
       this.clearingForm();
     },
     setImage: function (img) {

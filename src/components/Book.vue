@@ -1,13 +1,7 @@
 <template>
   <div class="book">
     <v-container>
-      <v-row>
-        <button onclick="history.back()">
-          <div>
-            <span class="subtitle-1 fi fi-rr-angle-left"> </span>
-          </div>
-        </button>
-      </v-row>
+  <BackArrow></BackArrow>
 
       <v-row>
         <span class="text-h6"
@@ -43,7 +37,10 @@
                   Страниц: {{ currentBook.PageCount }}
                 </div>
 
-                <div v-if="currentBook.Status == 'На месте'">
+                <div
+                  v-if="currentBook.Status == 'На месте'"
+                  class="text-caption font-weight-bold"
+                >
                   <div
                     v-if="
                       userInfo.CurrentReservedBooks &&
@@ -79,8 +76,9 @@
                   >
                     Эта книга у вас на руках
                   </div>
-                  <div v-else-if="!userInfo.CurrentReservedBooks">
-                    Книга {{ currentBook.Status }}
+                  <div v-else-if="!userInfo.CurrentReservedBooks && currentBook.Status ">
+                    Книга {{ currentBook.Status.toLowerCase() }} <br>
+                    до {{ givenOutLimit}}
                   </div>
                   <div v-else class="text-caption font-weight-bold">
                     <div
@@ -89,14 +87,14 @@
                         userInfo.CurrentReservedBooks == currentBook.Id
                       "
                     >
-                      Будет зарезервирована до {{ reserveLimit }}
+                      Зарезервирована до <br> {{ reserveLimit }}
                     </div>
                   </div>
 
                   <div v-if="userInfo.isAdmin && currentBook.ReservedQueue">
                     Зарезервировал "{{ currentBook.ReservedQueue }}"
                   </div>
-                  <div v-else-if="currentBook.TemporaryOwner">
+                  <div v-else-if="userInfo.isAdmin && currentBook.TemporaryOwner">
                     Взял "{{ currentBook.TemporaryOwner }}"
                   </div>
                 </div>
@@ -148,6 +146,7 @@
 </template>
 
 <script>
+import BackArrow from "./BackArrow.vue";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -159,7 +158,11 @@ export default {
     timeout: 3000,
     snackbarText: "",
     reserveLimit: "",
+    givenOutLimit:""
   }),
+   components: {
+    BackArrow,
+  },
   methods: {
     ...mapActions(["reserveBook", "giveBook", "returnBook", "deleteBookById"]),
 
@@ -168,8 +171,6 @@ export default {
       this.dialogAction = method;
     },
     takeBook: function () {
-
-      
       if (!this.userInfo.CurrentReservedBooks) {
         this.snackbarText = "Книга зарезервирована на 3 дня";
         this.snackbar = true;
@@ -182,20 +183,12 @@ export default {
         let date = new Date(
           Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
         );
-        // usual time format
-        let minutes = date.getMinutes() + "0";
-        let hours = date.getHours() + "0";
 
-        this.reserveLimit =
-          date.getDate() +
-          "." +
-          date.getMonth() +
-          "." +
-          date.getFullYear() +
-          " " +
-          hours.slice(0, 2) +
-          ":" +
-          minutes.slice(0, 2);
+        this.reserveLimit = date.toLocaleString("ru-RU", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
       } else {
         this.snackbarText = "У вас уже есть зарезервированная книга";
         this.dialog = false;
@@ -265,20 +258,23 @@ export default {
       let date = new Date(
         Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
       );
-      // usual time format
-      let minutes = date.getMinutes() + "0";
-      let hours = date.getHours() + "0";
 
-      this.reserveLimit =
-        date.getDate() +
-        "." +
-        date.getMonth() +
-        "." +
-        date.getFullYear() +
-        " " +
-        hours.slice(0, 2) +
-        ":" +
-        minutes.slice(0, 2);
+      this.reserveLimit = date.toLocaleString("ru-RU", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    }
+        if (this.currentBook.DateOfGivenOut) {
+      let date = new Date(
+        Number(this.currentBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
+      );
+
+      this.givenOutLimit = date.toLocaleString("ru-RU", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
     }
   },
 };

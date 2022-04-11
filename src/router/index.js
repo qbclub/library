@@ -57,6 +57,12 @@ const routes = [
     component: () => import('../components/Registration.vue')
   },
   {
+    path: '/present',
+    name: 'Presentation',
+
+    component: () => import('../components/Present.vue')
+  },
+  {
     path: '/auth',
     name: 'Auth',
 

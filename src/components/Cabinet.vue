@@ -1,10 +1,10 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="">
+      <v-col >
         <button onclick="history.back()">
           <div>
-            <span class="subtitle-1 fi fi-rr-angle-left"> </span>
+            <span class="fi fi-rr-angle-left navicons"> </span>
           </div>
         </button>
       </v-col>
@@ -47,7 +47,9 @@
     <v-row>
       <v-col cols="6">
         <p class="text-center">Книги на руках</p>
-        <p class="font-weight-bold">Вернуть до</p>
+        <p v-if="takenBook" class="font-weight-bold">
+          Вернуть до {{ returnLimit }}
+        </p>
         <v-img
           v-if="takenBook"
           loading="lazy"
@@ -58,8 +60,10 @@
         ></v-img
       ></v-col>
       <v-col class="justify-center" cols="6">
-        <p class="text-center">Зарезервированнo</p>
-        <p class="font-weight-bold">Взять до {{ reserveLimit }}</p>
+        <p class="text-center">Зарезервированo</p>
+        <p v-if="reservvedBook" class="font-weight-bold">
+          Взять до {{ reserveLimit }}
+        </p>
         <v-img
           v-if="reservvedBook"
           loading="lazy"
@@ -94,6 +98,7 @@ export default {
     takenBook: null,
     dialog: false,
     reserveLimit: 0,
+    returnLimit: 0,
   }),
   methods: {
     findBookById: function (id) {
@@ -127,28 +132,31 @@ export default {
         this.userInfo.CurrentReservedBooks
       );
       this.takenBook = this.findBookById(this.userInfo.CurrentTakenBooks);
-      console.log(this.reservvedBook);
+      if (this.reservvedBook) {
+        let date = new Date(
+          Number(this.reservvedBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
+        );
 
-      let date = new Date(
-        Number(this.reservvedBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
-      );
-      // usual time format
-      let minutes = date.getMinutes() + "0";
-      let hours = date.getHours() + "0";
+        this.reserveLimit = date.toLocaleString("ru-RU", { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+      if (this.takenBook) {
+        let dateReserve = new Date(
+          Number(this.takenBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
+        );
 
-      this.reserveLimit =
-        date.getDate() +
-        "." +
-        date.getMonth() +
-        "." +
-        date.getFullYear() +
-        " " +
-        hours.slice(0, 2) +
-        ":" +
-        minutes.slice(0, 2);
+        this.returnLimit = dateReserve.toLocaleString("ru-RU", { year: 'numeric', month: 'long', day: 'numeric' });
+      }
     }
   },
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
+.navicons {
+  cursor: pointer;
+  opacity: 0.6;
+  &:hover {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
 </style>

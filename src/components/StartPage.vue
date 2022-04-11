@@ -11,7 +11,7 @@
           align-center
         "
       >
-        <p class="text-center text-h5 text-uppercase mt-20">
+        <p class="text-center title text-sm-h5 text-uppercase pt-10">
           программирование <br />
           графика и дизайн <br />
           управление проектами
@@ -25,7 +25,10 @@
           max-width="450"
           src="../assets/image/test.png"
         ></v-img> -->
-        <div class="rules"><v-btn text color="accent" to="/rules">Правила пользования библиотекой</v-btn></div>
+        <div class="rules">
+          <v-btn text color="accent" to="/present">О библиотеке</v-btn>
+          <v-btn text color="accent" to="/rules">Правила</v-btn>
+        </div>
       </v-col>
     </v-row>
   </v-container>
@@ -37,17 +40,17 @@ export default {};
 
 <style lang="scss" scoped>
 .startPage {
-  height: calc(100vh - 200px);
+  height: calc(100vh - 300px);
 }
 .backgroundImage {
   background: url(../assets/image/test.png);
-  height: calc(100vh / 2);
+  height: calc(100vh / 2.5);
   background-position: center;
   background-repeat: no-repeat;
-  background-size:contain;
+  background-size: contain;
   position: relative;
 }
-.rules{
+.rules {
   text-align: center;
 }
 </style>

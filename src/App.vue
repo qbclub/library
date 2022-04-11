@@ -1,10 +1,9 @@
 <template>
-  <v-app>
+  <v-app class="overflow">
     <v-navigation-drawer
       class="d-none d-sm-flex"
       v-model="drawer"
       fixed
-      
       color="secondary"
       app
     >
@@ -24,16 +23,21 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app hide-on-scroll class="secondary">
+    <v-app-bar app v-if="!isMobile"  class="secondary">
       <v-app-bar-nav-icon
         class="d-none d-sm-flex"
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
-      <v-img max-width="40" src="./assets/image/logo.png"></v-img>
-      <v-toolbar-title @click="routeTo('/')" class="text-uppercase">Библиотека Кубита</v-toolbar-title>
+      <v-img
+        max-width="75"
+        src="../public/img/icons/StartPageLogo.png"
+        class=""
+      ></v-img>
+      <v-toolbar-title @click="routeTo('/')" class="headline"
+        >Библиотека Кубита</v-toolbar-title
+      >
       <v-spacer></v-spacer>
-  
     </v-app-bar>
 
     <v-main class="secondary">
@@ -104,6 +108,7 @@ export default {
   data: () => ({
     drawer: false,
     dialog: false,
+    isMobile: false,
 
     routes: [
       {
@@ -121,8 +126,11 @@ export default {
     ],
   }),
   methods: {
+    onResize() {
+      this.isMobile = window.innerWidth < 600;
+    },
     routeTo: function (path) {
-      this.$router.push(path);
+      this.$router.push(path).catch(() => {});
       this.drawer = false;
     },
 
@@ -134,11 +142,18 @@ export default {
       userInfo: "userInfo",
     }),
   },
+  beforeDestroy() {
+    if (typeof window === "undefined") return;
+
+    window.removeEventListener("resize", this.onResize, { passive: true });
+  },
 
   mounted() {
     this.getAllBooks();
-    this.getAllBookflow();
     this.fetchUser(this.user);
+
+    this.onResize();
+    window.addEventListener("resize", this.onResize, { passive: true });
   },
 };
 </script>

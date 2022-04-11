@@ -1,11 +1,11 @@
 <template>
   <div>
-    <BackArrow></BackArrow>
+  <BackArrow></BackArrow>
     <v-container fluid>
       <div class="d-flex align-center flex-column">
-        <div class="title mb-10">Правила</div>
+        <div class="title mb-10"><h3>О библиотеке</h3></div>
         <v-row no-gutters>
-          <v-col class="body-1">
+          <v-col>
             <ol>
               <li>Относитесь к книгам бережно</li>
               <li>Книга выдается на ровно 21 день</li>
@@ -18,6 +18,7 @@
     </v-container>
   </div>
 </template>
+
 <script>
 import BackArrow from "./BackArrow.vue";
 export default {
@@ -28,12 +29,8 @@ export default {
 </script>
 
 
-
 <style lang="scss" scoped>
 .title {
   text-align: center;
-}
-.text{
-  color: blackl;
 }
 </style>
