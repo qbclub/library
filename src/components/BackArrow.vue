@@ -3,7 +3,7 @@
     <v-col>
       <button onclick="history.back()">
         <div>
-          <span class="fi fi-rr-angle-left navicons"> </span>
+          <span class="fi fi-rr-arrow-small-left"> </span>
         </div>
       </button>
     </v-col>
@@ -15,6 +15,9 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
+span{
+  font-size: 30px;
+}
 .navicons {
   cursor: pointer;
   opacity: 0.6;

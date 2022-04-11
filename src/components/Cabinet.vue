@@ -4,7 +4,7 @@
       <v-col >
         <button onclick="history.back()">
           <div>
-            <span class="fi fi-rr-angle-left navicons"> </span>
+            <span id="icon" class="fi fi-rr-arrow-small-left"> </span>
           </div>
         </button>
       </v-col>
@@ -158,5 +158,8 @@ export default {
     opacity: 1;
     transform: scale(1.05);
   }
+}
+#icon{
+  font-size: 30px;
 }
 </style>
