@@ -11,10 +11,11 @@
           align-center
         "
       >
-        <p class="text-center title text-sm-h5 text-uppercase pt-10">
-          программирование <br />
-          графика и дизайн <br />
-          управление проектами
+        <p class="text-center  text-sm-h6 text-uppercase pt-10">
+          книги по <br>
+          программированию <br />
+          графике и дизайну <br />
+          управлению проектами
         </p>
         <v-btn text color="accent" to="/books">Вход</v-btn>
       </v-col>
@@ -25,7 +26,7 @@
           max-width="450"
           src="../assets/image/test.png"
         ></v-img> -->
-        <div class="rules">
+        <div class="rules pb-8">
           <v-btn text color="accent" to="/present">О библиотеке</v-btn>
           <v-btn text color="accent" to="/rules">Правила</v-btn>
         </div>
@@ -40,11 +41,11 @@ export default {};
 
 <style lang="scss" scoped>
 .startPage {
-  height: calc(100vh - 300px);
+  height: calc(100vh - 150px);
 }
 .backgroundImage {
-  background: url(../assets/image/test.png);
-  height: calc(100vh / 2.5);
+  background: url(../assets/image/startPage.webp);
+  height: calc(100vh / 2);
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
