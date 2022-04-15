@@ -199,6 +199,7 @@ export default {
     ...mapActions(["updateUser"]),
     clearingForm: function () {
       this.form = {
+        UserId:"",
         FirstName: "",
         LastName: "",
         BirthDate: "",
@@ -216,7 +217,7 @@ export default {
       };
     },
     send: async function () {
-      this.form.UserId = Date.now();
+      
       const headers = {
         "content-type": "application/json",
       };
@@ -232,6 +233,7 @@ export default {
         })
         .then((response) => {
           if (response.data) {
+             this.form.UserId = response.data.UserId;
             this.form.FirstName = response.data.FirstName;
             this.form.LastName = response.data.LastName;
             this.form.BirthDate = response.data.BirthDate;
@@ -258,10 +260,8 @@ export default {
       this.cover.newHeight = img.info.newHeight;
     },
     uploadImageComplete: function () {
-      /**
-       * Поменять Date.now()
-       */
-      const storageRef = ref(storage, "users/" + Date.now().toString());
+      
+      const storageRef = ref(storage, "users/" + this.form.UserId);
       uploadString(storageRef, this.cover.image, "data_url").then(
         (snapshot) => {
           getDownloadURL(snapshot.ref)

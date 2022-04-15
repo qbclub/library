@@ -129,6 +129,7 @@ export default {
   methods: {
     ...mapActions(["createUser"]),
     submit() {
+      
       this.$refs.observer.validate().then(this.userReg());
       setTimeout(this.clear, 1000);
     },
@@ -141,6 +142,7 @@ export default {
     userReg: async function () {
       let vm = this;
       let user = {
+        UserId:Date.now(),
         FirstName: "",
         LastName: "",
         BirthDate: "",
