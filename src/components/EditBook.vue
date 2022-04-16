@@ -4,6 +4,7 @@
     <v-row class="justify-center">
       <v-col class="col-md-6 col-12">
         <v-form>
+       
           <v-img contain :src="form.CoverPath" :max-height="150"></v-img>
 
           <v-text-field
@@ -189,7 +190,7 @@ export default {
       this.cover.newHeight = img.info.newHeight;
     },
     uploadImageComplete: function () {
-      this.form.Id = Date.now();
+     
       const storageRef = ref(storage, "books/" + this.form.Id);
       uploadString(storageRef, this.cover.image, "data_url").then(
         (snapshot) => {
