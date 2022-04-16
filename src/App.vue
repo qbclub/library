@@ -99,8 +99,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
+import { mapGetters } from "vuex";
+
 
 export default {
   name: "App",
@@ -134,7 +134,7 @@ export default {
       this.drawer = false;
     },
 
-    ...mapActions(["getAllBooks", "getAllBookflow", "fetchUser"]),
+    // ...mapActions(["getAllBooks", "getAllBookflow", "fetchUser"]),
   },
   computed: {
     ...mapGetters({
