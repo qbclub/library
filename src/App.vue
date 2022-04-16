@@ -42,7 +42,9 @@
 
     <v-main class="secondary">
       <v-container>
+        <transition name="fade" mode="out-in">
         <router-view />
+        </transition>
       </v-container>
     </v-main>
 
@@ -171,5 +173,16 @@ export default {
 .icon_text {
   line-height: 1;
   font-size: 10px;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+
+  /* transform: scale(0); */
 }
 </style>

@@ -119,13 +119,13 @@
             v-if="userInfo && userInfo.isAdmin"
             class="d-flex flex-wrap justify-center pb-8"
           >
-            <v-btn small class="ma-4 accent" @click="callDialog(_giveBook)"
+            <v-btn v-if="currentBook.ReservedQueue " small class="ma-4 accent" @click="callDialog(_giveBook)"
               >Выдать</v-btn
             >
-            <v-btn small class="ma-4 accent" @click="callDialog(_returnBook)"
+            <v-btn v-if="currentBook.TemporaryOwner" small class="ma-4 accent" @click="callDialog(_returnBook)"
               >Получить</v-btn
             >
-            <v-btn small class="ma-4 accent" @click="callDialog(cancelReserve)"
+            <v-btn v-if="currentBook.ReservedQueue" small class="ma-4 accent" @click="callDialog(cancelReserve)"
               >Снять резерв</v-btn
             >
             <v-btn small class="ma-4 accent" @click="editBook">Изменить</v-btn>
