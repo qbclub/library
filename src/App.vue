@@ -149,8 +149,6 @@ export default {
   },
 
   mounted() {
-    this.getAllBooks();
-    this.fetchUser(this.user);
 
     this.onResize();
     window.addEventListener("resize", this.onResize, { passive: true });

@@ -257,7 +257,6 @@ export default {
       this.dialog = false;
     },
     cancelReserve: function () {
-    
       alert("Убираем резервирование книги");
     },
     deleteBook: async function () {
@@ -280,32 +279,39 @@ export default {
   },
 
   mounted() {
-    this.currentBook = this.books.find(
-      (book) => book.Id == this.$route.query.book_id
-    );
+    axios
+      .post("http://localhost:3000/api/books/get-by-id", {
+        id: this.$route.query.book_id,
+      })
+      .then((response) => {
+       
+        this.currentBook = response.data[0];
+        if (this.currentBook.DateOfReserved) {
+          let date = new Date(
+            Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
+          );
 
-    if (this.currentBook.DateOfReserved) {
-      let date = new Date(
-        Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
-      );
+          this.reserveLimit = date.toLocaleString("ru-RU", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        }
+        if (this.currentBook.DateOfGivenOut) {
+          let date = new Date(
+            Number(this.currentBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
+          );
 
-      this.reserveLimit = date.toLocaleString("ru-RU", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
+          this.givenOutLimit = date.toLocaleString("ru-RU", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
       });
-    }
-    if (this.currentBook.DateOfGivenOut) {
-      let date = new Date(
-        Number(this.currentBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
-      );
-
-      this.givenOutLimit = date.toLocaleString("ru-RU", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
-    }
   },
 };
 </script>
