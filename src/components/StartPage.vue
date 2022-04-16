@@ -11,15 +11,15 @@
           align-center
         "
       >
-        <p class="text-center  text-sm-h6 text-uppercase pt-10">
-          книги по <br>
+        <p class="text-center text-sm-h6 text-uppercase pt-10">
+          книги по <br />
           программированию <br />
           графике и дизайну <br />
           управлению проектами
         </p>
         <v-btn text color="accent" to="/books">Вход</v-btn>
       </v-col>
-      <v-col class="col-12 col-sm-6">
+      <v-col class="col-12 col-sm-6 ">
         <div class="backgroundImage"></div>
         <!-- <v-img
           loading="lazy"

@@ -232,6 +232,7 @@ export default {
               this.currentBook.Status = "Выдана";
               this.currentBook.TemporaryOwner = this.currentBook.ReservedQueue;
               this.dialog = false;
+             
             }
           })
           .catch((error) => {
@@ -269,17 +270,8 @@ export default {
       this.$router.push(path);
       this.drawer = false;
     },
-  },
-  computed: {
-    ...mapGetters({
-      user: "user",
-      books: "books",
-      userInfo: "userInfo",
-    }),
-  },
-
-  mounted() {
-    axios
+    getBookById: function () {
+       axios
       .post("http://localhost:3000/api/books/get-by-id", {
         id: this.$route.query.book_id,
       })
@@ -312,6 +304,19 @@ export default {
       .catch((error) => {
         console.error("There was an error!", error);
       });
+    }
+  },
+
+  computed: {
+    ...mapGetters({
+      user: "user",
+      books: "books",
+      userInfo: "userInfo",
+    }),
+  },
+
+  mounted() {
+   this.getBookById()
   },
 };
 </script>
