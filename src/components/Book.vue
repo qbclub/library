@@ -125,6 +125,9 @@
             <v-btn small class="ma-4 accent" @click="callDialog(_returnBook)"
               >Получить</v-btn
             >
+            <v-btn small class="ma-4 accent" @click="callDialog(cancelReserve)"
+              >Снять резерв</v-btn
+            >
             <v-btn small class="ma-4 accent" @click="editBook">Изменить</v-btn>
             <v-btn small class="ma-4 error" @click="callDialog(deleteBook)"
               >Удалить</v-btn
@@ -253,6 +256,10 @@ export default {
       this.currentBook.TemporaryOwner = "";
       this.dialog = false;
     },
+    cancelReserve: function () {
+    
+      alert("Убираем резервирование книги");
+    },
     deleteBook: async function () {
       this.deleteBookById(this.currentBook.Id);
       this.snackbarText = "Книга удалена";
@@ -271,11 +278,8 @@ export default {
       userInfo: "userInfo",
     }),
   },
- 
 
   mounted() {
-
-   
     this.currentBook = this.books.find(
       (book) => book.Id == this.$route.query.book_id
     );
