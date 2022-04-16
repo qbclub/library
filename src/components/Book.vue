@@ -1,7 +1,7 @@
 <template>
   <div class="book">
     <v-container>
-  <BackArrow></BackArrow>
+      <BackArrow></BackArrow>
 
       <v-row>
         <span class="text-h6"
@@ -29,7 +29,7 @@
                   {{ currentBook.date }} г.
                 </div>
                 <div class="text-caption">
-                  Тематика: {{ currentBook.direction }}
+                  Тематика: {{ currentBook.Sections }}
                 </div>
 
                 <div class="text-caption">ISBN: {{ currentBook.ISBN }}</div>
@@ -76,9 +76,13 @@
                   >
                     Эта книга у вас на руках
                   </div>
-                  <div v-else-if="!userInfo.CurrentReservedBooks && currentBook.Status ">
-                    Книга {{ currentBook.Status.toLowerCase() }} <br>
-                    до {{ givenOutLimit}}
+                  <div
+                    v-else-if="
+                      !userInfo.CurrentReservedBooks && currentBook.Status
+                    "
+                  >
+                    Книга {{ currentBook.Status.toLowerCase() }} <br />
+                    до {{ givenOutLimit }}
                   </div>
                   <div v-else class="text-caption font-weight-bold">
                     <div
@@ -87,14 +91,17 @@
                         userInfo.CurrentReservedBooks == currentBook.Id
                       "
                     >
-                      Зарезервирована до <br> {{ reserveLimit }}
+                      Зарезервирована до <br />
+                      {{ reserveLimit }}
                     </div>
                   </div>
 
                   <div v-if="userInfo.isAdmin && currentBook.ReservedQueue">
                     Зарезервировал "{{ currentBook.ReservedQueue }}"
                   </div>
-                  <div v-else-if="userInfo.isAdmin && currentBook.TemporaryOwner">
+                  <div
+                    v-else-if="userInfo.isAdmin && currentBook.TemporaryOwner"
+                  >
                     Взял "{{ currentBook.TemporaryOwner }}"
                   </div>
                 </div>
@@ -146,6 +153,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import BackArrow from "./BackArrow.vue";
 import { mapGetters, mapActions } from "vuex";
 
@@ -158,9 +166,9 @@ export default {
     timeout: 3000,
     snackbarText: "",
     reserveLimit: "",
-    givenOutLimit:""
+    givenOutLimit: "",
   }),
-   components: {
+  components: {
     BackArrow,
   },
   methods: {
@@ -176,10 +184,10 @@ export default {
         this.snackbar = true;
         this.reserveBook(this.currentBook.Id);
         this.dialog = false;
-        let c = this.currentBook;
-        c.Status = "Зарезервирована";
-        c.ReservedQueue = this.userInfo.Contacts.Email;
-        c.DateOfReserved = Date.now();
+
+        this.currentBook.Status = "Зарезервирована";
+        this.currentBook.ReservedQueue = this.userInfo.Contacts.Email;
+        this.currentBook.DateOfReserved = Date.now();
         let date = new Date(
           Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
         );
@@ -200,17 +208,32 @@ export default {
     },
     _giveBook: function () {
       if (!this.currentBook.TemporaryOwner) {
-        this.snackbarText = "Книга выдана";
-        this.snackbar = true;
-        this.giveBook({
-          bookId: this.currentBook.Id,
-          userEmail: this.currentBook.ReservedQueue,
-        });
-        let c = this.currentBook;
-        c.ReservedQueue = "";
-        c.Status = "Выдана";
-        c.TemporaryOwner = this.currentBook.ReservedQueue;
-        this.dialog = false;
+        axios
+          .post("http://localhost:3000/api/users/get-by-email", {
+            email: this.currentBook.ReservedQueue,
+          })
+          .then((response) => {
+            if (response.data.CurrentTakenBooks) {
+              this.snackbarText = "Надо вернуть другую книгу";
+              this.dialog = false;
+              this.snackbar = true;
+            } else {
+              this.snackbarText = "Книга выдана";
+              this.snackbar = true;
+              this.giveBook({
+                bookId: this.currentBook.Id,
+                userEmail: this.currentBook.ReservedQueue,
+              });
+
+              this.currentBook.ReservedQueue = "";
+              this.currentBook.Status = "Выдана";
+              this.currentBook.TemporaryOwner = this.currentBook.ReservedQueue;
+              this.dialog = false;
+            }
+          })
+          .catch((error) => {
+            console.error("There was an error!", error);
+          });
       } else {
         this.snackbarText = "У книги есть владелец";
         this.dialog = false;
@@ -224,10 +247,10 @@ export default {
         bookId: this.currentBook.Id,
         userEmail: this.currentBook.TemporaryOwner,
       });
-      let c = this.currentBook;
-      c.Status = "На месте";
-      c.ReservedQueue = "";
-      c.TemporaryOwner = "";
+
+      this.currentBook.Status = "На месте";
+      this.currentBook.ReservedQueue = "";
+      this.currentBook.TemporaryOwner = "";
       this.dialog = false;
     },
     deleteBook: async function () {
@@ -248,8 +271,11 @@ export default {
       userInfo: "userInfo",
     }),
   },
+ 
 
   mounted() {
+
+   
     this.currentBook = this.books.find(
       (book) => book.Id == this.$route.query.book_id
     );
@@ -265,7 +291,7 @@ export default {
         day: "numeric",
       });
     }
-        if (this.currentBook.DateOfGivenOut) {
+    if (this.currentBook.DateOfGivenOut) {
       let date = new Date(
         Number(this.currentBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
       );

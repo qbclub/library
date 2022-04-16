@@ -194,5 +194,6 @@ export default {
         commit
     }, user) {
         commit('UPDATE_USER', user)
-    }
+    },
+   
 }
