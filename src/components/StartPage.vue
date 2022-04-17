@@ -4,7 +4,7 @@
       <v-col
         class="
           col-12 col-sm-6
-          mt-16
+    
           d-flex
           justify-center
           flex-column

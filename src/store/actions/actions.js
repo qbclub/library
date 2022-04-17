@@ -72,7 +72,7 @@ export default {
                         axios
                             .post("http://localhost:3000/api/users/get-by-email", { email: e.UserEmail })
                             .then((response) => {
-                                console.log(response.data)
+                            
                                 commit('SET_USER_INFO', response.data)
                             })
                             .catch((error) => {

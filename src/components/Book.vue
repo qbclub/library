@@ -119,13 +119,25 @@
             v-if="userInfo && userInfo.isAdmin"
             class="d-flex flex-wrap justify-center pb-8"
           >
-            <v-btn v-if="currentBook.ReservedQueue " small class="ma-4 accent" @click="callDialog(_giveBook)"
+            <v-btn
+              v-if="currentBook.ReservedQueue"
+              small
+              class="ma-4 accent"
+              @click="callDialog(_giveBook)"
               >Выдать</v-btn
             >
-            <v-btn v-if="currentBook.TemporaryOwner" small class="ma-4 accent" @click="callDialog(_returnBook)"
+            <v-btn
+              v-if="currentBook.TemporaryOwner"
+              small
+              class="ma-4 accent"
+              @click="callDialog(_returnBook)"
               >Получить</v-btn
             >
-            <v-btn v-if="currentBook.ReservedQueue" small class="ma-4 accent" @click="callDialog(cancelReserve)"
+            <v-btn
+              v-if="currentBook.ReservedQueue"
+              small
+              class="ma-4 accent"
+              @click="callDialog(cancelReserve)"
               >Снять резерв</v-btn
             >
             <v-btn small class="ma-4 accent" @click="editBook">Изменить</v-btn>
@@ -182,6 +194,7 @@ export default {
       this.dialogAction = method;
     },
     takeBook: function () {
+    
       if (!this.userInfo.CurrentReservedBooks) {
         this.snackbarText = "Книга зарезервирована на 3 дня";
         this.snackbar = true;
@@ -232,7 +245,6 @@ export default {
               this.currentBook.Status = "Выдана";
               this.currentBook.TemporaryOwner = this.currentBook.ReservedQueue;
               this.dialog = false;
-             
             }
           })
           .catch((error) => {
@@ -258,7 +270,21 @@ export default {
       this.dialog = false;
     },
     cancelReserve: function () {
-      alert("Убираем резервирование книги");
+      axios
+        .post("http://localhost:3000/api/books/unreserve-one", {
+          UserEmail: this.currentBook.ReservedQueue,
+          BookId: this.currentBook.Id,
+        })
+        .then((response) => {
+          this.snackbarText = "Резерв снят";
+          this.dialog = false;
+          this.snackbar = true;
+          this.getBookById();
+         
+        })
+        .catch((error) => {
+          console.error("There was an error!", error);
+        });
     },
     deleteBook: async function () {
       this.deleteBookById(this.currentBook.Id);
@@ -271,40 +297,39 @@ export default {
       this.drawer = false;
     },
     getBookById: function () {
-       axios
-      .post("http://localhost:3000/api/books/get-by-id", {
-        id: this.$route.query.book_id,
-      })
-      .then((response) => {
-       
-        this.currentBook = response.data[0];
-        if (this.currentBook.DateOfReserved) {
-          let date = new Date(
-            Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
-          );
+      axios
+        .post("http://localhost:3000/api/books/get-by-id", {
+          id: this.$route.query.book_id,
+        })
+        .then((response) => {
+          this.currentBook = response.data[0];
+          if (this.currentBook.DateOfReserved) {
+            let date = new Date(
+              Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
+            );
 
-          this.reserveLimit = date.toLocaleString("ru-RU", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          });
-        }
-        if (this.currentBook.DateOfGivenOut) {
-          let date = new Date(
-            Number(this.currentBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
-          );
+            this.reserveLimit = date.toLocaleString("ru-RU", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+          }
+          if (this.currentBook.DateOfGivenOut) {
+            let date = new Date(
+              Number(this.currentBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
+            );
 
-          this.givenOutLimit = date.toLocaleString("ru-RU", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          });
-        }
-      })
-      .catch((error) => {
-        console.error("There was an error!", error);
-      });
-    }
+            this.givenOutLimit = date.toLocaleString("ru-RU", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("There was an error!", error);
+        });
+    },
   },
 
   computed: {
@@ -316,7 +341,7 @@ export default {
   },
 
   mounted() {
-   this.getBookById()
+    this.getBookById();
   },
 };
 </script>
