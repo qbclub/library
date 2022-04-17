@@ -196,10 +196,11 @@ export default {
     takeBook: function () {
     
       if (!this.userInfo.CurrentReservedBooks) {
+        this.dialog = false;
         this.snackbarText = "Книга зарезервирована на 3 дня";
         this.snackbar = true;
         this.reserveBook(this.currentBook.Id);
-        this.dialog = false;
+        
 
         this.currentBook.Status = "Зарезервирована";
         this.currentBook.ReservedQueue = this.userInfo.Contacts.Email;
