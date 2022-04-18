@@ -212,7 +212,7 @@ export default {
     _giveBook: function () {
       if (!this.currentBook.TemporaryOwner) {
         axios
-          .post("http://localhost:3000/api/users/get-by-email", {
+          .post("http://grif-qbit.duckdns.org:8080/api/users/get-by-email", {
             email: this.currentBook.ReservedQueue,
           })
           .then((response) => {
@@ -280,12 +280,13 @@ export default {
 
   mounted() {
     axios
-      .post("http://localhost:3000/api/books/get-by-id", {
+      .post("http://grif-qbit.duckdns.org:8080/api/books/get-by-id", {
         id: this.$route.query.book_id,
       })
       .then((response) => {
        
         this.currentBook = response.data[0];
+        console.log(response)
         if (this.currentBook.DateOfReserved) {
           let date = new Date(
             Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
