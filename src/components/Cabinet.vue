@@ -2,11 +2,9 @@
   <v-container>
     <v-row>
       <v-col >
-        <button onclick="history.back()">
-          <div>
-            <span id="icon" class="fi fi-rr-arrow-small-left"> </span>
-          </div>
-        </button>
+     <v-btn onclick="history.back()" icon>
+           <v-icon large >fi fi-rr-arrow-small-left</v-icon>
+      </v-btn>
       </v-col>
       <v-col cols="2">
         <div>
