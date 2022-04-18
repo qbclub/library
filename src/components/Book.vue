@@ -119,25 +119,13 @@
             v-if="userInfo && userInfo.isAdmin"
             class="d-flex flex-wrap justify-center pb-8"
           >
-            <v-btn
-              v-if="currentBook.ReservedQueue"
-              small
-              class="ma-4 accent"
-              @click="callDialog(_giveBook)"
+            <v-btn small class="ma-4 accent" @click="callDialog(_giveBook)"
               >Выдать</v-btn
             >
-            <v-btn
-              v-if="currentBook.TemporaryOwner"
-              small
-              class="ma-4 accent"
-              @click="callDialog(_returnBook)"
+            <v-btn small class="ma-4 accent" @click="callDialog(_returnBook)"
               >Получить</v-btn
             >
-            <v-btn
-              v-if="currentBook.ReservedQueue"
-              small
-              class="ma-4 accent"
-              @click="callDialog(cancelReserve)"
+            <v-btn small class="ma-4 accent" @click="callDialog(cancelReserve)"
               >Снять резерв</v-btn
             >
             <v-btn small class="ma-4 accent" @click="editBook">Изменить</v-btn>
@@ -195,13 +183,11 @@ export default {
       this.dialogAction = method;
     },
     takeBook: function () {
-    
       if (!this.userInfo.CurrentReservedBooks) {
-        this.dialog = false;
         this.snackbarText = "Книга зарезервирована на 3 дня";
         this.snackbar = true;
         this.reserveBook(this.currentBook.Id);
-        
+        this.dialog = false;
 
         this.currentBook.Status = "Зарезервирована";
         this.currentBook.ReservedQueue = this.userInfo.Contacts.Email;
@@ -227,7 +213,7 @@ export default {
     _giveBook: function () {
       if (!this.currentBook.TemporaryOwner) {
         axios
-          .post("http://localhost:3000/api/users/get-by-email", {
+          .post("http://grif-qbit.duckdns.org:8080/api/users/get-by-email", {
             email: this.currentBook.ReservedQueue,
           })
           .then((response) => {
@@ -272,21 +258,7 @@ export default {
       this.dialog = false;
     },
     cancelReserve: function () {
-      axios
-        .post("http://localhost:3000/api/books/unreserve-one", {
-          UserEmail: this.currentBook.ReservedQueue,
-          BookId: this.currentBook.Id,
-        })
-        .then((response) => {
-          this.snackbarText = "Резерв снят";
-          this.dialog = false;
-          this.snackbar = true;
-          this.getBookById();
-         
-        })
-        .catch((error) => {
-          console.error("There was an error!", error);
-        });
+      alert("Убираем резервирование книги");
     },
     deleteBook: async function () {
       this.deleteBookById(this.currentBook.Id);
@@ -298,42 +270,7 @@ export default {
       this.$router.push(path);
       this.drawer = false;
     },
-    getBookById: function () {
-      axios
-        .post("http://localhost:3000/api/books/get-by-id", {
-          id: this.$route.query.book_id,
-        })
-        .then((response) => {
-          this.currentBook = response.data[0];
-          if (this.currentBook.DateOfReserved) {
-            let date = new Date(
-              Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
-            );
-
-            this.reserveLimit = date.toLocaleString("ru-RU", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            });
-          }
-          if (this.currentBook.DateOfGivenOut) {
-            let date = new Date(
-              Number(this.currentBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
-            );
-
-            this.givenOutLimit = date.toLocaleString("ru-RU", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            });
-          }
-        })
-        .catch((error) => {
-          console.error("There was an error!", error);
-        });
-    },
   },
-
   computed: {
     ...mapGetters({
       user: "user",
@@ -343,7 +280,40 @@ export default {
   },
 
   mounted() {
-    this.getBookById();
+    axios
+      .post("http://grif-qbit.duckdns.org:8080/api/books/get-by-id", {
+        id: this.$route.query.book_id,
+      })
+      .then((response) => {
+       
+        this.currentBook = response.data[0];
+        console.log(response)
+        if (this.currentBook.DateOfReserved) {
+          let date = new Date(
+            Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
+          );
+
+          this.reserveLimit = date.toLocaleString("ru-RU", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        }
+        if (this.currentBook.DateOfGivenOut) {
+          let date = new Date(
+            Number(this.currentBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
+          );
+
+          this.givenOutLimit = date.toLocaleString("ru-RU", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
   },
 };
 </script>
