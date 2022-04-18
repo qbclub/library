@@ -72,7 +72,7 @@ export default {
                         axios
                             .post("http://grif-qbit.duckdns.org:8080/api/users/get-by-email", { email: e.UserEmail })
                             .then((response) => {
-                                console.log(response.data)
+                            
                                 commit('SET_USER_INFO', response.data)
                             })
                             .catch((error) => {

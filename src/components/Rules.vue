@@ -1,20 +1,39 @@
 <template>
   <div>
     <BackArrow></BackArrow>
+    <div class="title text-center">Правила</div>
+    
     <v-container fluid>
-      <div class="d-flex align-center flex-column">
-        <div class="title mb-10">Правила</div>
-        <v-row no-gutters>
-          <v-col class="body-1">
-            <ol>
-              <li>Относитесь к книгам бережно</li>
-              <li>Книга выдается на ровно 21 день</li>
-              <li>Книга резервируется на 3 дня</li>
-              <li>В случае невозврата книги ваш аккаун будет заблокирован</li>
-            </ol>
-          </v-col>
-        </v-row>
-      </div>
+      <v-row>
+        <v-col class="col-sm-2">
+          <v-img src="../assets/image/polka1.png" contain> </v-img>
+        </v-col>
+        <v-col class="text-subtitle-1">
+          <p>
+            Для того чтобы <b>взять книгу</b> , ее надо зарезервировать в
+            приложении.
+          </p>
+          <p>Книга ждёт вас <b>3 дня</b> , затем резерв книги снимается.</p>
+          <p>
+            <b>Получить</b> книгу можно в клубе "Кубит", предварительно
+            согласовав время и пройдя регистрацию.
+          </p>
+          <p>
+            У вас есть <b>21 день</b> на изучение полученной книги, после чего
+            она должна быть возвращена.
+          </p>
+          <p class="pb-10">
+            Мы надеемся на <b>бережное отношение</b> к книгам, но если книга
+            была вами утеряна или пришла в негодность, ее полную
+            <b>стоимость</b> необходимо будет <b>возместить</b> .
+          </p>
+        </v-col>
+      </v-row>
+      <v-row class="justify-end d-none d-sm-flex">
+        <v-col class="col-sm-2">
+          <v-img src="../assets/image/polka2.png" contain> </v-img>
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -30,7 +49,7 @@ export default {
 
 
 <style lang="scss" scoped>
-.title {
-  text-align: center;
+p{
+  opacity: 0.8;
 }
 </style>
