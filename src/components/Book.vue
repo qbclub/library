@@ -296,7 +296,7 @@ export default {
     },
     getBookById: function () {
       axios
-        .get("http://localhost:3000/api/books/get-by-id", {
+        .post("http://localhost:3000/api/books/get-by-id", {
           id: this.$route.query.book_id,
         })
         .then((response) => {
