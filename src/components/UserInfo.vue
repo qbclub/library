@@ -165,7 +165,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 const storage = getStorage();
-import { mapGetters } from "vuex";
+import {mapGetters } from "vuex";
 
 export default {
   components: { About, ImageUploader, BackArrow },
