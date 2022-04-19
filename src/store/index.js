@@ -21,6 +21,7 @@ let store = new Vuex.Store({
     backend: 'node',
     books: [],
     bookflow: [],
+    apiUrl:"http://localhost:3000/"
   },
   mutations,
   actions,

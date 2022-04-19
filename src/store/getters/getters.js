@@ -13,6 +13,9 @@ export default {
     },
     backend(state) {
         return state.backend
+    },
+    urlApiServer(state) {
+        return state.apiUrl
     }
 
 }

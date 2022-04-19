@@ -224,7 +224,7 @@ export default {
     _giveBook: function () {
       if (!this.currentBook.TemporaryOwner) {
         axios
-          .post("http://localhost:3000/api/users/get-by-email", {
+          .post(this.urlApiServer + "api/users/get-by-email", {
             email: this.currentBook.ReservedQueue,
           })
           .then((response) => {
@@ -239,7 +239,7 @@ export default {
                 bookId: this.currentBook.Id,
                 userEmail: this.currentBook.ReservedQueue,
               });
-           
+
               this.currentBook.ReservedQueue = "";
               this.currentBook.Status = "Выдана";
               this.currentBook.TemporaryOwner = this.currentBook.ReservedQueue;
@@ -270,11 +270,11 @@ export default {
     },
     cancelReserve: function () {
       axios
-        .post("http://localhost:3000/api/books/unreserve-one", {
+        .post(this.urlApiServer + "api/books/unreserve-one", {
           UserEmail: this.currentBook.ReservedQueue,
           BookId: this.currentBook.Id,
         })
-        .then((response) => {
+        .then(() => {
           this.snackbarText = "Резерв снят";
           this.dialog = false;
           this.snackbar = true;
@@ -296,7 +296,7 @@ export default {
     },
     getBookById: function () {
       axios
-        .post("http://localhost:3000/api/books/get-by-id", {
+        .post(this.urlApiServer + "api/books/get-by-id", {
           id: this.$route.query.book_id,
         })
         .then((response) => {
@@ -331,11 +331,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters({
-      user: "user",
-      books: "books",
-      userInfo: "userInfo",
-    }),
+    ...mapGetters(["user", "books", "userInfo", "urlApiServer"]),
   },
 
   mounted() {

@@ -13,7 +13,7 @@ export default {
     GET_USER_INFO(state, email) {
         if (email) {
             axios
-                .post("http://localhost:3000/api/users/get-by-email", { email: email })
+                .post(state.apiUrl + "api/users/get-by-email", { email: email })
                 .then((response) => state.userInfo = response.data)
                 .catch((error) => {
                     console.error("There was an error!", error);
@@ -42,14 +42,14 @@ export default {
     },
     CREATE_BOOK(state, book) {
         axios
-            .post("http://localhost:3000/api/books/create", book)
+            .post(state.apiUrl + "api/books/create", book)
             .catch((error) => {
                 console.error("Cannot create book, error: ", error);
             });
     },
     CLEAR_BOOKS_DB() {
         axios
-            .get("http://localhost:3000/api/books/clear")
+            .get(state.apiUrl + "api/books/clear")
             .then((response) => console.log('clear books with status ', response.status))
             .catch((error) => {
                 console.error("Cannot clear books, error: ", error);
@@ -57,7 +57,7 @@ export default {
     },
     CLEAR_USERS_DB() {
         axios
-            .get("http://localhost:3000/api/users/clear")
+            .get(state.apiUrl + "api/users/clear")
             .then((response) => console.log(response))
             .catch((error) => {
                 console.error("Cannot clear users, error: ", error);
@@ -108,7 +108,7 @@ export default {
     UPDATE_BOOK(state, newBook) {
         let _ = newBook
         axios
-            .put("http://localhost:3000/api/books/update", {
+            .put(state.apiUrl + "api/books/update", {
                 setupOptions: {
                     $set: {
                         Id: _.Id,
@@ -135,7 +135,7 @@ export default {
             .catch(err => console.error("cannot update book, error: ", err))
     },
     CREATE_USER(state, user) {
-        axios.post("http://localhost:3000/api/users/create", user)
+        axios.post(state.apiUrl + "api/users/create", user)
     },
     UPDATE_USER(state, newUser) {
         console.log("update user: ", newUser)
@@ -159,7 +159,7 @@ export default {
             }
         }
         axios
-            .put("http://localhost:3000/api/users/update",
+            .put(state.apiUrl + "api/users/update",
                 {
                     setupOptions,
                     email: newUser.Contacts.Email

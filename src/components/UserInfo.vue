@@ -1,6 +1,7 @@
 <<template>
   <v-container>
    <BackArrow></BackArrow>
+
     <v-row class="justify-center">
       <v-col class="col-md-6 col-12">
         
@@ -164,10 +165,10 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 const storage = getStorage();
-import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
-  components: { About, ImageUploader,  BackArrow, },
+  components: { About, ImageUploader, BackArrow },
   data: function () {
     return {
       form: {
@@ -196,10 +197,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["updateUser"]),
+  
     clearingForm: function () {
       this.form = {
-        UserId:"",
+        UserId: "",
         FirstName: "",
         LastName: "",
         BirthDate: "",
@@ -217,7 +218,6 @@ export default {
       };
     },
     send: async function () {
-      
       const headers = {
         "content-type": "application/json",
       };
@@ -228,12 +228,12 @@ export default {
     },
     checkUser: function (email) {
       axios
-        .post("http://localhost:3000/api/users/get-by-email", {
+        .post(this.urlApiServer + "api/users/get-by-email", {
           email: this.form.Contacts.Email,
         })
         .then((response) => {
           if (response.data) {
-             this.form.UserId = response.data.UserId;
+            this.form.UserId = response.data.UserId;
             this.form.FirstName = response.data.FirstName;
             this.form.LastName = response.data.LastName;
             this.form.BirthDate = response.data.BirthDate;
@@ -260,7 +260,6 @@ export default {
       this.cover.newHeight = img.info.newHeight;
     },
     uploadImageComplete: function () {
-      
       const storageRef = ref(storage, "users/" + this.form.UserId);
       uploadString(storageRef, this.cover.image, "data_url").then(
         (snapshot) => {
@@ -277,6 +276,9 @@ export default {
     uploadImageStart: function () {
       console.log("UPLOAD STARTED");
     },
+  },
+ computed: {
+    ...mapGetters([ "urlApiServer"]),
   },
 };
 </script>
