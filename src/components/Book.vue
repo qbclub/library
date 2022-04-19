@@ -194,7 +194,6 @@ export default {
       this.dialogAction = method;
     },
     takeBook: function () {
-    
       if (!this.userInfo.CurrentReservedBooks) {
         this.snackbarText = "Книга зарезервирована на 3 дня";
         this.snackbar = true;
@@ -240,7 +239,7 @@ export default {
                 bookId: this.currentBook.Id,
                 userEmail: this.currentBook.ReservedQueue,
               });
-
+           
               this.currentBook.ReservedQueue = "";
               this.currentBook.Status = "Выдана";
               this.currentBook.TemporaryOwner = this.currentBook.ReservedQueue;
@@ -280,7 +279,6 @@ export default {
           this.dialog = false;
           this.snackbar = true;
           this.getBookById();
-         
         })
         .catch((error) => {
           console.error("There was an error!", error);
@@ -298,7 +296,7 @@ export default {
     },
     getBookById: function () {
       axios
-        .post("http://localhost:3000/api/books/get-by-id", {
+        .get("http://localhost:3000/api/books/get-by-id", {
           id: this.$route.query.book_id,
         })
         .then((response) => {

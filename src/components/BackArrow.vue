@@ -1,13 +1,11 @@
 <template>
   <v-row>
     <v-col>
-      <button onclick="history.back()">
-        <div>
-          <span class="fi fi-rr-arrow-small-left"> </span>
-        </div>
-      </button>
+      <v-btn onclick="history.back()" icon>
+           <v-icon large >fi fi-rr-arrow-small-left</v-icon>
+      </v-btn>
     </v-col>
-  </v-row>
+  </v-row> 
 </template>
 
 <script>
@@ -15,15 +13,4 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-span{
-  font-size: 30px;
-}
-.navicons {
-  cursor: pointer;
-  opacity: 0.6;
-  &:hover {
-    opacity: 1;
-    transform: scale(1.05);
-  }
-}
 </style>

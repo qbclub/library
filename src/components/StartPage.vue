@@ -4,14 +4,13 @@
       <v-col
         class="
           col-12 col-sm-6
-    
           d-flex
           justify-center
           flex-column
           align-center
         "
       >
-        <p class="text-center text-sm-h6 text-uppercase pt-10">
+        <p class="text-center text-md-h6 text-uppercase pt-16">
           книги по <br />
           программированию <br />
           графике и дизайну <br />

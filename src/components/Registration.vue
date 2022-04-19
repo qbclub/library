@@ -167,7 +167,7 @@ export default {
           })
             .then(async () => {
               vm.createUser(user);
-              console.log("Hello, " + data.user.displayName);
+              this.$router.push('/auth').catch(() => {});
             })
             .catch((error) => {
               console.log(error);

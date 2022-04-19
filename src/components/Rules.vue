@@ -1,31 +1,39 @@
 <template>
   <div>
     <BackArrow></BackArrow>
-       <div>
-        <v-img
-        loading="lazy"
-        max-width="50"
-        :aspect-ratio="10 / 14"
-        src=../assets/image/3330314.png
-        contain
-       ></v-img>
-      </div>
+    <div class="title text-center">Правила</div>
+    
     <v-container fluid>
-      <div class="d-flex align-center flex-column">
-        <div class="title mb-10">Правила</div>
-        <v-row no-gutters>
-          <v-col class="body-1">
-            <ol>
-              <li>Читатели имеют право получать консультационную помощь в поиске и выборе источников информации</li>
-              <li>Читатели обязаны бережно относится к книгам</li>
-              <li>Читатели обязаны возвращать книги в установленные сроки</li>
-              <li>Читатели обязаны не делать в книгах пометки, подчеркивания; не вырывать и не загибать страниц</li>
-              <li>Читатели, ответственные за утрату или повреждение изданий, обязаны заменить их такими же изданиями или их копиями</li>
-              <li>В случае невозврата книги ваш аккаун будет заблокирован</li>
-            </ol>
-          </v-col>
-        </v-row>
-      </div>
+      <v-row>
+        <v-col class="col-sm-2">
+          <v-img src="../assets/image/polka1.png" contain> </v-img>
+        </v-col>
+        <v-col class="text-subtitle-1">
+          <p>
+            Для того чтобы <b>взять книгу</b> , ее надо зарезервировать в
+            приложении.
+          </p>
+          <p>Книга ждёт вас <b>3 дня</b> , затем резерв книги снимается.</p>
+          <p>
+            <b>Получить</b> книгу можно в клубе "Кубит", предварительно
+            согласовав время и пройдя регистрацию.
+          </p>
+          <p>
+            У вас есть <b>21 день</b> на изучение полученной книги, после чего
+            она должна быть возвращена.
+          </p>
+          <p class="pb-10">
+            Мы надеемся на <b>бережное отношение</b> к книгам, но если книга
+            была вами утеряна или пришла в негодность, ее полную
+            <b>стоимость</b> необходимо будет <b>возместить</b> .
+          </p>
+        </v-col>
+      </v-row>
+      <v-row class="justify-end d-none d-sm-flex">
+        <v-col class="col-sm-2">
+          <v-img src="../assets/image/polka2.png" contain> </v-img>
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -41,10 +49,7 @@ export default {
 
 
 <style lang="scss" scoped>
-.title {
-  text-align: center;
-}
-.text {
-  color: blackl;
+p{
+  opacity: 0.8;
 }
 </style>

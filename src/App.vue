@@ -23,7 +23,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app v-if="!isMobile"  class="secondary">
+    <v-app-bar app v-if="!isMobile" class="secondary">
       <v-app-bar-nav-icon
         class="d-none d-sm-flex"
         @click.stop="drawer = !drawer"
@@ -43,14 +43,16 @@
     <v-main class="secondary">
       <v-container>
         <transition name="fade" mode="out-in">
-        <router-view />
+          <router-view />
         </transition>
       </v-container>
     </v-main>
 
     <v-footer class="d-none d-sm-flex secondary" padless app>
       <v-col cols="2"></v-col>
-      <v-col class="text-center" cols="8">Сделано в Кубит</v-col>
+      <v-col class="text-center" cols="8">
+        <a target="_blank" href="https://qbit-club.com/#/">Сделано в Кубит</a>
+      </v-col>
       <v-col cols="2"></v-col>
     </v-footer>
 
@@ -103,7 +105,6 @@
 <script>
 import { mapGetters } from "vuex";
 
-
 export default {
   name: "App",
 
@@ -151,7 +152,6 @@ export default {
   },
 
   mounted() {
-
     this.onResize();
     window.addEventListener("resize", this.onResize, { passive: true });
   },
@@ -176,7 +176,7 @@ export default {
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.5s;
+  transition: all 0.3s;
 }
 
 .fade-enter,
@@ -184,5 +184,10 @@ export default {
   opacity: 0;
 
   /* transform: scale(0); */
+}
+a {
+  text-decoration: none;
+  color: black !important;
+  
 }
 </style>
