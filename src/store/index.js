@@ -6,9 +6,6 @@ import mutations from './mutations/mutations'
 import getters from './getters/getters'
 
 
-
-
-
 Vue.use(Vuex)
 
 let store = new Vuex.Store({
@@ -22,7 +19,7 @@ let store = new Vuex.Store({
     books: [],
     bookflow: [],
     // apiUrl:"http://localhost:3000/",
-    apiUrl:"http://grif-qbit.duckdns.org:8080/"
+    apiUrl:"https://grif-qbit.duckdns.org:8080/"
   },
   mutations,
   actions,
