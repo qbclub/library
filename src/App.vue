@@ -104,6 +104,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
@@ -137,6 +138,7 @@ export default {
       this.drawer = false;
     },
 
+    ...mapActions(["getCSRF"]),
     // ...mapActions(["getAllBooks", "getAllBookflow", "fetchUser"]),
   },
   computed: {
@@ -154,6 +156,7 @@ export default {
   mounted() {
     this.onResize();
     window.addEventListener("resize", this.onResize, { passive: true });
+    this.getCSRF();
   },
 };
 </script>
@@ -188,6 +191,5 @@ export default {
 a {
   text-decoration: none;
   color: black !important;
-  
 }
 </style>

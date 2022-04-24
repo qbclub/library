@@ -1,5 +1,8 @@
 import axios from 'axios';
 export default {
+    SET_CSRF_TOKEN(state, token) {
+        state.csrf = token
+    },
     SET_LOGGED_IN(state, value) {
         state.user.loggedIn = value;
     },

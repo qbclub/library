@@ -1,6 +1,19 @@
 import axios from 'axios';
 
 export default {
+    getCSRF({ commit, state }) {
+        axios({
+            method: "GET",
+            url: state.apiUrl + "csrf",
+            headers: {
+                "xsrf-token": this.csrfTokenState,
+            },
+            credentials: "include",
+            mode: "cors",
+        }).then((response) => {
+            commit("SET_CSRF_TOKEN", response.data.csrfToken)
+        });
+    },
     fetchUser({
         commit
     }, user) {
@@ -22,7 +35,7 @@ export default {
         commit, state
     }) {
         axios
-            .get(state.apiUrl+"api/books/get-all")
+            .get(state.apiUrl + "api/books/get-all")
             .then((response) => {
                 commit('GET_ALL_BOOKS', response.data)
             })
@@ -33,7 +46,7 @@ export default {
     },
     deleteBookById({ commit, state }, BookId) {
         commit('DELETE_BOOK_BY_ID', BookId)
-        axios.post(state.apiUrl+"api/books/delete-by-id", { id: BookId })
+        axios.post(state.apiUrl + "api/books/delete-by-id", { id: BookId })
         // .then((response) => {
         //     console.log(
         //         `delete book with id ${BookId} with status: `,
@@ -62,17 +75,17 @@ export default {
             TimeStamp: dt
         }
         axios
-            .put(state.apiUrl+'api/books/change-state', { e, eventType: 'reserve' })
+            .put(state.apiUrl + 'api/books/change-state', { e, eventType: 'reserve' })
             .then(() => {
                 axios
-                    .get(state.apiUrl+"api/books/get-all")
+                    .get(state.apiUrl + "api/books/get-all")
                     .then((response) => {
                         commit('GET_ALL_BOOKS', response.data)
 
                         axios
-                            .post(state.apiUrl+"api/users/get-by-email", { email: e.UserEmail })
+                            .post(state.apiUrl + "api/users/get-by-email", { email: e.UserEmail })
                             .then((response) => {
-                            
+
                                 commit('SET_USER_INFO', response.data)
                             })
                             .catch((error) => {
@@ -89,7 +102,7 @@ export default {
             .catch((err) => console.error(err))
     },
     unreserveAllBooks() {
-        axios.post(state.apiUrl+'api/books/unreserve-all')
+        axios.post(state.apiUrl + 'api/books/unreserve-all')
     },
     giveBook({ commit, state }, bookIdAndUserEmail) {
         let dt = Date.now();
@@ -102,10 +115,10 @@ export default {
         }
 
         axios
-            .put(state.apiUrl+'api/books/change-state', { e, eventType: 'give' })
+            .put(state.apiUrl + 'api/books/change-state', { e, eventType: 'give' })
             .then(() => {
                 axios
-                    .get(state.apiUrl+"api/books/get-all")
+                    .get(state.apiUrl + "api/books/get-all")
                     .then((response) => {
                         commit('GET_ALL_BOOKS', response.data)
                         // axios
@@ -136,10 +149,10 @@ export default {
         }
 
         axios
-            .put(state.apiUrl+'api/books/change-state', { e, eventType: 'return' })
+            .put(state.apiUrl + 'api/books/change-state', { e, eventType: 'return' })
             .then(() => {
                 axios
-                    .get(state.apiUrl+"api/books/get-all")
+                    .get(state.apiUrl + "api/books/get-all")
                     .then((response) => {
                         commit('GET_ALL_BOOKS', response.data)
 
@@ -195,5 +208,5 @@ export default {
     }, user) {
         commit('UPDATE_USER', user)
     },
-   
+
 }
