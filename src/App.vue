@@ -134,7 +134,7 @@ export default {
     },
     routeTo: function (path) {
       this.$router.push(path).catch(() => {});
-      this.drawer = false;
+      // this.drawer = false;
     },
 
     // ...mapActions(["getAllBooks", "getAllBookflow", "fetchUser"]),
