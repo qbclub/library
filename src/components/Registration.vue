@@ -51,8 +51,8 @@
                 </validation-provider>
 
                 <div class="d-flex justify-space-around">
-                  <v-btn text color="accent"  type="submit"> да </v-btn>
-                  <v-btn text color="error"  @click="clear"> нет </v-btn>
+                  <v-btn text color="accent" type="submit"> да </v-btn>
+                  <v-btn text color="error" @click="clear"> нет </v-btn>
                 </div>
 
                 <div>{{ error }}</div>
@@ -129,7 +129,6 @@ export default {
   methods: {
     ...mapActions(["createUser"]),
     submit() {
-      
       this.$refs.observer.validate().then(this.userReg());
       setTimeout(this.clear, 1000);
     },
@@ -142,7 +141,7 @@ export default {
     userReg: async function () {
       let vm = this;
       let user = {
-        UserId:Date.now(),
+        UserId: Date.now(),
         FirstName: "",
         LastName: "",
         BirthDate: "",
@@ -158,16 +157,16 @@ export default {
         },
         PhotoPath: "",
       };
-      
-      
+
       createUserWithEmailAndPassword(auth, this.email, this.password)
         .then((data) => {
+          vm.createUser(user);
+
           updateProfile(data.user, {
             displayName: vm.name,
           })
             .then(async () => {
-              vm.createUser(user);
-              this.$router.push('/auth').catch(() => {});
+              this.$router.push("/auth").catch(() => {});
             })
             .catch((error) => {
               console.log(error);

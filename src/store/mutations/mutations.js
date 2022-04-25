@@ -17,7 +17,9 @@ export default {
         if (email) {
             axios
                 .post(state.apiUrl + "api/users/get-by-email", { email: email })
-                .then((response) => state.userInfo = response.data)
+                .then((response) => {
+                    state.userInfo = response.data
+                })
                 .catch((error) => {
                     console.error("There was an error!", error);
                 })
@@ -138,39 +140,9 @@ export default {
             .catch(err => console.error("cannot update book, error: ", err))
     },
     CREATE_USER(state, user) {
-        axios.post(state.apiUrl + "api/users/create", user)
+        state.userInfo = user;
     },
     UPDATE_USER(state, newUser) {
-        console.log("update user: ", newUser)
-        let _ = newUser;
-        let setupOptions = {
-            $set: {
-                FirstName: _.FirstName,
-                LastName: _.LastName,
-                BirthDate: _.BirthDate,
-                EducationalInstitution: _.EducationalInstitution,
-                LivingAddress: _.LivingAddress,
-                isAdmin: _.isAdmin,
-                CurrentTakenBooks: _.CurrentTakenBooks,
-                CurrentReservedBooks: _.CurrentReservedBooks,
-                Contacts: {
-                    PhoneNumber: _.Contacts.PhoneNumber,
-                    Email: _.Contacts.Email,
-                    SocCeti: _.Contacts.SocCeti
-                },
-                PhotoPath: _.PhotoPath,
-            }
-        }
-        axios
-            .put(state.apiUrl + "api/users/update",
-                {
-                    setupOptions,
-                    email: newUser.Contacts.Email
-                })
-            .then((response) => console.log("update user with status: ", response.status))
-            .catch((error) => {
-                console.error("cannot update user, error: ", error);
-            });
-
+        state.userInfo = newUser;
     }
 }
