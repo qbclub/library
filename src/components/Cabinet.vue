@@ -45,7 +45,7 @@
     <v-row>
       <v-col cols="6">
         <p class="text-center">Книги на руках</p>
-        <p v-if="takenBook" class="font-weight-bold">
+        <p v-if="userInfo.CurrentTakenBooks" class="font-weight-bold">
           Вернуть до {{ returnLimit }}
         </p>
         <v-img
@@ -59,16 +59,16 @@
       ></v-col>
       <v-col class="justify-center" cols="6">
         <p class="text-center">Зарезервированo</p>
-        <p v-if="reservvedBook" class="font-weight-bold">
+        <p v-if="userInfo.CurrentReservedBooks" class="font-weight-bold">
           Взять до {{ reserveLimit }}
         </p>
         <v-img
-          v-if="reservvedBook"
+          v-if="reservedBook"
           loading="lazy"
           contain
           max-width="250"
           :aspect-ratio="10 / 14"
-          :src="reservvedBook.CoverPath"
+          :src="reservedBook.CoverPath"
         ></v-img
       ></v-col>
     </v-row>
@@ -92,7 +92,7 @@ import { mapGetters } from "vuex";
 import { getAuth, signOut } from "firebase/auth";
 export default {
   data: () => ({
-    reservvedBook: null,
+    reservedBook: null,
     takenBook: null,
     dialog: false,
     reserveLimit: 0,
@@ -126,13 +126,13 @@ export default {
   },
   mounted() {
     if (this.user.loggedIn) {
-      this.reservvedBook = this.findBookById(
+      this.reservedBook = this.findBookById(
         this.userInfo.CurrentReservedBooks
       );
       this.takenBook = this.findBookById(this.userInfo.CurrentTakenBooks);
-      if (this.reservvedBook) {
+      if (this.reservedBook) {
         let date = new Date(
-          Number(this.reservvedBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
+          Number(this.reservedBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
         );
 
         this.reserveLimit = date.toLocaleString("ru-RU", { year: 'numeric', month: 'long', day: 'numeric' });
