@@ -1,67 +1,78 @@
-<<template>
+<template>
   <v-container>
-   <BackArrow></BackArrow>
-
+    <BackArrow></BackArrow>
     <v-row class="justify-center">
       <v-col class="col-md-6 col-12">
-        
-          <h1 class="text-center">Информация</h1>
-        
+        <h1 class="text-center">Информация</h1>
+        <v-img
+          v-if="form.PhotoPath"
+          contain
+          :src="form.PhotoPath"
+          :max-height="150"
+        ></v-img>
         <v-form>
-           <v-img v-if="form.PhotoPath" contain :src="form.PhotoPath" :max-height="150"></v-img>
-      
           <v-row>
-            <v-col cols="12" sm="6">
-          <v-text-field
-            v-model="form.FirstName"
-            label="Имя"
-            required
-            color="accent"
-          ></v-text-field>
+            <v-col cols="12" class="d-flex">
+              <v-text-field
+                v-model="form.Contacts.Email"
+                label="Почта"
+                required
+                color="accent"
+              >
+              </v-text-field>
+              <v-btn icon v-on:click="checkUser"
+                ><i class="fi fi-rr-info"></i
+              ></v-btn>
             </v-col>
             <v-col cols="12" sm="6">
-         <v-text-field
-            v-model="form.LastName"
-            label="Фамилия"
-            required
-            color="accent"
-          ></v-text-field>
+              <v-text-field
+                v-model="form.FirstName"
+                label="Имя"
+                required
+                color="accent"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="form.LastName"
+                label="Фамилия"
+                required
+                color="accent"
+              ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
             <v-col cols="12" sm="6">
-          <v-text-field
-            v-model="form.BirthDate"
-            label="Дата рождения"
-            required
-            color="accent"
-          ></v-text-field>
+              <v-text-field
+                v-model="form.BirthDate"
+                label="Дата рождения"
+                required
+                color="accent"
+              ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6">
-          <v-text-field
-            v-model="form.EducationalInstitution"
-            label="Учебное заведение"
-            required
-            color="accent"
-          ></v-text-field>
+              <v-text-field
+                v-model="form.EducationalInstitution"
+                label="Учебное заведение"
+                required
+                color="accent"
+              ></v-text-field>
             </v-col>
-          </v-row>  
+          </v-row>
 
           <v-row>
             <v-col cols="12" sm="6">
-          <v-text-field
-            v-model="form.LivingAddress"
-            label="Адрес проживания"
-            required
-            color="accent"
-          ></v-text-field>
+              <v-text-field
+                v-model="form.LivingAddress"
+                label="Адрес проживания"
+                required
+                color="accent"
+              ></v-text-field>
             </v-col>
-            <v-col class="d-flex align-center"  cols="12" sm="6">
-          <v-checkbox
-          v-model="form.isAdmin"
-          ></v-checkbox>
-          <span>{{form.isAdmin? 'Администратор': 'Пользователь'}}</span> 
+            <v-col class="d-flex align-center" cols="12" sm="6">
+              <v-checkbox v-model="form.isAdmin"></v-checkbox>
+              <span>{{ form.isAdmin ? "Администратор" : "Пользователь" }}</span>
             </v-col>
           </v-row>
           <v-row class="align-center">
@@ -107,21 +118,9 @@
             </v-col>
           </v-row>
 
-        
-         
           <h3 class="text-center">Контакты</h3>
-         
 
           <v-row>
-             <v-col cols="12" sm="6" class="d-flex">
-              <v-text-field
-                v-model="form.Contacts.Email"
-                label="Почта"
-                required
-                color="accent"
-              > </v-text-field>
-             <v-btn icon v-on:click="checkUser"><i class="fi fi-rr-info"></i></v-btn>
-            </v-col>
             <v-col cols="12" sm="6">
               <v-text-field
                 v-model="form.Contacts.PhoneNumber"
@@ -130,10 +129,7 @@
                 color="accent"
               ></v-text-field>
             </v-col>
-
-           
-
-            <v-col cols="12" >
+            <v-col cols="12" sm="6">
               <v-text-field
                 v-model="form.Contacts.SocCeti"
                 label="Соц.сети"
@@ -142,8 +138,11 @@
               ></v-text-field>
             </v-col>
           </v-row>
-
-          <v-btn color="success" class="mb-10" @click="send"> Отправить </v-btn>
+          <div class="d-flex justify-center">
+            <v-btn color="success" class="mb-10" @click="send">
+              Отправить
+            </v-btn>
+          </div>
         </v-form>
       </v-col>
     </v-row>
@@ -165,7 +164,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 const storage = getStorage();
-import {mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   components: { About, ImageUploader, BackArrow },
@@ -197,7 +196,6 @@ export default {
     };
   },
   methods: {
-  
     clearingForm: function () {
       this.form = {
         UserId: "",
@@ -277,8 +275,8 @@ export default {
       console.log("UPLOAD STARTED");
     },
   },
- computed: {
-    ...mapGetters([ "urlApiServer"]),
+  computed: {
+    ...mapGetters(["urlApiServer"]),
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-   <BackArrow></BackArrow>
+      <BackArrow></BackArrow>
       <!-- <v-row class="align-center justify-end">
         <v-col class="d-flex" cols="12" md="2">
           <v-select
@@ -15,8 +15,8 @@
         </v-col>
       </v-row> -->
       <v-row class="justify-center">
-        <v-col cols="8 ma-8">
-          <v-btn @click="routeTo('/user-actions')" block class="mb-8"
+        <v-col cols="8" class="d-flex justify-center flex-column">
+          <v-btn @click="routeTo('/userinfo')" block class="mb-8"
             >Добавить пользователя</v-btn
           >
           <v-btn @click="routeTo('/book-actions')" block class="mb-8"
@@ -99,7 +99,8 @@ import MiniBook from "./MiniBook.vue";
 
 export default {
   components: {
-    MiniBook, BackArrow,
+    MiniBook,
+    BackArrow,
   },
   data: () => ({
     backends: ["node", "c#"],

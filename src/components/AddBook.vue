@@ -1,5 +1,6 @@
 <template>
-  <v-container>
+  <div>
+   
     <v-row class="justify-center">
       <v-col class="col-md-6 col-12">
         <v-form>
@@ -131,15 +132,16 @@
             </v-col>
           </v-row>
 
-          <v-btn class="mb-b success" @click="send"> Отправить </v-btn>
+          <v-btn class="mb-8 success" @click="send"> Отправить </v-btn>
         </v-form>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script>
 import About from "../views/About.vue";
+import BackArrow from "./BackArrow.vue";
 import { mapActions } from "vuex";
 import ImageUploader from "vue-image-upload-resize";
 import {
@@ -151,7 +153,7 @@ import {
 const storage = getStorage();
 
 export default {
-  components: { About, ImageUploader },
+  components: { About, ImageUploader, BackArrow},
   data: function () {
     return {
       form: {
