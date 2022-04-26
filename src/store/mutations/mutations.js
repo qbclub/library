@@ -140,6 +140,6 @@ export default {
         state.userInfo = user;
     },
     UPDATE_USER(state, newUser) {
-        state.userInfo = newUser;
+        // it happens on admin side, so we dont need to change state
     }
 }

@@ -161,7 +161,6 @@ export default {
       createUserWithEmailAndPassword(auth, this.email, this.password)
         .then((data) => {
           vm.createUser(user);
-
           updateProfile(data.user, {
             displayName: vm.name,
           })

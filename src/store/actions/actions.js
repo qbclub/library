@@ -247,13 +247,16 @@ export default {
     },
     // On Registration
     createUser({
-        commit
+        commit, state
     }, user) {
-        commit('CREATE_USER', user)
+        axios.post(state.apiUrl + 'api/users/create', user)
+            .then((response) => {
+                commit('CREATE_USER', user)
+            })
     },
     // From Admin panel
     updateUser({
-        commit
+        commit, state
     }, user) {
         let _ = user;
         let setupOptions = {
@@ -279,12 +282,6 @@ export default {
                 setupOptions,
                 email: user.Contacts.Email
             })
-            .then((response) => {
-                commit('UPDATE_USER', user)
-            })
-            .catch((error) => {
-                console.error("cannot update user, error: ", error);
-            });
         // axios.post(state.apiUrl + "api/users/create", user).then(res => commit('UPDATE_USER', user)
         // )
     },
