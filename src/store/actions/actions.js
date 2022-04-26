@@ -193,7 +193,39 @@ export default {
     updateUser({
         commit
     }, user) {
-        commit('UPDATE_USER', user)
+        let _ = user;
+        let setupOptions = {
+            $set: {
+                FirstName: _.FirstName,
+                LastName: _.LastName,
+                BirthDate: _.BirthDate,
+                EducationalInstitution: _.EducationalInstitution,
+                LivingAddress: _.LivingAddress,
+                isAdmin: _.isAdmin,
+                CurrentTakenBooks: _.CurrentTakenBooks,
+                CurrentReservedBooks: _.CurrentReservedBooks,
+                Contacts: {
+                    PhoneNumber: _.Contacts.PhoneNumber,
+                    Email: _.Contacts.Email,
+                    SocCeti: _.Contacts.SocCeti
+                },
+                PhotoPath: _.PhotoPath,
+            }
+        }
+        axios
+            .put(state.apiUrl + "api/users/update",
+                {
+                    setupOptions,
+                    email: user.Contacts.Email
+                })
+            .then((response) => {
+                commit('UPDATE_USER', user)
+            })
+            .catch((error) => {
+                console.error("cannot update user, error: ", error);
+            });
+        // axios.post(state.apiUrl + "api/users/create", user).then(res => commit('UPDATE_USER', user)
+        // )
     },
    
 }
