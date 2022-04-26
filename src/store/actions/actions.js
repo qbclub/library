@@ -18,11 +18,19 @@ export default {
             commit("GET_USER_INFO", false)
         }
     },
+    getUserInfo({
+        commit
+    }, user) {
+        commit("GET_USER_INFO", false)
+    },
+
+
     getAllBooks({
-        commit, state
+        commit,
+        state
     }) {
         axios
-            .get(state.apiUrl+"api/books/get-all")
+            .get(state.apiUrl + "api/books/get-all")
             .then((response) => {
                 commit('GET_ALL_BOOKS', response.data)
             })
@@ -31,9 +39,14 @@ export default {
         //     return error;
         // });
     },
-    deleteBookById({ commit, state }, BookId) {
+    deleteBookById({
+        commit,
+        state
+    }, BookId) {
         commit('DELETE_BOOK_BY_ID', BookId)
-        axios.post(state.apiUrl+"api/books/delete-by-id", { id: BookId })
+        axios.post(state.apiUrl + "api/books/delete-by-id", {
+            id: BookId
+        })
         // .then((response) => {
         //     console.log(
         //         `delete book with id ${BookId} with status: `,
@@ -51,7 +64,8 @@ export default {
     //     await dispatch('deleteBookById')
     // },
     reserveBook({
-        commit, state
+        commit,
+        state
     }, bookId) {
         let dt = Date.now()
         let e = {
@@ -62,17 +76,22 @@ export default {
             TimeStamp: dt
         }
         axios
-            .put(state.apiUrl+'api/books/change-state', { e, eventType: 'reserve' })
+            .put(state.apiUrl + 'api/books/change-state', {
+                e,
+                eventType: 'reserve'
+            })
             .then(() => {
                 axios
-                    .get(state.apiUrl+"api/books/get-all")
+                    .get(state.apiUrl + "api/books/get-all")
                     .then((response) => {
                         commit('GET_ALL_BOOKS', response.data)
 
                         axios
-                            .post(state.apiUrl+"api/users/get-by-email", { email: e.UserEmail })
+                            .post(state.apiUrl + "api/users/get-by-email", {
+                                email: e.UserEmail
+                            })
                             .then((response) => {
-                            
+
                                 commit('SET_USER_INFO', response.data)
                             })
                             .catch((error) => {
@@ -89,9 +108,12 @@ export default {
             .catch((err) => console.error(err))
     },
     unreserveAllBooks() {
-        axios.post(state.apiUrl+'api/books/unreserve-all')
+        axios.post(state.apiUrl + 'api/books/unreserve-all')
     },
-    giveBook({ commit, state }, bookIdAndUserEmail) {
+    giveBook({
+        commit,
+        state
+    }, bookIdAndUserEmail) {
         let dt = Date.now();
         let e = {
             Id: dt,
@@ -102,10 +124,13 @@ export default {
         }
 
         axios
-            .put(state.apiUrl+'api/books/change-state', { e, eventType: 'give' })
+            .put(state.apiUrl + 'api/books/change-state', {
+                e,
+                eventType: 'give'
+            })
             .then(() => {
                 axios
-                    .get(state.apiUrl+"api/books/get-all")
+                    .get(state.apiUrl + "api/books/get-all")
                     .then((response) => {
                         commit('GET_ALL_BOOKS', response.data)
                         // axios
@@ -114,8 +139,22 @@ export default {
                         //         commit('SET_USER_INFO', response.data)
                         //     })
                         //     .catch((error) => { console.error(error); })
+                    }).then(() => {
+                        axios
+                            .post(state.apiUrl + "api/users/get-by-email", {
+                                email: e.UserEmail
+                            })
+                            .then((response) => {
+
+                                commit('SET_USER_INFO', response.data)
+                            })
+                            .catch((error) => {
+                                console.error(error);
+                            })
                     })
-                    .catch((error) => { console.error(error); })
+                    .catch((error) => {
+                        console.error(error);
+                    })
 
 
                 // commit('GIVE_BOOK', {
@@ -125,7 +164,10 @@ export default {
                 // })
             })
     },
-    returnBook({ commit, state }, bookIdAndUserEmail) {
+    returnBook({
+        commit,
+        state
+    }, bookIdAndUserEmail) {
         const dt = Date.now()
         let e = {
             Id: dt,
@@ -136,10 +178,13 @@ export default {
         }
 
         axios
-            .put(state.apiUrl+'api/books/change-state', { e, eventType: 'return' })
+            .put(state.apiUrl + 'api/books/change-state', {
+                e,
+                eventType: 'return'
+            })
             .then(() => {
                 axios
-                    .get(state.apiUrl+"api/books/get-all")
+                    .get(state.apiUrl + "api/books/get-all")
                     .then((response) => {
                         commit('GET_ALL_BOOKS', response.data)
 
@@ -150,12 +195,29 @@ export default {
                         //     })
                         //     .catch((error) => { console.error(error); })
                     })
-                    .catch((error) => { console.error(error); })
+                    .then(() => {
+                        axios
+                            .post(state.apiUrl + "api/users/get-by-email", {
+                                email: e.UserEmail
+                            })
+                            .then((response) => {
+
+                                commit('SET_USER_INFO', response.data)
+                            })
+                            .catch((error) => {
+                                console.error(error);
+                            })
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    })
 
                 // commit('RETURN_BOOK', bookIdAndUserEmail.bookId)
             })
     },
-    updateBook({ commit }, newBook) {
+    updateBook({
+        commit
+    }, newBook) {
         commit('UPDATE_BOOK', newBook)
     },
     getAllBookflow({
@@ -213,11 +275,10 @@ export default {
             }
         }
         axios
-            .put(state.apiUrl + "api/users/update",
-                {
-                    setupOptions,
-                    email: user.Contacts.Email
-                })
+            .put(state.apiUrl + "api/users/update", {
+                setupOptions,
+                email: user.Contacts.Email
+            })
             .then((response) => {
                 commit('UPDATE_USER', user)
             })
@@ -227,5 +288,5 @@ export default {
         // axios.post(state.apiUrl + "api/users/create", user).then(res => commit('UPDATE_USER', user)
         // )
     },
-   
+
 }
