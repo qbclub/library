@@ -335,7 +335,13 @@ export default {
   },
 
   mounted() {
-    this.getBookById();
+    this.currentBook = this.books.find(
+      (x) => x.Id == this.$route.query.book_id
+    );
+    if (!this.currentBook) {
+      console.log("No current book")
+      this.getBookById();
+    }
   },
 };
 </script>

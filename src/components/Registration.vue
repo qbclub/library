@@ -166,7 +166,7 @@ export default {
             displayName: vm.name,
           })
             .then(async () => {
-              this.$router.push("/auth").catch(() => {});
+              this.$router.push("/books").catch(() => {});
             })
             .catch((error) => {
               console.log(error);
