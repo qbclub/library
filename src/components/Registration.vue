@@ -138,7 +138,7 @@ export default {
       this.email = "";
       this.$refs.observer.reset();
     },
-    userReg: async function () {
+    userReg:  function () {
       let vm = this;
       let user = {
         UserId: Date.now(),
@@ -160,12 +160,12 @@ export default {
 
       createUserWithEmailAndPassword(auth, this.email, this.password)
         .then((data) => {
-          vm.createUser(user);
-
+         
           updateProfile(data.user, {
             displayName: vm.name,
           })
             .then(async () => {
+               vm.createUser(user);
               this.$router.push("/books").catch(() => {});
             })
             .catch((error) => {

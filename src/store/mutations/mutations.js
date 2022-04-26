@@ -13,7 +13,9 @@ export default {
     GET_USER_INFO(state, email) {
         if (email) {
             axios
-                .post(state.apiUrl + "api/users/get-by-email", { email: email })
+                .post(state.apiUrl + "api/users/get-by-email", {
+                    email: email
+                })
                 .then((response) => {
                     state.userInfo = response.data
                 })
@@ -137,7 +139,11 @@ export default {
             .catch(err => console.error("cannot update book, error: ", err))
     },
     CREATE_USER(state, user) {
-        state.userInfo = user;
+        axios.post(state.apiUrl + "api/users/create", user).then(() => {
+            state.userInfo = user;
+            console.log("User created")
+        }).catch(err => console.error("cannot create user, error: ", err))
+        
     },
     UPDATE_USER(state, newUser) {
         state.userInfo = newUser;

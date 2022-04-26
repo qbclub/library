@@ -253,7 +253,7 @@ export default {
     },
     // From Admin panel
     updateUser({
-        commit
+        commit, state
     }, user) {
         let _ = user;
         let setupOptions = {

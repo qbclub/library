@@ -164,7 +164,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 const storage = getStorage();
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: { About, ImageUploader, BackArrow },
@@ -196,6 +196,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["updateUser"]),
     clearingForm: function () {
       this.form = {
         UserId: "",
@@ -215,7 +216,7 @@ export default {
         PhotoPath: "",
       };
     },
-    send: async function () {
+    send: function () {
       const headers = {
         "content-type": "application/json",
       };
