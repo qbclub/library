@@ -28,12 +28,11 @@
             <b>стоимость</b> необходимо будет <b>возместить</b> .
           </p>
         </v-col>
-      </v-row>
-      <v-row class="justify-end d-none d-sm-flex">
-        <v-col class="col-sm-2">
+         <v-col class="col-sm-2 d-none d-sm-flex">
           <v-img src="../assets/image/polka2.png" contain> </v-img>
         </v-col>
       </v-row>
+    
     </v-container>
   </div>
 </template>

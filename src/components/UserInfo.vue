@@ -216,7 +216,7 @@ export default {
         PhotoPath: "",
       };
     },
-    send: async function () {
+    send: function () {
       const headers = {
         "content-type": "application/json",
       };

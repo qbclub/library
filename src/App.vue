@@ -34,7 +34,7 @@
         src="../public/img/icons/StartPageLogo.png"
         class=""
       ></v-img>
-      <v-toolbar-title @click="routeTo('/')" class="headline"
+      <v-toolbar-title @click="routeTo('/')" class="headline text--secondary"
         >Библиотека Кубита</v-toolbar-title
       >
       <v-spacer></v-spacer>
@@ -51,7 +51,7 @@
     <v-footer class="d-none d-sm-flex secondary" padless app>
       <v-col cols="2"></v-col>
       <v-col class="text-center" cols="8">
-        <a target="_blank" href="https://qbit-club.com/#/">Сделано в Кубит</a>
+        <a target="_blank" href="https://qbit-club.com/#/" class="text--secondary">Сделано в Кубит</a>
       </v-col>
       <v-col cols="2"></v-col>
     </v-footer>
