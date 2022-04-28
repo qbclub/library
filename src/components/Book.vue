@@ -146,18 +146,7 @@
             >
           </div>
           
-          <div
-            v-if="userInfo"
-            class="d-flex flex-wrap justify-center pb-8"
-          >
-            <v-btn
-              v-if="currentBook.ReservedQueue && userInfo.Contacts.Email == currentBook.ReservedQueue "
-              small
-              class="ma-4 accent"
-              @click="callDialog(unreserveBook)"
-              >Снять резерв</v-btn
-            >
-          </div>
+      
         </v-col>
       </v-row>
     </v-container>
