@@ -110,6 +110,39 @@ export default {
     unreserveAllBooks() {
         axios.post(state.apiUrl + 'api/books/unreserve-all')
     },
+    cancelReserve ({
+        commit,
+        state
+    }, bookIdAndUserEmail) { 
+        axios
+            .post(state.apiUrl + 'api/books/unreserve-one', bookIdAndUserEmail)
+            .then(() => {
+                axios
+                    .get(state.apiUrl + "api/books/get-all")
+                    .then((response) => {
+                        commit('GET_ALL_BOOKS', response.data)
+                    })
+                    .then(() => {
+                        axios
+                            .post(state.apiUrl + "api/users/get-by-email", {
+                                email: bookIdAndUserEmail.UserEmail
+                            })
+                            .then((response) => {
+                                commit('SET_USER_INFO', response.data)
+                            })
+                            .catch((error) => {
+                                console.error(error);
+                            })
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    })
+              
+            })
+    },
+
+
+
     giveBook({
         commit,
         state

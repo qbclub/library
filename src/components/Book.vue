@@ -137,7 +137,7 @@
               v-if="currentBook.ReservedQueue"
               small
               class="ma-4 accent"
-              @click="callDialog(cancelReserve)"
+              @click="callDialog(unreserveBook)"
               >Снять резерв</v-btn
             >
             <v-btn small class="ma-4 accent" @click="editBook">Изменить</v-btn>
@@ -187,7 +187,13 @@ export default {
     BackArrow,
   },
   methods: {
-    ...mapActions(["reserveBook", "giveBook", "returnBook", "deleteBookById"]),
+    ...mapActions([
+      "reserveBook",
+      "giveBook",
+      "returnBook",
+      "deleteBookById",
+      "cancelReserve",
+    ]),
 
     callDialog: function (method) {
       this.dialog = true;
@@ -197,21 +203,10 @@ export default {
       if (!this.userInfo.CurrentReservedBooks) {
         this.snackbarText = "Книга зарезервирована на 3 дня";
         this.snackbar = true;
-        this.reserveBook(this.currentBook.Id);
-        this.dialog = false;
-
         this.currentBook.Status = "Зарезервирована";
         this.currentBook.ReservedQueue = this.userInfo.Contacts.Email;
-        this.currentBook.DateOfReserved = Date.now();
-        let date = new Date(
-          Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
-        );
-
-        this.reserveLimit = date.toLocaleString("ru-RU", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        });
+        this.reserveBook(this.currentBook.Id);
+        this.dialog = false;
       } else {
         this.snackbarText = "У вас уже есть зарезервированная книга";
         this.dialog = false;
@@ -268,22 +263,19 @@ export default {
       this.currentBook.TemporaryOwner = "";
       this.dialog = false;
     },
-    cancelReserve: function () {
-      axios
-        .post(this.urlApiServer + "api/books/unreserve-one", {
-          UserEmail: this.currentBook.ReservedQueue,
-          BookId: this.currentBook.Id,
-        })
-        .then(() => {
-          this.snackbarText = "Резерв снят";
-          this.dialog = false;
-          this.snackbar = true;
-          this.getBookById();
-        })
-        .catch((error) => {
-          console.error("There was an error!", error);
-        });
+
+    unreserveBook:  function () {
+       this.cancelReserve({
+        UserEmail: this.currentBook.ReservedQueue,
+        BookId: this.currentBook.Id,
+      });
+      this.snackbarText = "Резерв снят";
+      this.currentBook.Status = "На месте";
+      this.currentBook.ReservedQueue = "";
+      this.dialog = false;
+      this.snackbar = true;
     },
+
     deleteBook: async function () {
       this.deleteBookById(this.currentBook.Id);
       this.snackbarText = "Книга удалена";
@@ -301,28 +293,6 @@ export default {
         })
         .then((response) => {
           this.currentBook = response.data[0];
-          if (this.currentBook.DateOfReserved) {
-            let date = new Date(
-              Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
-            );
-
-            this.reserveLimit = date.toLocaleString("ru-RU", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            });
-          }
-          if (this.currentBook.DateOfGivenOut) {
-            let date = new Date(
-              Number(this.currentBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
-            );
-
-            this.givenOutLimit = date.toLocaleString("ru-RU", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            });
-          }
         })
         .catch((error) => {
           console.error("There was an error!", error);
@@ -339,7 +309,7 @@ export default {
       (x) => x.Id == this.$route.query.book_id
     );
     if (!this.currentBook) {
-      console.log("No current book")
+      console.log("No current book");
       this.getBookById();
     }
   },
@@ -348,3 +318,27 @@ export default {
 
 <style lang="scss" scoped>
 </style>
+
+
+        // if (this.currentBook.DateOfReserved) {
+          //   let date = new Date(
+          //     Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
+          //   );
+
+          //   this.reserveLimit = date.toLocaleString("ru-RU", {
+          //     year: "numeric",
+          //     month: "long",
+          //     day: "numeric",
+          //   });
+          // }
+          // if (this.currentBook.DateOfGivenOut) {
+          //   let date = new Date(
+          //     Number(this.currentBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
+          //   );
+
+          //   this.givenOutLimit = date.toLocaleString("ru-RU", {
+          //     year: "numeric",
+          //     month: "long",
+          //     day: "numeric",
+          //   });
+          // }
