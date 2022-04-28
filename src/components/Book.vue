@@ -82,7 +82,7 @@
                     "
                   >
                     Книга {{ currentBook.Status.toLowerCase() }} <br />
-                    до {{ booksGiveOutDate }}
+                    до {{ booksReserveLimit }} {{booksGiveOutDate}}
                   </div>
                   <div v-else class="text-caption font-weight-bold">
                     <div
@@ -143,6 +143,19 @@
             <v-btn small class="ma-4 accent" @click="editBook">Изменить</v-btn>
             <v-btn small class="ma-4 error" @click="callDialog(deleteBook)"
               >Удалить</v-btn
+            >
+          </div>
+          
+          <div
+            v-if="userInfo"
+            class="d-flex flex-wrap justify-center pb-8"
+          >
+            <v-btn
+              v-if="currentBook.ReservedQueue && userInfo.Contacts.Email == currentBook.ReservedQueue "
+              small
+              class="ma-4 accent"
+              @click="callDialog(unreserveBook)"
+              >Снять резерв</v-btn
             >
           </div>
         </v-col>
@@ -300,7 +313,7 @@ export default {
 
   computed: {
     ...mapGetters(["user", "books", "userInfo", "urlApiServer"]),
-    booksReserveLimit: function ()  {
+    booksReserveLimit: function () {
       if (this.currentBook.DateOfReserved) {
         let date = new Date(
           Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
@@ -313,7 +326,7 @@ export default {
         });
       }
     },
-    booksGiveOutDate: function() {
+    booksGiveOutDate: function () {
       if (this.currentBook.DateOfGivenOut) {
         let date = new Date(
           Number(this.currentBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
