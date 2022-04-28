@@ -74,7 +74,7 @@
                       currentBook.Id == userInfo.CurrentTakenBooks
                     "
                   >
-                    Эта книга у вас на руках
+                    Эта книга у вас
                   </div>
                   <div
                     v-else-if="
@@ -82,7 +82,7 @@
                     "
                   >
                     Книга {{ currentBook.Status.toLowerCase() }} <br />
-                    до {{ givenOutLimit }}
+                    до {{ booksGiveOutDate }}
                   </div>
                   <div v-else class="text-caption font-weight-bold">
                     <div
@@ -91,8 +91,8 @@
                         userInfo.CurrentReservedBooks == currentBook.Id
                       "
                     >
-                      Зарезервирована до <br />
-                      {{ reserveLimit }}
+                      Взять до <br />
+                      {{ booksReserveLimit }}
                     </div>
                   </div>
 
@@ -180,8 +180,6 @@ export default {
     dialogAction: null,
     timeout: 3000,
     snackbarText: "",
-    reserveLimit: "",
-    givenOutLimit: "",
   }),
   components: {
     BackArrow,
@@ -234,10 +232,10 @@ export default {
                 bookId: this.currentBook.Id,
                 userEmail: this.currentBook.ReservedQueue,
               });
-
+              this.currentBook.TemporaryOwner = this.currentBook.ReservedQueue;
               this.currentBook.ReservedQueue = "";
               this.currentBook.Status = "Выдана";
-              this.currentBook.TemporaryOwner = this.currentBook.ReservedQueue;
+
               this.dialog = false;
             }
           })
@@ -264,8 +262,8 @@ export default {
       this.dialog = false;
     },
 
-    unreserveBook:  function () {
-       this.cancelReserve({
+    unreserveBook: function () {
+      this.cancelReserve({
         UserEmail: this.currentBook.ReservedQueue,
         BookId: this.currentBook.Id,
       });
@@ -302,6 +300,31 @@ export default {
 
   computed: {
     ...mapGetters(["user", "books", "userInfo", "urlApiServer"]),
+    booksReserveLimit: function ()  {
+      if (this.currentBook.DateOfReserved) {
+        let date = new Date(
+          Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
+        );
+
+        return date.toLocaleString("ru-RU", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+      }
+    },
+    booksGiveOutDate: function() {
+      if (this.currentBook.DateOfGivenOut) {
+        let date = new Date(
+          Number(this.currentBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
+        );
+        return date.toLocaleString("ru-RU", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+      }
+    },
   },
 
   mounted() {
@@ -320,25 +343,5 @@ export default {
 </style>
 
 
-        // if (this.currentBook.DateOfReserved) {
-          //   let date = new Date(
-          //     Number(this.currentBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
-          //   );
-
-          //   this.reserveLimit = date.toLocaleString("ru-RU", {
-          //     year: "numeric",
-          //     month: "long",
-          //     day: "numeric",
-          //   });
-          // }
-          // if (this.currentBook.DateOfGivenOut) {
-          //   let date = new Date(
-          //     Number(this.currentBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
-          //   );
-
-          //   this.givenOutLimit = date.toLocaleString("ru-RU", {
-          //     year: "numeric",
-          //     month: "long",
-          //     day: "numeric",
-          //   });
-          // }
+     
+       
