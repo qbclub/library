@@ -111,9 +111,9 @@
         </v-col>
 
         <v-col class="col-12 col-md-6">
-          <div class="text-caption">
+          <!-- <div class="text-caption">
             <b>Аннотация к книге "{{ currentBook.Name }}"</b>
-          </div>
+          </div> -->
           <span class="text-caption">{{ currentBook.Annotation }}</span>
           <div
             v-if="userInfo && userInfo.isAdmin"

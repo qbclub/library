@@ -46,7 +46,7 @@
       <v-col cols="6">
         <p class="text-center">Книги на руках</p>
         <p v-if="userInfo.CurrentTakenBooks" class="font-weight-bold">
-          Вернуть до <br>{{ returnLimit }}
+          Вернуть до <br />{{ returnLimit }}
         </p>
         <v-img
           v-if="takenBook"
@@ -60,15 +60,10 @@
       <v-col class="justify-center" cols="6">
         <p class="text-center">Зарезервированo</p>
         <p v-if="userInfo.CurrentReservedBooks" class="font-weight-bold">
-          Взять до <br> {{ reserveLimit }}
+          Взять до <br />
+          {{ reserveLimit }}
         </p>
-        <v-btn
-          v-if="reservedBook"
-          small
-          class="error"
-          @click="unreserveBook()"
-          >Отменить резерв</v-btn
-        >
+
         <v-img
           v-if="reservedBook"
           loading="lazy"
@@ -76,8 +71,16 @@
           max-width="250"
           :aspect-ratio="10 / 14"
           :src="reservedBook.CoverPath"
-        ></v-img
-      ></v-col>
+        ></v-img>
+        <v-btn
+          v-if="reservedBook"
+          small
+          text
+          class="error mt-4"
+          @click="unreserveBook()"
+          >Отменить резерв</v-btn
+        >
+      </v-col>
     </v-row>
     <v-dialog v-model="dialog" max-width="290">
       <v-card>
