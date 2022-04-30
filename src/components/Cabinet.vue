@@ -76,7 +76,8 @@
           v-if="reservedBook"
           small
           text
-          class="error mt-4"
+          color="error"
+          class="mt-4"
           @click="unreserveBook()"
           >Отменить резерв</v-btn
         >

@@ -2,13 +2,7 @@
   <v-container class="startPage d-flex align-center">
     <v-row>
       <v-col
-        class="
-          col-12 col-sm-6
-          d-flex
-          justify-center
-          flex-column
-          align-center
-        "
+        class="col-12 col-sm-6 d-flex justify-center flex-column align-center"
       >
         <p class="text-center text-md-h6 text-uppercase pt-16 text--secondary">
           книги по <br />
@@ -18,7 +12,7 @@
         </p>
         <v-btn text color="accent" to="/books">Вход</v-btn>
       </v-col>
-      <v-col class="col-12 col-sm-6 ">
+      <v-col class="col-12 col-sm-6">
         <div class="backgroundImage"></div>
         <!-- <v-img
           loading="lazy"
@@ -30,6 +24,7 @@
           <v-btn text color="accent" to="/rules">Правила</v-btn>
         </div>
       </v-col>
+     
     </v-row>
   </v-container>
 </template>

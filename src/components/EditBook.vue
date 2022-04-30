@@ -208,6 +208,9 @@ export default {
     },
     send: function () {
       this.updateBook(this.form);
+      this.$router.replace({
+            name: "ListOfBooks",
+          });
     },
     uploadImageStart: function () {
       console.log("UPLOAD COVER IMAGE STARTED");
