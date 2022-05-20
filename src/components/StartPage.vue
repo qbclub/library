@@ -1,7 +1,9 @@
 <template>
   <v-container class="startPage d-flex align-center">
     <v-row>
-      <v-col class="col-12 col-sm-6 d-flex justify-center flex-column align-center">
+      <v-col
+        class="col-12 col-sm-6 d-flex justify-center flex-column align-center"
+      >
         <p class="text-center text-md-h6 text-uppercase pt-16">
           книги по <br />
           программированию <br />
@@ -11,11 +13,10 @@
         <v-btn text color="accent" to="/books">Вход</v-btn>
       </v-col>
       <v-col class="col-12 col-sm-6">
-       
         <div class="backgroundImage">
-          <Clock></Clock> 
+          <Clock></Clock>
         </div>
-    
+
         <div class="rules pb-8">
           <v-btn text color="accent" to="/present">О библиотеке</v-btn>
           <v-btn text color="accent" to="/rules">Правила</v-btn>
@@ -26,14 +27,12 @@
 </template>
 
 <script>
-import Clock from "./Clock.vue"
+import Clock from "./Clock.vue";
 export default {
   components: {
-    Clock
-  }
-
-}
-
+    Clock,
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -61,7 +60,4 @@ export default {
   justify-content: center;
   align-items: middle;
 }
-
-
-
 </style>

@@ -24,14 +24,18 @@ export default {
         commit("GET_USER_INFO", false)
     },
 
-
     getAllBooks({
         commit,
         state
     }) {
         axios
-            .get(state.apiUrl + "api/books/get-all")
+            .get(state.apiUrl + "api/books/get-all", {
+                headers: {
+                    authorization: state.accessToken
+                }
+            })
             .then((response) => {
+
                 commit('GET_ALL_BOOKS', response.data)
             })
         // .catch((error) => {
@@ -46,6 +50,10 @@ export default {
         commit('DELETE_BOOK_BY_ID', BookId)
         axios.post(state.apiUrl + "api/books/delete-by-id", {
             id: BookId
+        }, {
+            headers: {
+                authorization: state.accessToken
+            }
         })
         // .then((response) => {
         //     console.log(
@@ -79,16 +87,28 @@ export default {
             .put(state.apiUrl + 'api/books/change-state', {
                 e,
                 eventType: 'reserve'
+            }, {
+                headers: {
+                    authorization: this.accessTokenGetter,
+                }
             })
             .then(() => {
                 axios
-                    .get(state.apiUrl + "api/books/get-all")
+                    .get(state.apiUrl + "api/books/get-all", {
+                        headers: {
+                            authorization: state.accessToken
+                        }
+                    })
                     .then((response) => {
                         commit('GET_ALL_BOOKS', response.data)
 
                         axios
                             .post(state.apiUrl + "api/users/get-by-email", {
                                 email: e.UserEmail
+                            }, {
+                                headers: {
+                                    authorization: state.accessToken
+                                }
                             })
                             .then((response) => {
 
@@ -108,17 +128,25 @@ export default {
             .catch((err) => console.error(err))
     },
     unreserveAllBooks() {
-        axios.post(state.apiUrl + 'api/books/unreserve-all')
+        axios.post(state.apiUrl + 'api/books/unreserve-all', {
+            headers: {
+                authorization: state.accessToken
+            }
+        })
     },
-    cancelReserve ({
+    cancelReserve({
         commit,
         state
-    }, bookIdAndUserEmail) { 
+    }, bookIdAndUserEmail) {
         axios
             .post(state.apiUrl + 'api/books/unreserve-one', bookIdAndUserEmail)
             .then(() => {
                 axios
-                    .get(state.apiUrl + "api/books/get-all")
+                    .get(state.apiUrl + "api/books/get-all", {
+                        headers: {
+                            authorization: state.accessToken
+                        }
+                    })
                     .then((response) => {
                         commit('GET_ALL_BOOKS', response.data)
                     })
@@ -126,6 +154,10 @@ export default {
                         axios
                             .post(state.apiUrl + "api/users/get-by-email", {
                                 email: bookIdAndUserEmail.UserEmail
+                            }, {
+                                headers: {
+                                    authorization: state.accessToken
+                                }
                             })
                             .then((response) => {
                                 commit('SET_USER_INFO', response.data)
@@ -137,7 +169,7 @@ export default {
                     .catch((error) => {
                         console.error(error);
                     })
-              
+
             })
     },
 
@@ -160,10 +192,18 @@ export default {
             .put(state.apiUrl + 'api/books/change-state', {
                 e,
                 eventType: 'give'
+            }, {
+                headers: {
+                    authorization: state.accessToken
+                }
             })
             .then(() => {
                 axios
-                    .get(state.apiUrl + "api/books/get-all")
+                    .get(state.apiUrl + "api/books/get-all", {
+                        headers: {
+                            authorization: state.accessToken
+                        }
+                    })
                     .then((response) => {
                         commit('GET_ALL_BOOKS', response.data)
                         // axios
@@ -176,6 +216,10 @@ export default {
                         axios
                             .post(state.apiUrl + "api/users/get-by-email", {
                                 email: e.UserEmail
+                            }, {
+                                headers: {
+                                    authorization: state.accessToken
+                                }
                             })
                             .then((response) => {
 
@@ -214,10 +258,18 @@ export default {
             .put(state.apiUrl + 'api/books/change-state', {
                 e,
                 eventType: 'return'
+            }, {
+                headers: {
+                    authorization: state.accessToken
+                }
             })
             .then(() => {
                 axios
-                    .get(state.apiUrl + "api/books/get-all")
+                    .get(state.apiUrl + "api/books/get-all", {
+                        headers: {
+                            authorization: state.accessToken
+                        }
+                    })
                     .then((response) => {
                         commit('GET_ALL_BOOKS', response.data)
 
@@ -232,6 +284,10 @@ export default {
                         axios
                             .post(state.apiUrl + "api/users/get-by-email", {
                                 email: e.UserEmail
+                            }, {
+                                headers: {
+                                    authorization: state.accessToken
+                                }
                             })
                             .then((response) => {
 
@@ -284,9 +340,15 @@ export default {
     }, user) {
         commit('CREATE_USER', user)
     },
+    createAccessToken({
+        commit
+    }, token) {
+        commit('ACCESS_TOKEN', token)
+    },
     // From Admin panel
     updateUser({
-        commit, state
+        commit,
+        state
     }, user) {
         let _ = user;
         let setupOptions = {
@@ -311,6 +373,10 @@ export default {
             .put(state.apiUrl + "api/users/update", {
                 setupOptions,
                 email: user.Contacts.Email
+            }, {
+                headers: {
+                    authorization: state.accessToken
+                }
             })
             .then((response) => {
                 commit('UPDATE_USER', user)

@@ -16,6 +16,9 @@ export default {
     },
     urlApiServer(state) {
         return state.apiUrl
+    },
+    accessTokenGetter(state){
+        return state.accessToken
     }
 
 }
