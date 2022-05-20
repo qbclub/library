@@ -345,7 +345,7 @@ export default {
     );
     if (!this.currentBook) {
       console.log("No current book");
-      this.getBookById();
+      this.getBookById(this.$route.query.book_id);
     }
   },
 };

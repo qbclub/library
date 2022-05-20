@@ -89,7 +89,7 @@ export default {
                 eventType: 'reserve'
             }, {
                 headers: {
-                    authorization: this.accessTokenGetter,
+                    authorization: state.accessToken,
                 }
             })
             .then(() => {
@@ -139,7 +139,11 @@ export default {
         state
     }, bookIdAndUserEmail) {
         axios
-            .post(state.apiUrl + 'api/books/unreserve-one', bookIdAndUserEmail)
+            .post(state.apiUrl + 'api/books/unreserve-one', bookIdAndUserEmail, {
+                headers: {
+                    authorization: state.accessToken
+                }
+            })
             .then(() => {
                 axios
                     .get(state.apiUrl + "api/books/get-all", {
