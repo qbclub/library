@@ -26,7 +26,7 @@
                 </div>
                 <div class="text-caption">
                   Издательство: {{ currentBook.PublisherName }},
-                  {{ currentBook.date }} г.
+                  {{ currentBook.ReleaseDate }}
                 </div>
                 <div class="text-caption">
                   Тематика: {{ currentBook.Sections }}
@@ -178,7 +178,7 @@ export default {
     snackbar: false,
     dialog: false,
     dialogAction: null,
-    timeout: 3000,
+    timeout: 1500,
     snackbarText: "",
   }),
   components: {
