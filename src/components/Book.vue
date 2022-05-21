@@ -63,7 +63,7 @@
                     depressed
                     small
                     class="ma-4 accent"
-                    >Зарегистрироваться</v-btn
+                    >Войти</v-btn
                   >
                 </div>
 

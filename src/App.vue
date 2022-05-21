@@ -79,7 +79,7 @@
         </div>
 
         <div
-          v-if="user.loggedIn"
+          v-if="userInfo !=''"
           @click="routeTo('/cabinet')"
           class="d-flex flex-column navicons"
         >
