@@ -49,6 +49,12 @@ export default {
   computed: {
     ...mapGetters(["books"]),
   },
+  watch: {
+    books: function () {
+      this.booksToShow = this.books;
+    },
+  },
+
   mounted() {
     this.booksToShow = this.books;
   },
