@@ -1,10 +1,10 @@
 <template>
   <v-container>
     <v-row>
-      <v-col >
-     <v-btn onclick="history.back()" icon>
-           <v-icon large >fi fi-rr-arrow-small-left</v-icon>
-      </v-btn>
+      <v-col>
+        <v-btn onclick="history.back()" icon>
+          <v-icon large>fi fi-rr-arrow-small-left</v-icon>
+        </v-btn>
       </v-col>
       <v-col cols="2">
         <div>
@@ -46,7 +46,7 @@
       <v-col cols="6">
         <p class="text-center">Книги на руках</p>
         <p v-if="userInfo.CurrentTakenBooks" class="font-weight-bold">
-          Вернуть до {{ returnLimit }}
+          Вернуть до <br />{{ returnLimit }}
         </p>
         <v-img
           v-if="takenBook"
@@ -60,8 +60,10 @@
       <v-col class="justify-center" cols="6">
         <p class="text-center">Зарезервированo</p>
         <p v-if="userInfo.CurrentReservedBooks" class="font-weight-bold">
-          Взять до {{ reserveLimit }}
+          Взять до <br />
+          {{ reserveLimit }}
         </p>
+
         <v-img
           v-if="reservedBook"
           loading="lazy"
@@ -69,8 +71,17 @@
           max-width="250"
           :aspect-ratio="10 / 14"
           :src="reservedBook.CoverPath"
-        ></v-img
-      ></v-col>
+        ></v-img>
+        <v-btn
+          v-if="reservedBook"
+          small
+          text
+          color="error"
+          class="mt-4"
+          @click="unreserveBook()"
+          >Отменить резерв</v-btn
+        >
+      </v-col>
     </v-row>
     <v-dialog v-model="dialog" max-width="290">
       <v-card>
@@ -88,7 +99,7 @@
   </v-container>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { getAuth, signOut } from "firebase/auth";
 export default {
   data: () => ({
@@ -99,8 +110,16 @@ export default {
     returnLimit: 0,
   }),
   methods: {
+    ...mapActions(["cancelReserve"]),
     findBookById: function (id) {
       return this.books.find(({ Id }) => Id == id);
+    },
+    unreserveBook: function () {
+      this.cancelReserve({
+        UserEmail: this.userInfo.Contacts.Email,
+        BookId: this.reservedBook.Id,
+      });
+      this.reservedBook = null;
     },
     signOut: function () {
       signOut(getAuth())
@@ -126,23 +145,29 @@ export default {
   },
   mounted() {
     if (this.user.loggedIn) {
-      this.reservedBook = this.findBookById(
-        this.userInfo.CurrentReservedBooks
-      );
+      this.reservedBook = this.findBookById(this.userInfo.CurrentReservedBooks);
       this.takenBook = this.findBookById(this.userInfo.CurrentTakenBooks);
       if (this.reservedBook) {
         let date = new Date(
           Number(this.reservedBook.DateOfReserved) + 1000 * 60 * 60 * 24 * 3
         );
 
-        this.reserveLimit = date.toLocaleString("ru-RU", { year: 'numeric', month: 'long', day: 'numeric' });
+        this.reserveLimit = date.toLocaleString("ru-RU", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
       }
       if (this.takenBook) {
         let dateReserve = new Date(
           Number(this.takenBook.DateOfGivenOut) + 1000 * 60 * 60 * 24 * 21
         );
 
-        this.returnLimit = dateReserve.toLocaleString("ru-RU", { year: 'numeric', month: 'long', day: 'numeric' });
+        this.returnLimit = dateReserve.toLocaleString("ru-RU", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
       }
     }
   },
@@ -157,7 +182,7 @@ export default {
     transform: scale(1.05);
   }
 }
-#icon{
+#icon {
   font-size: 30px;
 }
 </style>

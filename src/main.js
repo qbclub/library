@@ -20,7 +20,7 @@ auth.onAuthStateChanged(user => {
   store.dispatch("fetchUser", user);
 });
 
-store.dispatch("getAllBooks")
+// store.dispatch("getAllBooks")
 
 new Vue({
   router,

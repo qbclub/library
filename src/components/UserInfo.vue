@@ -138,6 +138,24 @@
               ></v-text-field>
             </v-col>
           </v-row>
+                  <v-row>
+            <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="form.CurrentTakenBooks"
+                label="книга на руках"
+                required
+                color="accent"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="form.CurrentReservedBooks"
+                label="книга в резерве"
+                required
+                color="accent"
+              ></v-text-field>
+            </v-col>
+          </v-row>
           <div class="d-flex justify-center">
             <v-btn color="success" class="mb-10" @click="send">
               Отправить
@@ -196,7 +214,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["updateUser"]),
+    ...mapActions(["updateUser", ]),
     clearingForm: function () {
       this.form = {
         UserId: "",
@@ -206,8 +224,8 @@ export default {
         EducationalInstitution: "",
         LivingAddress: "",
         isAdmin: false,
-        CurrentTakenBooks: [],
-        CurrentReservedBooks: [],
+        CurrentTakenBooks: "",
+        CurrentReservedBooks: "",
         Contacts: {
           PhoneNumber: "",
           Email: "",
@@ -225,10 +243,15 @@ export default {
       this.clearingForm();
       this.$router.push({ path: "/admin" });
     },
-    checkUser: function (email) {
-      axios
+    checkUser:  function (email) {
+ 
+       axios
         .post(this.urlApiServer + "api/users/get-by-email", {
           email: this.form.Contacts.Email,
+        },{
+            headers: {
+                authorization: this.accessTokenGetter
+            }
         })
         .then((response) => {
           if (response.data) {
@@ -243,6 +266,8 @@ export default {
             this.form.Contacts.PhoneNumber = response.data.Contacts.PhoneNumber;
             this.form.Contacts.SocCeti = response.data.Contacts.SocCeti;
             this.form.PhotoPath = response.data.PhotoPath;
+            this.form.CurrentTakenBooks = response.data.CurrentTakenBooks;
+            this.form.CurrentReservedBooks = response.data.CurrentReserved
           } else {
             this.snackbar = true;
           }
@@ -277,7 +302,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["urlApiServer"]),
+    ...mapGetters(["urlApiServer", "accessTokenGetter"]),
   },
 };
 </script>
