@@ -241,7 +241,7 @@ export default {
 
       this.updateUser(this.form);
       this.clearingForm();
-      this.$router.push({ path: "/admin" });
+      this.$router.push({ path: "/books" });
     },
     checkUser:  function (email) {
  
