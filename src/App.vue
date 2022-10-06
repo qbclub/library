@@ -162,7 +162,7 @@ export default {
     window.addEventListener("resize", this.onResize, { passive: true });
 
     axios
-      .get(this.urlApiServer)
+      .get(`${this.urlApiServer}api`)
       .then((response) => {
         this.createAccessToken(response.data);
       })
