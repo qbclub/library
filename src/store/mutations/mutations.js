@@ -10,11 +10,18 @@ export default {
     SET_USER_INFO(state, data) {
         state.userInfo = data
     },
+    ACCESS_TOKEN(state, token) {
+        state.accessToken = token;
+    },
     GET_USER_INFO(state, email) {
         if (email) {
             axios
                 .post(state.apiUrl + "api/users/get-by-email", {
                     email: email
+                }, {
+                    headers: {
+                        authorization: state.accessToken
+                    }
                 })
                 .then((response) => {
                     state.userInfo = response.data
@@ -46,14 +53,22 @@ export default {
     },
     CREATE_BOOK(state, book) {
         axios
-            .post(state.apiUrl + "api/books/create", book)
+            .post(state.apiUrl + "api/books/create", book, {
+                headers: {
+                    authorization: state.accessToken
+                }
+            })
             .catch((error) => {
                 console.error("Cannot create book, error: ", error);
             });
     },
     CLEAR_BOOKS_DB() {
         axios
-            .get(state.apiUrl + "api/books/clear")
+            .get(state.apiUrl + "api/books/clear", {
+                headers: {
+                    authorization: state.accessToken
+                }
+            })
             .then((response) => console.log('clear books with status ', response.status))
             .catch((error) => {
                 console.error("Cannot clear books, error: ", error);
@@ -61,7 +76,11 @@ export default {
     },
     CLEAR_USERS_DB() {
         axios
-            .get(state.apiUrl + "api/users/clear")
+            .get(state.apiUrl + "api/users/clear", {
+                headers: {
+                    authorization: state.accessToken
+                }
+            })
             .then((response) => console.log(response))
             .catch((error) => {
                 console.error("Cannot clear users, error: ", error);
@@ -132,6 +151,10 @@ export default {
                     }
                 },
                 id: newBook.Id
+            }, {
+                headers: {
+                    authorization: state.accessToken
+                }
             })
             .then((response) => {
                 console.log("update book with status: ", response.status)
@@ -139,11 +162,15 @@ export default {
             .catch(err => console.error("cannot update book, error: ", err))
     },
     CREATE_USER(state, user) {
-        axios.post(state.apiUrl + "api/users/create", user).then(() => {
+        axios.post(state.apiUrl + "api/users/create", user, {
+            headers: {
+                authorization: state.accessToken
+            }
+        }).then(() => {
             state.userInfo = user;
             console.log("User created")
         }).catch(err => console.error("cannot create user, error: ", err))
-        
+
     },
     UPDATE_USER(state, newUser) {
         state.userInfo = newUser;

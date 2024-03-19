@@ -18,8 +18,8 @@ let store = new Vuex.Store({
     backend: 'node',
     books: [],
     bookflow: [],
-    apiUrl:"http://localhost:3000/",
-    // apiUrl:"https://grif-qbit.duckdns.org:8080/"
+    // apiUrl:"http://localhost:3000/",
+    apiUrl:"https://grif-qbit.duckdns.org/"
   },
   mutations,
   actions,

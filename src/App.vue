@@ -51,7 +51,12 @@
     <v-footer class="d-none d-sm-flex secondary" padless app>
       <v-col cols="2"></v-col>
       <v-col class="text-center" cols="8">
-        <a target="_blank" href="https://qbit-club.com/#/" class="text--secondary">Сделано в Кубит</a>
+        <a
+          target="_blank"
+          href="https://qbit-club.com/#/"
+          class="text--secondary"
+          >Сделано в Кубит</a
+        >
       </v-col>
       <v-col cols="2"></v-col>
     </v-footer>
@@ -74,7 +79,7 @@
         </div>
 
         <div
-          v-if="user.loggedIn"
+          v-if="userInfo !=''"
           @click="routeTo('/cabinet')"
           class="d-flex flex-column navicons"
         >
@@ -103,8 +108,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
+import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
 export default {
   name: "App",
 
@@ -136,13 +141,14 @@ export default {
       this.$router.push(path).catch(() => {});
       // this.drawer = false;
     },
-
-    // ...mapActions(["getAllBooks", "getAllBookflow", "fetchUser"]),
+  
+    ...mapActions(["createAccessToken", "getAllBooks"]),
   },
   computed: {
     ...mapGetters({
       user: "user",
       userInfo: "userInfo",
+      urlApiServer: "urlApiServer",
     }),
   },
   beforeDestroy() {
@@ -154,6 +160,13 @@ export default {
   mounted() {
     this.onResize();
     window.addEventListener("resize", this.onResize, { passive: true });
+
+    axios
+      .get(`${this.urlApiServer}api`)
+      .then((response) => {
+        this.createAccessToken(response.data);
+      })
+      .then(() => this.getAllBooks());
   },
 };
 </script>
@@ -188,6 +201,5 @@ export default {
 a {
   text-decoration: none;
   color: black !important;
-  
 }
 </style>

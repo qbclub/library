@@ -214,7 +214,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["updateUser"]),
+    ...mapActions(["updateUser", ]),
     clearingForm: function () {
       this.form = {
         UserId: "",
@@ -243,10 +243,15 @@ export default {
       this.clearingForm();
       this.$router.push({ path: "/books" });
     },
-    checkUser: function (email) {
-      axios
+    checkUser:  function (email) {
+ 
+       axios
         .post(this.urlApiServer + "api/users/get-by-email", {
           email: this.form.Contacts.Email,
+        },{
+            headers: {
+                authorization: this.accessTokenGetter
+            }
         })
         .then((response) => {
           if (response.data) {
@@ -297,7 +302,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["urlApiServer"]),
+    ...mapGetters(["urlApiServer", "accessTokenGetter"]),
   },
 };
 </script>

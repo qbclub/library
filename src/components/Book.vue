@@ -26,7 +26,7 @@
                 </div>
                 <div class="text-caption">
                   Издательство: {{ currentBook.PublisherName }},
-                  {{ currentBook.date }} г.
+                  {{ currentBook.ReleaseDate }}
                 </div>
                 <div class="text-caption">
                   Тематика: {{ currentBook.Sections }}
@@ -63,7 +63,7 @@
                     depressed
                     small
                     class="ma-4 accent"
-                    >Зарегистрироваться</v-btn
+                    >Войти</v-btn
                   >
                 </div>
 
@@ -82,7 +82,7 @@
                     "
                   >
                     Книга {{ currentBook.Status.toLowerCase() }} <br />
-                    до {{ booksReserveLimit }} {{booksGiveOutDate}}
+                    до {{ booksReserveLimit }} {{ booksGiveOutDate }}
                   </div>
                   <div v-else class="text-caption font-weight-bold">
                     <div
@@ -145,8 +145,6 @@
               >Удалить</v-btn
             >
           </div>
-          
-      
         </v-col>
       </v-row>
     </v-container>
@@ -180,7 +178,7 @@ export default {
     snackbar: false,
     dialog: false,
     dialogAction: null,
-    timeout: 3000,
+    timeout: 1500,
     snackbarText: "",
   }),
   components: {
@@ -221,6 +219,10 @@ export default {
         axios
           .post(this.urlApiServer + "api/users/get-by-email", {
             email: this.currentBook.ReservedQueue,
+          },     {
+            headers: {
+              authorization: this.accessTokenGetter,
+            }
           })
           .then((response) => {
             if (response.data.CurrentTakenBooks) {
@@ -288,9 +290,17 @@ export default {
     },
     getBookById: function () {
       axios
-        .post(this.urlApiServer + "api/books/get-by-id", {
-          id: this.$route.query.book_id,
-        })
+        .post(
+          this.urlApiServer + "api/books/get-by-id",
+          {
+            id: this.$route.query.book_id,
+          },
+          {
+            headers: {
+              authorization: this.accessTokenGetter,
+            }
+          }
+        )
         .then((response) => {
           this.currentBook = response.data[0];
         })
@@ -301,7 +311,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["user", "books", "userInfo", "urlApiServer"]),
+    ...mapGetters(["user", "books", "userInfo", "urlApiServer", "accessTokenGetter"]),
     booksReserveLimit: function () {
       if (this.currentBook.DateOfReserved) {
         let date = new Date(
@@ -335,7 +345,7 @@ export default {
     );
     if (!this.currentBook) {
       console.log("No current book");
-      this.getBookById();
+      this.getBookById(this.$route.query.book_id);
     }
   },
 };
